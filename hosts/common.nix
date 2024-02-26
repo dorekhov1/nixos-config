@@ -3,7 +3,6 @@
 {
   imports = [
     ../modules/git.nix
-
     ../modules/terminal/wezterm.nix
     ../modules/shell
     ../modules/neovim
