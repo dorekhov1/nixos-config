@@ -12,13 +12,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     neovim-flake = {
       url = "github:dorekhov1/kickstart-nix.nvim";
+    };
+
+    tmux-sessionx = {
+        url = "github:omerxx/tmux-sessionx";
     };
 
   };
@@ -28,12 +27,11 @@
     nixpkgs,
     nixos-hardware,
     home-manager,
-    nixvim,
     ...
   }:
   let
 
-    vars = rec {
+    vars = {
       user = "daniil";
       fullName = "Daniil Orekhov";
       stateVersion = "23.11";

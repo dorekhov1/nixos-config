@@ -157,5 +157,5 @@
       '';
     };
   };
-
+  programs.ssh.startAgent = true;
 }
