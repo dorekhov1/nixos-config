@@ -69,11 +69,6 @@
 
 
   environment = {
-    variables = {
-      # TERMINAL = "${config.terminal}";
-      # EDITOR = "${vars.editor}";
-      # VISUAL = "${vars.editor}";
-    };
     systemPackages = with pkgs; [
       # Terminal
       wezterm           # Terminal Emulator

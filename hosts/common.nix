@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -66,6 +66,9 @@
     ## Packages should be managed with home-manager whereever
     ## possible. Only use a set of barebones applications here.
     environment.systemPackages = with pkgs; [ git vim wget curl ];
+    environment.variables = {
+      EDITOR = "vim";
+    };
 
     ## Home manager settings
     home-manager.useGlobalPkgs = true;
