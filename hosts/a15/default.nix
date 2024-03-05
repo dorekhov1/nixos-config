@@ -13,6 +13,7 @@ nixpkgs.lib.nixosSystem {
     ../common.nix
     home-manager.nixosModules.home-manager {
         nixpkgs.overlays = overlays;
+        home-manager.extraSpecialArgs = { inherit inputs; };
     }
     ./configuration.nix
   ];

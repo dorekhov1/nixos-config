@@ -3,10 +3,17 @@
 {
   home-manager.users.${config.user} = {
 
-    home.packages = with pkgs; [
-      gcc
-      nvim-pkg
+    imports = [ 
+      ./packages.nix
+
+      ./lazyvim
+      #./astronvim
     ];
+
+    # kickstart-nix
+    # home.packages = with pkgs; [
+    #     nvim-pkg
+    # ];
 
   };
 }

@@ -12,6 +12,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    astronvim = {
+        url = "github:AstroNvim/AstroNvim/v3.41.2";
+        flake = false;
+    };
+
     neovim-flake = {
       url = "github:dorekhov1/kickstart-nix.nvim";
     };

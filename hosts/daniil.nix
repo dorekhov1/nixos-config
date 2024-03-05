@@ -10,8 +10,9 @@
   ];
 
   imports = [
-    ./programs/shell
+    ./programs/astronvim
     ./programs/neovim
+    ./programs/shell
   ];
 
 }
