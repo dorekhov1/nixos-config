@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ config, inputs, pkgs, ... }:
 
 {
+
   home-manager.users.${config.user} = {
 
     imports = [ 
@@ -10,10 +11,13 @@
       #./astronvim
     ];
 
+    home.packages = with pkgs; [
     # kickstart-nix
-    # home.packages = with pkgs; [
     #     nvim-pkg
-    # ];
+
+    #	neovim-nightly
+    ];
+
 
   };
 }

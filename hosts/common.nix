@@ -6,6 +6,7 @@
     ../modules/terminal/wezterm.nix
     ../modules/shell
     ../modules/neovim
+    ../modules/vpn
   ];
   
   ## Global options

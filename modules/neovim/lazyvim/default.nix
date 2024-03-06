@@ -9,6 +9,15 @@
       stylua
       # Telescope
       ripgrep
+
+      #-- nix
+      nil
+      rnix-lsp
+      # nixd
+      statix # Lints and suggestions for the nix programming language
+      deadnix # Find and remove unused code in .nix source files
+      alejandra # Nix Code Formatter
+
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -67,6 +76,15 @@
           { name = "mini.indentscope"; path = mini-nvim; }
           { name = "mini.pairs"; path = mini-nvim; }
           { name = "mini.surround"; path = mini-nvim; }
+
+          nvim-dap
+          nvim-dap-ui
+          nvim-dap-python
+          nvim-dap-virtual-text
+          yanky-nvim
+          sqlite-lua # dependency for yanky-nvim
+          edgy-nvim
+
         ];
         mkEntryFromDrv = drv:
           if lib.isDerivation drv then
@@ -92,9 +110,15 @@
             -- The following configs are needed for fixing lazyvim on nix
             -- force enable telescope-fzf-native.nvim
             { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
+
+            { import = "lazyvim.plugins.extras.coding.copilot" },
+            { import = "lazyvim.plugins.extras.ui.alpha" },
+            { import = "lazyvim.plugins.extras.ui.edgy" },
+
             -- disable mason.nvim, use programs.neovim.extraPackages
             { "williamboman/mason-lspconfig.nvim", enabled = false },
             { "williamboman/mason.nvim", enabled = false },
+
             -- import/override with your plugins
             { import = "plugins" },
             -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
@@ -102,6 +126,7 @@
           },
         })
       '';
+
   };
 
   # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
@@ -117,7 +142,9 @@
           lua
           markdown
           markdown_inline
+          nix
           regex
+          python
         ])).dependencies;
       };
     in

@@ -16,9 +16,16 @@
         url = "github:AstroNvim/AstroNvim/v3.41.2";
         flake = false;
     };
+    
+    neovim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     neovim-flake = {
-      url = "github:dorekhov1/kickstart-nix.nvim";
+      # url = "github:dorekhov1/kickstart-nix.nvim";
+      url = "github:cwfryer/neovim-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     tmux-sessionx = {
@@ -43,7 +50,7 @@
     };
 
     overlays = [
-      inputs.neovim-flake.overlays.default
+      inputs.neovim-flake.overlays."x86_64-linux".default
     ];
 
   in rec {
