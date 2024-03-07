@@ -62,7 +62,11 @@
     corefonts                               # MS
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
+        "NerdFontsSymbolsOnly"
+
         "FiraCode"
+        "JetBrainsMono"
+        "Iosevka"
       ];
     })
   ];

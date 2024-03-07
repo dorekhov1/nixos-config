@@ -15,14 +15,15 @@
         vim_keys = true;
     };
   
-    home.packages = [
-      pkgs.manix
-      pkgs.xsel
-      pkgs.ripgrep
-      pkgs.fd
-      pkgs.eza
-      pkgs.bat
-      pkgs.neofetch
+    home.packages = with pkgs; [
+      manix
+      xsel
+      ripgrep
+      fd
+      eza
+      bat
+      neofetch
+      just
     ];
   
     programs.zsh.shellAliases = {
@@ -30,6 +31,12 @@
       ls = "eza --icons -l -T -L=1";
       cat = "bat";
       htop = "btop";
+      v = "nvim";
+
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      "....." = "cd ../../../..";
     };
   };
 }

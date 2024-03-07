@@ -7,17 +7,18 @@
       # LazyVim
       lua-language-server
       stylua
+
       # Telescope
       ripgrep
 
-      #-- nix
+      # nix
       nil
       rnix-lsp
+
       # nixd
       statix # Lints and suggestions for the nix programming language
       deadnix # Find and remove unused code in .nix source files
       alejandra # Nix Code Formatter
-
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -85,6 +86,7 @@
           sqlite-lua # dependency for yanky-nvim
           edgy-nvim
           tmux-nvim
+          vim-just
 
         ];
         mkEntryFromDrv = drv:

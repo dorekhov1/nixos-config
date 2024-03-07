@@ -7,7 +7,10 @@
 
   home.packages = with pkgs;
     [
+      fzf
+      fd
       lazygit
+      ripgrep
       
       #-- c/c++
       cmake
@@ -27,33 +30,9 @@
         ps:
           with ps; [
             ruff-lsp
-            black # python formatter
-
-            jupyter
-            ipython
-            pandas
-            requests
-            pyquery
-            pyyaml
-
-            ## emacs's lsp-bridge dependenciesge
-            epc
-            orjson
-            sexpdata
-            six
-            setuptools
-            paramiko
-            rapidfuzz
+            debugpy
           ]
       ))
-
-      #-- rust
-      rust-analyzer
-      cargo # rust package manager
-      rustfmt
-
-      #-- zig
-      zls
 
       #-- nix
       nil
@@ -62,21 +41,6 @@
       statix # Lints and suggestions for the nix programming language
       deadnix # Find and remove unused code in .nix source files
       alejandra # Nix Code Formatter
-
-      #-- golang
-      go
-      gomodifytags
-      iferr # generate error handling code for go
-      impl # generate function implementation for go
-      gotools # contains tools like: godoc, goimports, etc.
-      gopls # go language server
-      delve # go debugger
-
-      # -- java
-      jdk17
-      gradle
-      maven
-      spring-boot-cli
 
       #-- lua
       stylua
@@ -104,11 +68,6 @@
       jsonnet-language-server
       hadolint # Dockerfile linter
 
-      # -- Lisp like Languages
-      guile
-      racket-minimal
-      fnlfmt # fennel
-
       #-- Others
       taplo # TOML language server / formatter / validator
       nodePackages.yaml-language-server
@@ -122,21 +81,11 @@
       nodePackages.prettier # common code formatter
       marksman # language server for markdown
       glow # markdown previewer
-      fzf
       pandoc # document converter
       hugo # static site generator
 
       #-- Optional Requirements:
       gdu # disk usage analyzer, required by AstroNvim
       (ripgrep.override {withPCRE2 = true;}) # recursively searches directories for a regex pattern
-    ]
-    ++ (
-      if pkgs.stdenv.isDarwin
-      then []
-      else [
-        #-- verilog / systemverilog
-        verible
-        gdb
-      ]
-    );
+    ];
 }
