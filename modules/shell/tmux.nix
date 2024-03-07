@@ -104,6 +104,8 @@
           set -g renumber-windows on
 
           set -g status-position top
+
+          set-option -sa terminal-features ',screen-256color:RGB'
         '';
       };
     };

@@ -84,6 +84,7 @@
           yanky-nvim
           sqlite-lua # dependency for yanky-nvim
           edgy-nvim
+          tmux-nvim
 
         ];
         mkEntryFromDrv = drv:

@@ -7,6 +7,8 @@
 
   home.packages = with pkgs;
     [
+      lazygit
+      
       #-- c/c++
       cmake
       cmake-language-server
