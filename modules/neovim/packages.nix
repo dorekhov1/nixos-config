@@ -25,14 +25,15 @@
       lldb
 
       #-- python
-      nodePackages.pyright # python language server
-      (python311.withPackages (
-        ps:
-          with ps; [
-            ruff-lsp
-            debugpy
-          ]
-      ))
+       ruff
+       nodePackages.pyright # python language server
+       (python311.withPackages (
+         ps:
+           with ps; [
+             ruff-lsp
+             debugpy
+           ]
+       ))
 
       #-- nix
       nil

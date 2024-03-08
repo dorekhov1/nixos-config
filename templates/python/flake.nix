@@ -30,7 +30,7 @@
           python-packages = p:
             with p; [
               pip
-              python-lsp-ruff
+              debugpy
             ];
         in {
         # Per-system attributes can be defined here. The self' and inputs'
@@ -49,7 +49,10 @@
           # https://devenv.sh/reference/options/
           packages = with pkgs;
             [
+              nodePackages.pyright
               ruff
+              ruff-lsp
+
               just # makefile alternative
               stdenv.cc.cc.lib # required by Jupyter
               (python3.withPackages python-packages)
@@ -84,11 +87,11 @@
 
           # https://devenv.sh/pre-commit-hooks/
           pre-commit.hooks = {
-            black.enable = true;
             nixfmt.enable = true;
             yamllint.enable = true;
             pyright.enable = true;
             editorconfig-checker.enable = true;
+            ruff.enable = true;
           };
 
           # Plugin configuration

@@ -19,6 +19,7 @@
       statix # Lints and suggestions for the nix programming language
       deadnix # Find and remove unused code in .nix source files
       alejandra # Nix Code Formatter
+
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -148,6 +149,7 @@
           nix
           regex
           python
+          vimdoc
         ])).dependencies;
       };
     in
