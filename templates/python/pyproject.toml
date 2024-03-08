@@ -1,0 +1,44 @@
+[tool.poetry]
+name = ""
+version = "0.1.0"
+description = ""
+authors = ["John Smith <john.smith@mail.ru>"]
+license = "Proprietary"
+packages = [
+  { include = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+# ruff = "^0.3.1"
+pyre-check = "^0.9.19"
+debugpy = "^1.8.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+

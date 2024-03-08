@@ -23,8 +23,7 @@
     };
 
     neovim-flake = {
-      # url = "github:dorekhov1/kickstart-nix.nvim";
-      url = "github:cwfryer/neovim-flake";
+      url = "github:dorekhov1/kickstart-nix.nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -50,7 +49,7 @@
     };
 
     overlays = [
-      inputs.neovim-flake.overlays."x86_64-linux".default
+      # inputs.neovim-flake.overlays."x86_64-linux".default
     ];
 
   in rec {
@@ -63,6 +62,13 @@
 
     homeConfigurations = {
       a15 = nixosConfigurations.a15.config.home-manager.users.${vars.user}.home;
+    };
+
+    templates = {
+      python = {
+        path = ./templates/python;
+        description = "Custom Python development environment";
+      };
     };
 
   };
