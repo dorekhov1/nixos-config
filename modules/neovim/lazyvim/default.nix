@@ -88,6 +88,7 @@
           edgy-nvim
           tmux-nvim
           vim-just
+          harpoon
 
         ];
         mkEntryFromDrv = drv:
@@ -115,9 +116,8 @@
             -- force enable telescope-fzf-native.nvim
             { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
 
-            { import = "lazyvim.plugins.extras.coding.copilot" },
-            { import = "lazyvim.plugins.extras.ui.alpha" },
-            { import = "lazyvim.plugins.extras.ui.edgy" },
+            -- { import = "lazyvim.plugins.extras.ui.alpha" },
+            -- { import = "lazyvim.plugins.extras.ui.edgy" },
 
             -- disable mason.nvim, use programs.neovim.extraPackages
             { "williamboman/mason-lspconfig.nvim", enabled = false },
