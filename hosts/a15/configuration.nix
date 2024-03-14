@@ -125,6 +125,16 @@
       telegram-desktop
       brave
       zoom-us
+
+      # Screenshot tools for Wayland
+      grim
+      slurp
+      swappy
+      wl-clipboard
+      wf-recorder
+
+      appimage-run
+
       # Other Packages Found @
       # - ./<host>/default.nix
       # - ../modules

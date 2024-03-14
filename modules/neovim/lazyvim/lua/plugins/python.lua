@@ -69,7 +69,7 @@ return {
         { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
       },
       config = function()
-        require("dap-python").setup(".venv/bin/python")
+        require("dap-python").setup("python")
       end,
     },
   },

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home-manager.users.${config.user} = {
@@ -17,13 +17,14 @@
   
     home.packages = with pkgs; [
       manix
-      xsel
       ripgrep
       fd
       eza
       bat
       neofetch
       just
+
+      xsel
     ];
   
     programs.zsh.shellAliases = {
@@ -32,6 +33,8 @@
       cat = "bat";
       htop = "btop";
       v = "nvim";
+
+      startvpn = "(exec hiddify-next &> /dev/null &)";
 
       ".." = "cd ..";
       "..." = "cd ../..";

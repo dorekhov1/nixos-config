@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   programs.neovim = {
@@ -13,7 +13,7 @@
 
       # nix
       nil
-      rnix-lsp
+      # rnix-lsp # TODO
 
       # nixd
       statix # Lints and suggestions for the nix programming language

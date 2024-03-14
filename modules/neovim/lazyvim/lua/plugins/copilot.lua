@@ -12,8 +12,20 @@ return {
         markdown = true,
         help = true,
       },
+      server_opts_overrides = {
+        settings = {
+          advanced = {
+            listCount = 10, -- #completions for panel
+            inlineSuggestCount = 3, -- #completions for getCompletions
+            debug = {
+              overrideProxyUrl = "http://75.119.206.82:32524:32524",
+            },
+          },
+        },
+      },
     },
   },
+
   {
     "nvim-lualine/lualine.nvim",
     optional = true,
