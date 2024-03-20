@@ -25,6 +25,7 @@
       just
 
       xsel
+      awscli2
     ];
   
     programs.zsh.shellAliases = {
@@ -35,6 +36,7 @@
       v = "nvim";
 
       startvpn = "(exec hiddify-next &> /dev/null &)";
+      yc = "/home/daniil/yandex-cloud/bin/yc"; # TODO this is pretty bad
 
       ".." = "cd ..";
       "..." = "cd ../..";
