@@ -12,7 +12,7 @@
         terminal = "screen-256color";
         clock24 = true;
         sensibleOnTop = true;
-        escapeTime = 300;
+        escapeTime = 10;
         historyLimit = 1000000;
         plugins = with pkgs.tmuxPlugins; [
           vim-tmux-navigator
