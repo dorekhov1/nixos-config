@@ -10,5 +10,7 @@
   environment.systemPackages = with pkgs; [
     docker                  # Containers
     docker-compose          # Multi-Container
+    kubectl
+    kubernetes-helm
   ];
 }
