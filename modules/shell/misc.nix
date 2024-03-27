@@ -25,7 +25,8 @@
       just
 
       xsel
-      awscli2
+      # awscli2
+      devenv
     ];
   
     programs.zsh.shellAliases = {
