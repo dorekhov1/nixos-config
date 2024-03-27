@@ -57,6 +57,14 @@
         dates = "weekly";
         options = "--delete-older-than 7d";
       };
+
+      settings = {
+        trusted-users = ["daniil"];
+
+        substituters = [
+          "https://cache.nixos.org"
+        ];
+      };
     };
 
     ## Allow unfree packages
