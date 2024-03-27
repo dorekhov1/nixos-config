@@ -8,7 +8,7 @@ appimageTools.wrapType2 rec {
 
   src = fetchurl {
     url = "https://github.com/hiddify/hiddify-next/releases/download/${version}/Hiddify-Linux-x64.AppImage";
-    sha256 = "sha256-KU7JsalM8N3Dr+8MmXnRqLwCONguV2LqCJADfrhPBfA=";
+    hash = "sha256-T4BWxhJ7q13KE1rvvFsnXhs2XVEmNkFTJbJ4e8PCg+0=";
   };
   extraPkgs = pkgs:
     with pkgs; [
