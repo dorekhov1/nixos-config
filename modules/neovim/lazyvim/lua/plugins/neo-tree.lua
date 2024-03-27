@@ -11,7 +11,11 @@ return {
           ".mypy_cache",
           ".pyre",
           ".ruff_cache",
+          ".devenv",
+          ".venv",
           "result",
+          ".devenv.flake.nix",
+          ".pre-commit-config.yaml",
         },
         never_show_by_pattern = {
           "**/__pycache__",
