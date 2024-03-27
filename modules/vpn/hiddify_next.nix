@@ -4,7 +4,7 @@ with pkgs;
 appimageTools.wrapType2 rec {
   name = "hiddify-next";
   pname = "hiddify-next";
-  version = "v0.17.8.dev";
+  version = "v1.1.1";
 
   src = fetchurl {
     url = "https://github.com/hiddify/hiddify-next/releases/download/${version}/Hiddify-Linux-x64.AppImage";
