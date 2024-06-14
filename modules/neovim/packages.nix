@@ -26,7 +26,7 @@
 
       #-- python
        ruff
-       nodePackages.pyright # python language server
+       pyright # python language server
        (python311.withPackages (
          ps:
            with ps; [

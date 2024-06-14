@@ -8,8 +8,8 @@
   users.groups.docker.members = [ "${config.user}" ];
 
   environment.systemPackages = with pkgs; [
-    docker                  # Containers
-    docker-compose          # Multi-Container
+    docker
+    docker-compose
     kubectl
     kubernetes-helm
   ];

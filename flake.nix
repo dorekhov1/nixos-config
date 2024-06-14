@@ -13,24 +13,24 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    astronvim = {
-        url = "github:AstroNvim/AstroNvim/v3.41.2";
-        flake = false;
-    };
-    
-    neovim-nightly = {
-      url = "github:nix-community/neovim-nightly-overlay";
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-flake = {
-      url = "github:dorekhov1/kickstart-nix.nvim";
+    sops-nix = {
+      url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     tmux-sessionx = {
         url = "github:omerxx/tmux-sessionx";
     };
+
+    # nix-secrets = {
+    #   url = "git+ssh://git@gitlab.com/emergentmind/nix-secrets.git?ref=main&shallow=1";
+    #   flake = false;
+    # };
 
   };
 
@@ -53,6 +53,10 @@
       # inputs.neovim-flake.overlays."x86_64-linux".default
     ];
 
+    forAllSystems = nixpkgs.lib.genAttrs [
+      "x86_64-linux"
+    ];
+
   in rec {
 
     nixosConfigurations = {
@@ -72,5 +76,10 @@
       };
     };
 
+    devShells = forAllSystems
+      (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./shell.nix { inherit pkgs; }
+      );
   };
 }

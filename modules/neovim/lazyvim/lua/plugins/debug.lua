@@ -3,6 +3,11 @@ return {
 
   dependencies = {
 
+    -- async io
+    {
+      "nvim-neotest/nvim-nio",
+    },
+
     -- fancy UI for the debugger
     {
       "rcarriga/nvim-dap-ui",

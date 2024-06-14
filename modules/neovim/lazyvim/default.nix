@@ -29,67 +29,67 @@
     extraLuaConfig =
       let
         plugins = with pkgs.vimPlugins; [
-          # LazyVim
-          LazyVim
-          bufferline-nvim
-          cmp-buffer
-          cmp-nvim-lsp
-          cmp-path
-          cmp_luasnip
-          conform-nvim
-          dashboard-nvim
-          dressing-nvim
-          flash-nvim
-          friendly-snippets
-          gitsigns-nvim
-          indent-blankline-nvim
-          lualine-nvim
-          neo-tree-nvim
-          neoconf-nvim
-          neodev-nvim
-          noice-nvim
-          nui-nvim
-          nvim-cmp
-          nvim-lint
-          nvim-lspconfig
-          nvim-notify
-          nvim-spectre
-          nvim-treesitter
-          nvim-treesitter-context
-          nvim-treesitter-textobjects
-          nvim-ts-autotag
-          nvim-ts-context-commentstring
-          nvim-web-devicons
-          persistence-nvim
-          plenary-nvim
-          telescope-fzf-native-nvim
-          telescope-nvim
-          todo-comments-nvim
-          tokyonight-nvim
-          trouble-nvim
-          vim-illuminate
-          vim-startuptime
-          which-key-nvim
-          { name = "LuaSnip"; path = luasnip; }
-          { name = "catppuccin"; path = catppuccin-nvim; }
-          { name = "mini.ai"; path = mini-nvim; }
-          { name = "mini.bufremove"; path = mini-nvim; }
-          { name = "mini.comment"; path = mini-nvim; }
-          { name = "mini.indentscope"; path = mini-nvim; }
-          { name = "mini.pairs"; path = mini-nvim; }
-          { name = "mini.surround"; path = mini-nvim; }
+            # LazyVim
+            LazyVim
+            bufferline-nvim
+            cmp-buffer
+            cmp-nvim-lsp
+            cmp-path
+            cmp_luasnip
+            conform-nvim
+            dashboard-nvim
+            dressing-nvim
+            flash-nvim
+            friendly-snippets
+            gitsigns-nvim
+            indent-blankline-nvim
+            lualine-nvim
+            neo-tree-nvim
+            neoconf-nvim
+            neodev-nvim
+            noice-nvim
+            nui-nvim
+            nvim-cmp
+            nvim-lint
+            nvim-lspconfig
+            nvim-notify
+            nvim-spectre
+            nvim-treesitter
+            nvim-treesitter-context
+            nvim-treesitter-textobjects
+            nvim-ts-autotag
+            nvim-ts-context-commentstring
+            nvim-web-devicons
+            persistence-nvim
+            plenary-nvim
+            telescope-fzf-native-nvim
+            telescope-nvim
+            todo-comments-nvim
+            tokyonight-nvim
+            trouble-nvim
+            vim-illuminate
+            vim-startuptime
+            which-key-nvim
+            { name = "LuaSnip"; path = luasnip; }
+            { name = "catppuccin"; path = catppuccin-nvim; }
+            { name = "mini.ai"; path = mini-nvim; }
+            { name = "mini.bufremove"; path = mini-nvim; }
+            { name = "mini.comment"; path = mini-nvim; }
+            { name = "mini.indentscope"; path = mini-nvim; }
+            { name = "mini.pairs"; path = mini-nvim; }
+            { name = "mini.surround"; path = mini-nvim; }
 
-          nvim-dap
-          nvim-dap-ui
-          nvim-dap-python
-          nvim-dap-virtual-text
-          yanky-nvim
-          sqlite-lua # dependency for yanky-nvim
-          edgy-nvim
-          tmux-nvim
-          vim-just
-          harpoon
-
+            nvim-dap
+            nvim-dap-ui
+            nvim-nio
+            nvim-dap-python
+            nvim-dap-virtual-text
+            yanky-nvim
+            sqlite-lua # dependency for yanky-nvim
+            edgy-nvim
+            tmux-nvim
+            vim-just
+            harpoon
         ];
         mkEntryFromDrv = drv:
           if lib.isDerivation drv then

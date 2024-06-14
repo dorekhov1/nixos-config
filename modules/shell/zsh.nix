@@ -16,17 +16,20 @@
         initExtra = ''
           proxy_http="http://127.0.0.1:2334"
           proxy_socks="socks5://127.0.0.1:2334"
+          no_proxy_addr="*.local.choice.shopping,127.0.0.1,localhost,.local.choice.shopping"
 
           set_proxy() {
             export http_proxy="$proxy_http"
             export https_proxy="$proxy_http"
             export ALL_PROXY="$proxy_socks"
+            export no_proxy="$no_proxy_addr"
           }
 
           unset_proxy() {
             unset http_proxy
             unset https_proxy
             unset ALL_PROXY
+            unset no_proxy
           }
 
           toggle_proxy() {
@@ -45,6 +48,7 @@
               echo "HTTP_PROXY: $http_proxy"
               echo "HTTPS_PROXY: $https_proxy"
               echo "ALL_PROXY: $ALL_PROXY"
+              echo "NO_PROXY: $no_proxy"
             else
               echo "Proxy is currently disabled."
             fi

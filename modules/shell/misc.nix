@@ -25,10 +25,13 @@
       just
 
       xsel
-      # awscli2
       devenv
+      openssl
+      dig
+      mkcert
+
     ];
-  
+
     programs.zsh.shellAliases = {
       cd = "z";
       ls = "eza --icons -l -T -L=1";

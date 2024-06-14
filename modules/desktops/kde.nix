@@ -27,6 +27,12 @@ with lib;
     };
 
     services = {
+      libinput.enable = true;
+      displayManager = {
+        sddm.enable = true;                       # Display Manager
+        defaultSession = "plasmawayland";
+      };
+
       xserver = {
         enable = true;
 
@@ -36,14 +42,9 @@ with lib;
           options = "grp:win_space_toggle";
         };
 
-        libinput.enable = true;
         modules = [ pkgs.xf86_input_wacom ];
         wacom.enable = true;
 
-        displayManager = {
-          sddm.enable = true;                       # Display Manager
-          defaultSession = "plasmawayland";
-        };
         desktopManager.plasma5 = {
           enable = true;                            # Desktop Environment
         };

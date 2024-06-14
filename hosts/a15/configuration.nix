@@ -28,6 +28,50 @@
   networking.hostName = "a15";
   networking.networkmanager.enable = true;
 
+  #choice development
+  networking.extraHosts = "127.0.0.1 api.local.choice.shopping
+127.0.0.1 weaviate.local.choice.shopping
+127.0.0.1 adminer.local.choice.shopping
+127.0.0.1 widget.local.choice.shopping
+127.0.0.1 rabbitmq.local.choice.shopping
+127.0.0.1 llm.local.choice.shopping";
+
+  security.pki.certificateFiles = [
+    # ../../certs/choice.shopping.crt
+    # /etc/ssl/certs/nginx-selfsigned.crt
+  ];
+
+  security.pki.certificates = [
+  ''
+-----BEGIN CERTIFICATE-----
+MIIEcTCCAtmgAwIBAgIQeG9xWayyJCsT6icfYpAMMzANBgkqhkiG9w0BAQsFADBR
+MR4wHAYDVQQKExVta2NlcnQgZGV2ZWxvcG1lbnQgQ0ExEzARBgNVBAsMCmRhbmlp
+bEBhMTUxGjAYBgNVBAMMEW1rY2VydCBkYW5paWxAYTE1MB4XDTI0MDUyNDA4NDA0
+N1oXDTM0MDUyNDA4NDA0N1owUTEeMBwGA1UEChMVbWtjZXJ0IGRldmVsb3BtZW50
+IENBMRMwEQYDVQQLDApkYW5paWxAYTE1MRowGAYDVQQDDBFta2NlcnQgZGFuaWls
+QGExNTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBANO2gJ7QwLiIFPKW
+Z5mQlSzTnLqNRx0KtMg2ztHF3IkuPQdLG+TWtTtTw59yyOXf93HMx3zhXxWM9VDX
+kKz9vEzVLJMo7aspbw6j6Wwm6/aqnZ2feg5dRnn0A605cbdow+Ok93xeIbjsZC7I
+F7ESAF+feQigsH7c3Hwu/phnLb0cDmMCSLiS84sahQJ0gGm0QR0YVsuTtOIuHE9p
+YNGUpTurOAgngB68buMNsrvEhTT/wAyBsSucIn1/wztHKBwYFIn9Y7ElJA4U4KU7
+QUeIdSy96Ov1LHEdFk9dr48htoJZwlaZiuv9RmZ6PsdMfW5XryatwoRA70a+iqzi
+o+6pfmPc6OGl6dwy/6srfY0BluU0+t9q4/cOjNuv1T2N43kWiwl5eXwiqHzj82OK
+oWcf6Q8BwCSCAucV1zs+TtxhEndzAmQgNjIaAGipOhvNWaS3cuo8+OjLjA5SMxwY
+MbEVQ+OAVvIQ+OfwQ5RiJ+Sf8a8fd11bfgrBoYCsFufQWlmUjwIDAQABo0UwQzAO
+BgNVHQ8BAf8EBAMCAgQwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNVHQ4EFgQU55M+
+GGl8Xti/RCg5hCU9CjPvLzQwDQYJKoZIhvcNAQELBQADggGBAJzNtN137XqfTP5H
+toX51fL7ZK8FKmR2Cj1g2KaaSe7R2LicWJK2GjerQ9TapNoxPFvne0hwBNhs/Blb
+Mf7l6uysvBkxwiojHMoogOKWjGEdDvm9wn5Kd0bFsAUgJk6TLdzJWwE1+7J/KT+b
+RbrnRuvkMAjBKij3K8RyQQ7dlMkgUjPHp4IXzygBb3O/tvy3eFjXEXDrvZeOZx+E
+UuSZ888IepJck3ZhOnBSYC+OPzaJv2PS3ROkuzltzTZoa4T6RsZt9EzE3JDkUUcI
+0Kh19n1hge16o1Qx5u4ytpHbWjevuV/pIdNKFvPiWs653yTU9VMTrObM5BkwD9ZA
+apDBp+RHveKkedHUnYgbqotsFq6qb/0Pr2dtdMBQ/5jxEGO0fLMLL/QhGrDqy6j1
+PDDf+oSicBfod4ZoF+XDylE3w+2nWa7oZhGYUfMtsdx3vayG4btWNKCke28n2tFy
+tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
+-----END CERTIFICATE-----
+  ''
+  ];
+
   users.users.${config.user} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
@@ -95,7 +139,7 @@
       # Video/Audio
       alsa-utils        # Audio Control
       feh               # Image Viewer
-      image-roll        # Image Viewer
+      # image-roll        # Image Viewer
       linux-firmware    # Proprietary Hardware Blob
       mpv               # Media Player
       pavucontrol       # Audio Control
@@ -135,16 +179,24 @@
 
       appimage-run
 
+      postman
+      ngrok
+
       # Other Packages Found @
       # - ./<host>/default.nix
       # - ../modules
+      gparted
+      bitwarden-desktop
+      bitwarden-cli
+
+      wireshark
     ];
   };
 
   hardware.pulseaudio.enable = false;
   services = {
+    displayManager.sddm.enable = true;
     xserver.enable = true;
-    xserver.displayManager.sddm.enable = true;
     xserver.desktopManager.plasma5.enable = true;
     printing = {
       enable = true;
