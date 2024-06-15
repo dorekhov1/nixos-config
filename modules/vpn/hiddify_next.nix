@@ -4,11 +4,11 @@ with pkgs;
 appimageTools.wrapType2 rec {
   name = "hiddify-next";
   pname = "hiddify-next";
-  version = "v1.1.1";
+  version = "v1.4.0";
 
   src = fetchurl {
     url = "https://github.com/hiddify/hiddify-next/releases/download/${version}/Hiddify-Linux-x64.AppImage";
-    hash = "sha256-T4BWxhJ7q13KE1rvvFsnXhs2XVEmNkFTJbJ4e8PCg+0=";
+    hash = "sha256-EY89VbK/alSeluf5PWbsufaPrN701Jy8LOuFbGnxEjs=";
   };
   extraPkgs = pkgs:
     with pkgs; [
