@@ -76,7 +76,7 @@
     ## possible. Only use a set of barebones applications here.
     environment.systemPackages = with pkgs; [ git vim wget curl ];
     environment.variables = {
-      EDITOR = "vim";
+      EDITOR = "nvim";
     };
 
     ## Home manager settings
