@@ -5,6 +5,7 @@
     ../modules/git.nix
     ../modules/terminal/wezterm.nix
     ../modules/shell
+    ../modules/llm
     ../modules/neovim
     ../modules/vpn
   ];

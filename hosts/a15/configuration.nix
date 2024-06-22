@@ -219,4 +219,5 @@ tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
     };
   };
   programs.ssh.startAgent = true;
+  programs.mosh.enable = true;
 }

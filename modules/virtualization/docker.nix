@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  virtualisation = {
-    docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    enableNvidia = true;
   };
 
   users.groups.docker.members = [ "${config.user}" ];
