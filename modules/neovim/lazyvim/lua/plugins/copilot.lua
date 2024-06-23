@@ -5,6 +5,10 @@ return {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     build = ":Copilot auth",
+    config = function()
+      vim.g.copilot_proxy = "http://127.0.0.1:11434"
+      require("copilot").setup({})
+    end,
     opts = {
       suggestion = { enabled = false },
       panel = { enabled = false },
@@ -17,9 +21,6 @@ return {
           advanced = {
             listCount = 10, -- #completions for panel
             inlineSuggestCount = 3, -- #completions for getCompletions
-            debug = {
-              overrideProxyUrl = "http://75.119.206.82:32524:32524",
-            },
           },
         },
       },
