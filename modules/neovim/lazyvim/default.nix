@@ -90,6 +90,7 @@
             tmux-nvim
             vim-just
             harpoon
+            codeium-nvim
         ];
         mkEntryFromDrv = drv:
           if lib.isDerivation drv then

@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }:
+{ config, ... }:
 
 {
 
@@ -7,9 +7,6 @@
     imports = [ 
       ./packages.nix
       ./lazyvim
-    ];
-
-    home.packages = with pkgs; [
     ];
 
   };
