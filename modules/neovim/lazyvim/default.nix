@@ -91,6 +91,8 @@
             vim-just
             harpoon
             codeium-nvim
+
+            obsidian-nvim
         ];
         mkEntryFromDrv = drv:
           if lib.isDerivation drv then

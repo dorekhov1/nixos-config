@@ -3,3 +3,11 @@ rebuild:
 
 update:
   nix flake update
+
+list:
+  nix-env --list-generations
+  nixos-rebuild list-generations
+
+clean:
+  nix-collect-garbage
+

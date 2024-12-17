@@ -30,6 +30,7 @@
       dig
       mkcert
 
+      hollywood
     ];
 
     programs.zsh.shellAliases = {

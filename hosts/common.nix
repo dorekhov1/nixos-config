@@ -3,6 +3,7 @@
 {
   imports = [
     ../modules/git.nix
+    ../modules/steam.nix
     ../modules/terminal/wezterm.nix
     ../modules/shell
     ../modules/llm

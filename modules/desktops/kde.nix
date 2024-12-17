@@ -30,7 +30,6 @@ with lib;
       libinput.enable = true;
       displayManager = {
         sddm.enable = true;                       # Display Manager
-        defaultSession = "plasmawayland";
       };
 
       xserver = {

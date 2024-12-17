@@ -17,4 +17,5 @@ nixpkgs.lib.nixosSystem {
     }
     ./configuration.nix
   ];
+
 }

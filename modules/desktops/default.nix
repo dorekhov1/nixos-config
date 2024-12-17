@@ -1,3 +1,4 @@
 [
   ./kde.nix
+  # ./hyprland.nix
 ]

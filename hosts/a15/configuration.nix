@@ -34,7 +34,9 @@
 127.0.0.1 adminer.local.choice.shopping
 127.0.0.1 widget.local.choice.shopping
 127.0.0.1 rabbitmq.local.choice.shopping
-127.0.0.1 llm.local.choice.shopping";
+127.0.0.1 llm.local.choice.shopping
+127.0.0.1 local.lovislot.ru";
+
 
   security.pki.certificateFiles = [
     # ../../certs/choice.shopping.crt
@@ -153,7 +155,7 @@ tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
       brave             # Browser
       firefox           # Browser
       google-chrome     # Browser
-      remmina           # XRDP & VNC Client
+      # remmina           # XRDP & VNC Client
 
       # File Management
       gnome.file-roller # Archive Manager
@@ -165,10 +167,14 @@ tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
       libreoffice       # Office
       zip               # Zip
 
-      discord
+      # discord
       telegram-desktop
       brave
       zoom-us
+      xdg-desktop-portal
+      xdg-desktop-portal-kde
+
+      # hiddify-app
 
       # Screenshot tools for Wayland
       grim
@@ -177,11 +183,6 @@ tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
       wl-clipboard
       wf-recorder
 
-      appimage-run
-
-      postman
-      ngrok
-
       # Other Packages Found @
       # - ./<host>/default.nix
       # - ../modules
@@ -189,15 +190,25 @@ tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
       bitwarden-desktop
       bitwarden-cli
 
+      deluge
+
       wireshark
+      postman
+      ngrok
+
+      obsidian
+
+      input-remapper
+      xclicker
     ];
   };
 
   hardware.pulseaudio.enable = false;
   services = {
-    displayManager.sddm.enable = true;
+    displayManager.sddm = {
+	enable = true;
+    };
     xserver.enable = true;
-    xserver.desktopManager.plasma5.enable = true;
     printing = {
       enable = true;
     };
