@@ -106,15 +106,11 @@ tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
     jetbrains-mono
     font-awesome                            # Icons
     corefonts                               # MS
-    (nerdfonts.override {                   # Nerdfont Icons override
-      fonts = [
-        "NerdFontsSymbolsOnly"
-
-        "FiraCode"
-        "JetBrainsMono"
-        "Iosevka"
-      ];
-    })
+    # Individual nerd-fonts packages
+    nerd-fonts.symbols-only                 # NerdFontsSymbolsOnly
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
   ];
 
 
@@ -158,7 +154,7 @@ tprMiKGrHzYmvXhLE28X5EDFHOk8ZUTL+Oc9MnMzgylobuakZg==
       # remmina           # XRDP & VNC Client
 
       # File Management
-      gnome.file-roller # Archive Manager
+      file-roller       # Archive Manager
       pcmanfm           # File Browser
       p7zip             # Zip Encryption
       rsync             # Syncer - $ rsync -r dir1/ dir2/
