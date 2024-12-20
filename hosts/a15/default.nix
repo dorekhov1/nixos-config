@@ -9,12 +9,18 @@ nixpkgs.lib.nixosSystem {
 
   modules = [
     vars
-    ./hardware-configuration.nix
-    ../common.nix
     home-manager.nixosModules.home-manager {
         nixpkgs.overlays = overlays;
         home-manager.extraSpecialArgs = { inherit inputs; };
     }
+
+    disko.nixosModules.default
+    impermanence.nixosModules.impermanence
+    ./disko-config.nix
+
+    ./hardware-configuration.nix
+
+    ../common.nix
     ./configuration.nix
   ];
 

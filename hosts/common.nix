@@ -86,14 +86,14 @@
     home-manager.useUserPackages = true;
 
     ## Setting the `stateVersion' for both home-manager and system.
-    home-manager.users.${config.user} = {
-      home = lib.mkMerge [
-        {
-          ## Setting state version for home-manager
-          stateVersion = "${config.stateVersion}";
-        }
-      ];
-    };
+    # home-manager.users.${config.user} = {
+    #   home = lib.mkMerge [
+    #     {
+    #       ## Setting state version for home-manager
+    #       stateVersion = "${config.stateVersion}";
+    #     }
+    #   ];
+    # };
 
     ## Setting state version for system
     system.stateVersion = "${config.stateVersion}";
