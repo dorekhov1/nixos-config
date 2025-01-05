@@ -9,6 +9,7 @@
     ../modules/llm
     ../modules/neovim
     ../modules/vpn
+    ../modules/firefox.nix
   ];
   
   ## Global options
@@ -85,6 +86,7 @@
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
 
+    home-manager.backupFileExtension = "hm-backup-" + pkgs.lib.readFile "${pkgs.runCommand "timestamp" {} "echo -n `date '+%Y%m%d%H%M%S'` > $out"}";
     ## Setting the `stateVersion' for both home-manager and system.
     # home-manager.users.${config.user} = {
     #   home = lib.mkMerge [

@@ -131,7 +131,7 @@
       # Apps
       appimage-run      # Runs AppImages on NixOS
       brave             # Browser
-      firefox           # Browser
+      # firefox           # Browser
       google-chrome     # Browser
       # remmina           # XRDP & VNC Client
 
@@ -181,7 +181,6 @@
     ];
   };
 
-  hardware.pulseaudio.enable = false;
   services = {
     displayManager.sddm = {
 	    enable = true;
@@ -199,6 +198,7 @@
       pulse.enable = true;
       jack.enable = true;
     };
+    pulseaudio.enable = false;
     openssh = {
       enable = true;
       allowSFTP = true;
