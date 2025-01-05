@@ -21,8 +21,8 @@
 
         settings = {
           # Enable hardware video acceleration
-          # "media.ffmpeg.vaapi.enabled" = true;
-          # "media.navigator.mediadatadecoder_vpx_enabled" = true;
+          "media.ffmpeg.vaapi.enabled" = true;
+          "media.navigator.mediadatadecoder_vpx_enabled" = true;
 
           # Privacy settings
           # "privacy.trackingprotection.enabled" = true;
@@ -31,18 +31,18 @@
           # "privacy.firstparty.isolate" = true;
 
           # Disable telemetry
-          # "browser.newtabpage.activity-stream.feeds.telemetry" = false;
-          # "browser.ping-centre.telemetry" = false;
-          # "browser.tabs.crashReporting.sendReport" = false;
-          # "devtools.onboarding.telemetry.logged" = false;
-          # "toolkit.telemetry.enabled" = false;
-          # "toolkit.telemetry.unified" = false;
+          "browser.newtabpage.activity-stream.feeds.telemetry" = false;
+          "browser.ping-centre.telemetry" = false;
+          "browser.tabs.crashReporting.sendReport" = false;
+          "devtools.onboarding.telemetry.logged" = false;
+          "toolkit.telemetry.enabled" = false;
+          "toolkit.telemetry.unified" = false;
 
           # Performance settings
-          # "browser.cache.disk.enable" = false;
-          # "browser.cache.memory.enable" = true;
-          # "browser.cache.memory.capacity" = 524288;
-          # "browser.sessionstore.interval" = 15000;
+          "browser.cache.disk.enable" = false;
+          "browser.cache.memory.enable" = true;
+          "browser.cache.memory.capacity" = 524288;
+          "browser.sessionstore.interval" = 15000;
 
           # UI customization
           # "browser.toolbars.bookmarks.visibility" = "always";
