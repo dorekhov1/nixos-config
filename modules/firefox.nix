@@ -24,12 +24,6 @@
           "media.ffmpeg.vaapi.enabled" = true;
           "media.navigator.mediadatadecoder_vpx_enabled" = true;
 
-          # Privacy settings
-          # "privacy.trackingprotection.enabled" = true;
-          # "privacy.donottrackheader.enabled" = true;
-          # "privacy.resistFingerprinting" = true;
-          # "privacy.firstparty.isolate" = true;
-
           # Disable telemetry
           "browser.newtabpage.activity-stream.feeds.telemetry" = false;
           "browser.ping-centre.telemetry" = false;
@@ -45,30 +39,60 @@
           "browser.sessionstore.interval" = 15000;
 
           # UI customization
-          # "browser.toolbars.bookmarks.visibility" = "always";
-          # "browser.theme.content-theme" = 0;
-          # "browser.theme.toolbar-theme" = 0;
-          
-          # Downloads
-          # "browser.download.dir" = "/home/yourusername/Downloads";
-          # "browser.download.folderList" = 2;
+          "sidebar.verticalTabs" = true;
 
-          # Other preferences
-          # "browser.startup.homepage" = "https://start.duckduckgo.com";
-          # "browser.search.defaultenginename" = "DuckDuckGo";
-          # "browser.search.isUS" = false;
-          # "general.useragent.locale" = "en-US";
+          # Disable password saving prompts
+          "signon.rememberSignons" = false;
+          "signon.autofillForms" = false;
+
+          # Disable translation prompts
+          "browser.translation.ui.show" = false;
+          "browser.translation.detectLanguage" = false;
+
+          # Enable dark theme
+          "browser.theme.content-theme" = 0;
+          "browser.theme.toolbar-theme" = 0;
+          "browser.in-content.dark-mode" = true;
+
+          # Performance improvements
+          # Increase process count for better parallel processing
+          "dom.ipc.processCount" = 8;  # Default is 8, increase if you have more CPU cores
+
+          # Enable HTTP/3 for faster connections
+          "network.http.http3.enabled" = true;
+
+          # Reduce animation effects
+          "ui.prefersReducedMotion" = 1;
+
+          # Enable hardware acceleration
+          "gfx.webrender.all" = true;
+          "layers.acceleration.force-enabled" = true;
+
+          # Memory management
+          "browser.tabs.unloadOnLowMemory" = true;
+
+          # Increase script timeout for complex web apps
+          "dom.max_script_run_time" = 20;  # Default is 10 seconds
+
+          # Enable back-forward cache for faster navigation
+          "browser.cache.memory.max_entry_size" = 51200;
+
+          # Reduce resource usage of background tabs
+          "browser.tabs.loadInBackground" = false;
+          "browser.sessionstore.interval.idle" = 3600000; # Save session every hour when idle
+
+          # Enable process per site isolation for better stability
+          "fission.autostart" = true;
+
+          # Optimize JavaScript performance
+          "javascript.options.mem.gc_incremental_slice_ms" = 5;
+          "javascript.options.mem.high_water_mark" = 128;
+
+          # Additional SSE-specific optimizations
+          "network.http.connection-timeout" = 300;  # Longer connection timeout
+          "network.http.response.timeout" = 300;    # Longer response timeout
+          "network.http.max-persistent-connections-per-server" = 10;  # More concurrent connections
         };
-
-        # # Custom user Chrome CSS
-        # userChrome = ''
-        #   /* Add your custom CSS here */
-        # '';
-        #
-        # # Custom user Content CSS
-        # userContent = ''
-        #   /* Add your custom CSS here */
-        # '';
 
         # Search engines
         search = {
@@ -127,6 +151,13 @@
             ];
           }
         ];
+
+        userChrome = ''
+          #Bitwarden_toolbar-button {
+            -moz-box-ordinal-group: 1 !important;
+          }
+        '';
+
       };
     };
   };

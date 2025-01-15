@@ -48,6 +48,11 @@ with lib;
           enable = true;                            # Desktop Environment
         };
       };
+      pipewire = {
+        enable = true;
+        alsa.enable = true;
+        pulse.enable = true;
+      };
     };
 
     environment = {
