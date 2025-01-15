@@ -106,6 +106,9 @@
           defaults = {
             lazy = true,
           },
+          rocks = {
+            enabled = false,
+          },
           dev = {
             -- reuse files from pkgs.vimPlugins.*
             path = "${lazyPath}",
