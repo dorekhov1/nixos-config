@@ -69,6 +69,11 @@
       jsonnet-language-server
       hadolint # Dockerfile linter
 
+      #-- AI Coding Assistance
+      curl # Required by avante.nvim
+      gnutar # Required by avante.nvim
+      cargo # Required by avante.nvim if building from source
+
       #-- Others
       taplo # TOML language server / formatter / validator
       nodePackages.yaml-language-server
