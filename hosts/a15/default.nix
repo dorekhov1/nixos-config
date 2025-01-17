@@ -20,6 +20,8 @@ nixpkgs.lib.nixosSystem {
 
     ./hardware-configuration.nix
 
+    sops-nix.nixosModules.sops
+
     ../common.nix
     ./configuration.nix
   ];

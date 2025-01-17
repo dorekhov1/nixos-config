@@ -10,6 +10,7 @@
     ../modules/neovim
     ../modules/vpn
     ../modules/firefox.nix
+    ../modules/sops
   ];
   
   ## Global options
@@ -77,7 +78,7 @@
     ##
     ## Packages should be managed with home-manager whereever
     ## possible. Only use a set of barebones applications here.
-    environment.systemPackages = with pkgs; [ git vim wget curl ];
+    environment.systemPackages = with pkgs; [ git vim wget curl age sops ];
     environment.variables = {
       EDITOR = "nvim";
     };

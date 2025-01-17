@@ -35,11 +35,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nix-secrets = {
-    #   url = "git+ssh://git@gitlab.com/emergentmind/nix-secrets.git?ref=main&shallow=1";
-    #   flake = false;
-    # };
-
   };
 
   outputs = inputs @ {
@@ -48,6 +43,7 @@
     nixos-hardware,
     home-manager,
     nur,
+    sops-nix,
     ...
   }:
   let

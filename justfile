@@ -71,6 +71,9 @@ install:
         echo "Aborted."
     fi
 
+edit-secrets:
+  sops secrets/secrets.yaml
+
 help:
     @just --list
 
