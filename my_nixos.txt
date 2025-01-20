@@ -1,0 +1,4604 @@
+### File: ./combine_files.sh ###
+
+#!/bin/bash
+
+# Output file path
+output_file="my_nixos.txt"
+
+# Remove the output file if it already exists
+rm -f "$output_file"
+
+# Find all files in the current directory and subdirectories
+# Excluding hidden files/directories and the output file itself
+find . -type f \
+  ! -name ".*" \
+  ! -name "$output_file" \
+  ! -path "*/\.*" \
+  ! -path "*/node_modules/*" \
+  ! -path "*/__pycache__/*" \
+  ! -path "*/venv/*" \
+  ! -path "*/build/*" \
+  ! -path "*/dist/*" |
+  sort |
+  while read -r file; do
+
+    # Skip only known binary file extensions
+    if [[ "$file" =~ \.(png|jpg|jpeg|gif|pdf|zip|tar|gz|bin|exe|o|so|dylib|dll|class)$ ]]; then
+      echo "Skipping binary file: $file"
+      continue
+    fi
+
+    # Common text files without extensions that we want to include
+    if [[ "$file" =~ /(justfile|Dockerfile|Makefile|README)$ ]] ||
+      [[ "$file" =~ \.(nix|lua|md|txt|toml|yaml|yml|json|js|py|sh|bash|zsh|fish|conf|ini|cfg)$ ]]; then
+      # Add a header with the relative file path
+      echo "### File: $file ###" >>"$output_file"
+      echo "" >>"$output_file"
+
+      # Add the file contents
+      cat "$file" >>"$output_file"
+
+      # Add two blank lines between files for better readability
+      echo -e "\n\n" >>"$output_file"
+      continue
+    fi
+
+    # For all other files, try to detect if they're text
+    if LC_ALL=C grep -Iq . "$file" 2>/dev/null; then
+      echo "### File: $file ###" >>"$output_file"
+      echo "" >>"$output_file"
+      cat "$file" >>"$output_file"
+      echo -e "\n\n" >>"$output_file"
+    else
+      echo "Skipping unreadable or binary file: $file"
+    fi
+  done
+
+# Check if any files were found and combined
+if [ -s "$output_file" ]; then
+  echo "Successfully combined files into $output_file"
+  echo "Total size: $(du -h "$output_file" | cut -f1)"
+else
+  echo "No files found to combine"
+  rm -f "$output_file"
+fi
+
+
+
+### File: ./flake.lock ###
+
+{
+  "nodes": {
+    "aquamarine": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland",
+          "hyprutils"
+        ],
+        "hyprwayland-scanner": [
+          "hyprland",
+          "hyprwayland-scanner"
+        ],
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736102453,
+        "narHash": "sha256-5qb4kb7Xbt8jJFL/oDqOor9Z2+E+A+ql3PiyDvsfWZ0=",
+        "owner": "hyprwm",
+        "repo": "aquamarine",
+        "rev": "4846091641f3be0ad7542086d52769bb7932bde6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "aquamarine",
+        "type": "github"
+      }
+    },
+    "aquamarine_2": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprutils"
+        ],
+        "hyprwayland-scanner": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprwayland-scanner"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734400729,
+        "narHash": "sha256-Bf+oya0BuleVXYGIWsb0eWnrK6s0aiesOsI7Mpj1pMU=",
+        "owner": "hyprwm",
+        "repo": "aquamarine",
+        "rev": "a132fa41be7ebe797ad758e84d9df068151a723b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "aquamarine",
+        "type": "github"
+      }
+    },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736711425,
+        "narHash": "sha256-8hKhPQuMtXfJi+4lPvw3FBk/zSJVHeb726Zo0uF1PP8=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "f720e64ec37fa16ebba6354eadf310f81555cc07",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "nur",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733312601,
+        "narHash": "sha256-4pDvzqnegAfRkPwO3wmwBhVi/Sye1mzps0zHWYnP88c=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "205b12d8b7cd4802fbcb8e8ef6a0f1408781a4f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland",
+          "pre-commit-hooks",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_2": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "pre-commit-hooks",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736785676,
+        "narHash": "sha256-TY0jUwR3EW0fnS0X5wXMAVy6h4Z7Y6a3m+Yq++C9AyE=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "fc52a210b60f2f52c74eac41a8647c1573d2071d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "hyprcursor": {
+      "inputs": {
+        "hyprlang": [
+          "hyprland",
+          "hyprlang"
+        ],
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734906540,
+        "narHash": "sha256-vQ/L9hZFezC0LquLo4TWXkyniWtYBlFHAKIsDc7PYJE=",
+        "owner": "hyprwm",
+        "repo": "hyprcursor",
+        "rev": "69270ba8f057d55b0e6c2dca0e165d652856e613",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprcursor",
+        "type": "github"
+      }
+    },
+    "hyprcursor_2": {
+      "inputs": {
+        "hyprlang": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprlang"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734364709,
+        "narHash": "sha256-+2bZJL2u5hva7rSp65OfKJBK+k03T6GB/NCvpoS1OOo=",
+        "owner": "hyprwm",
+        "repo": "hyprcursor",
+        "rev": "f388aacd22be4a6e4d634fbaf6f75eb0713d239a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprcursor",
+        "type": "github"
+      }
+    },
+    "hyprgraphics": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland",
+          "hyprutils"
+        ],
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736115290,
+        "narHash": "sha256-Jcn6yAzfUMcxy3tN/iZRbi/QgrYm7XLyVRl9g/nbUl4=",
+        "owner": "hyprwm",
+        "repo": "hyprgraphics",
+        "rev": "52202272d89da32a9f866c0d10305a5e3d954c50",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprgraphics",
+        "type": "github"
+      }
+    },
+    "hyprgraphics_2": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprutils"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733684019,
+        "narHash": "sha256-2kYREgmSmbLsmDpLEq96hxVAU3qz8aCvVhF65yCFZHY=",
+        "owner": "hyprwm",
+        "repo": "hyprgraphics",
+        "rev": "fb2c0268645a77403af3b8a4ce8fa7ba5917f15d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprgraphics",
+        "type": "github"
+      }
+    },
+    "hyprland": {
+      "inputs": {
+        "aquamarine": "aquamarine",
+        "hyprcursor": "hyprcursor",
+        "hyprgraphics": "hyprgraphics",
+        "hyprland-protocols": "hyprland-protocols",
+        "hyprland-qtutils": "hyprland-qtutils",
+        "hyprlang": "hyprlang",
+        "hyprutils": "hyprutils",
+        "hyprwayland-scanner": "hyprwayland-scanner",
+        "nixpkgs": "nixpkgs",
+        "pre-commit-hooks": "pre-commit-hooks",
+        "systems": "systems",
+        "xdph": "xdph"
+      },
+      "locked": {
+        "lastModified": 1736873552,
+        "narHash": "sha256-VByeYPOu3I0a5r5Nn45loSaEV8M9fmZrTByUdu9sjfY=",
+        "owner": "hyprwm",
+        "repo": "Hyprland",
+        "rev": "25add26881d7b98d2b80eb7a95d3aee0449b72b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "Hyprland",
+        "type": "github"
+      }
+    },
+    "hyprland-plugins": {
+      "inputs": {
+        "hyprland": "hyprland_2",
+        "nixpkgs": [
+          "hyprland"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736372092,
+        "narHash": "sha256-+uxeBRTrDZsH6HtVtlMuJLLPJw3usPpG2/pm/L30c3E=",
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "rev": "b4c0fa3ebc6ccd1589dcd17904652223088efede",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "type": "github"
+      }
+    },
+    "hyprland-protocols": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735774328,
+        "narHash": "sha256-vIRwLS9w+N99EU1aJ+XNOU6mJTxrUBa31i1r82l0V7s=",
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
+        "rev": "e3b6af97ddcfaafbda8e2828c719a5af84f662cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
+        "type": "github"
+      }
+    },
+    "hyprland-protocols_2": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1728345020,
+        "narHash": "sha256-xGbkc7U/Roe0/Cv3iKlzijIaFBNguasI31ynL2IlEoM=",
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
+        "rev": "a7c183800e74f337753de186522b9017a07a8cee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
+        "type": "github"
+      }
+    },
+    "hyprland-qtutils": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland",
+          "hyprutils"
+        ],
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736114838,
+        "narHash": "sha256-FxbuGQExtN37ToWYnGmO6weOYN6WPHN/RAqbr7gNPek=",
+        "owner": "hyprwm",
+        "repo": "hyprland-qtutils",
+        "rev": "6997fe382dcf396704227d2b98ffdd5066da6959",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-qtutils",
+        "type": "github"
+      }
+    },
+    "hyprland-qtutils_2": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprutils"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733940128,
+        "narHash": "sha256-hmfXWj2GA9cj1QUkPFYtAAeohhs615zL4E3APy3FnvQ=",
+        "owner": "hyprwm",
+        "repo": "hyprland-qtutils",
+        "rev": "3833097e50473a152dd614d4b468886840b4ea78",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-qtutils",
+        "type": "github"
+      }
+    },
+    "hyprland_2": {
+      "inputs": {
+        "aquamarine": "aquamarine_2",
+        "hyprcursor": "hyprcursor_2",
+        "hyprgraphics": "hyprgraphics_2",
+        "hyprland-protocols": "hyprland-protocols_2",
+        "hyprland-qtutils": "hyprland-qtutils_2",
+        "hyprlang": "hyprlang_2",
+        "hyprutils": "hyprutils_2",
+        "hyprwayland-scanner": "hyprwayland-scanner_2",
+        "nixpkgs": "nixpkgs_2",
+        "pre-commit-hooks": "pre-commit-hooks_2",
+        "systems": "systems_2",
+        "xdph": "xdph_2"
+      },
+      "locked": {
+        "lastModified": 1734808910,
+        "narHash": "sha256-p3b1pgacsB7zVGa/VFsMu7U8FN4Jy0okZSI8TribLTg=",
+        "owner": "hyprwm",
+        "repo": "Hyprland",
+        "rev": "57921d7dbd1b87a9474f609cb9cd30e6174027cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "Hyprland",
+        "type": "github"
+      }
+    },
+    "hyprlang": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland",
+          "hyprutils"
+        ],
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735393019,
+        "narHash": "sha256-NPpqA8rtmDLsEmZOmz+qR67zsB6Y503Jnv+nSFLKJZ8=",
+        "owner": "hyprwm",
+        "repo": "hyprlang",
+        "rev": "55608efdaa387af7bfdc0eddb404c409958efa43",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprlang",
+        "type": "github"
+      }
+    },
+    "hyprlang_2": {
+      "inputs": {
+        "hyprutils": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprutils"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734364628,
+        "narHash": "sha256-ii8fzJfI953n/EmIxVvq64ZAwhvwuuPHWfGd61/mJG8=",
+        "owner": "hyprwm",
+        "repo": "hyprlang",
+        "rev": "16e59c1eb13d9fb6de066f54e7555eb5e8a4aba5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprlang",
+        "type": "github"
+      }
+    },
+    "hyprutils": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736164519,
+        "narHash": "sha256-1LimBKvDpBbeX+qW7T240WEyw+DBVpDotZB4JYm8Aps=",
+        "owner": "hyprwm",
+        "repo": "hyprutils",
+        "rev": "3c895da64b0eb19870142196fa48c07090b441c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprutils",
+        "type": "github"
+      }
+    },
+    "hyprutils_2": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734384247,
+        "narHash": "sha256-bl3YyJb2CgaeVKYq/l8j27vKdbkTpDNFDsnCl0dnNlY=",
+        "owner": "hyprwm",
+        "repo": "hyprutils",
+        "rev": "e6cf45cd1845368702e03b8912f4cc44ebba3322",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprutils",
+        "type": "github"
+      }
+    },
+    "hyprwayland-scanner": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735493474,
+        "narHash": "sha256-fktzv4NaqKm94VAkAoVqO/nqQlw+X0/tJJNAeCSfzK4=",
+        "owner": "hyprwm",
+        "repo": "hyprwayland-scanner",
+        "rev": "de913476b59ee88685fdc018e77b8f6637a2ae0b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprwayland-scanner",
+        "type": "github"
+      }
+    },
+    "hyprwayland-scanner_2": {
+      "inputs": {
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734384417,
+        "narHash": "sha256-noYeXcNQ15g1/gIJIYT2zdO66wzY5Z06PYz6BfKUZA8=",
+        "owner": "hyprwm",
+        "repo": "hyprwayland-scanner",
+        "rev": "90e87f7fcfcce4862826d60332cbc5e2f87e1f88",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprwayland-scanner",
+        "type": "github"
+      }
+    },
+    "impermanence": {
+      "locked": {
+        "lastModified": 1736688610,
+        "narHash": "sha256-1Zl9xahw399UiZSJ9Vxs1W4WRFjO1SsNdVZQD4nghz0=",
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "rev": "c64bed13b562fc3bb454b48773d4155023ac31b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1736441705,
+        "narHash": "sha256-OL7leZ6KBhcDF3nEKe4aZVfIm6xQpb1Kb+mxySIP93o=",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "rev": "8870dcaff63dfc6647fb10648b827e9d40b0a337",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1736012469,
+        "narHash": "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8f3e1f807051e32d8c95cd12b9b421623850a34d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1730741070,
+        "narHash": "sha256-edm8WG19kWozJ/GqyYx2VjW99EdhjKwbY3ZwdlPAAlo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d063c1dd113c91ab27959ba540c0d9753409edf3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1734119587,
+        "narHash": "sha256-AKU6qqskl0yf2+JdRdD0cfxX4b9x3KKV5RqA6wijmPM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3566ab7246670a43abd2ffa913cc62dad9cdf7d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1736798957,
+        "narHash": "sha256-qwpCtZhSsSNQtK4xYGzMiyEDhkNzOCz/Vfu4oL2ETsQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9abb87b552b7f55ac8916b6fc9e5cb486656a2f3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nur": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1736955116,
+        "narHash": "sha256-QUKE0bwM5H4NsEg7hgIEYywVEHYw0Ec548+G1iz+Ewg=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "a3881065b0733b67c1b193f807ae1f07af60ccac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
+    "pre-commit-hooks": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "gitignore": "gitignore",
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735882644,
+        "narHash": "sha256-3FZAG+pGt3OElQjesCAWeMkQ7C/nB1oTHLRQ8ceP110=",
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "rev": "a5a961387e75ae44cc20f0a57ae463da5e959656",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "type": "github"
+      }
+    },
+    "pre-commit-hooks_2": {
+      "inputs": {
+        "flake-compat": "flake-compat_2",
+        "gitignore": "gitignore_2",
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": "nixpkgs-stable"
+      },
+      "locked": {
+        "lastModified": 1734379367,
+        "narHash": "sha256-Keu8z5VgT5gnCF4pmB+g7XZFftHpfl4qOn7nqBcywdE=",
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "rev": "0bb4be58f21ff38fc3cdbd6c778eb67db97f0b99",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "disko": "disko",
+        "home-manager": "home-manager",
+        "hyprland": "hyprland",
+        "hyprland-plugins": "hyprland-plugins",
+        "impermanence": "impermanence",
+        "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs_3",
+        "nur": "nur",
+        "sops-nix": "sops-nix"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736808430,
+        "narHash": "sha256-wlgdf/n7bJMLBheqt1jmPoxJFrUP6FByKQFXuM9YvIk=",
+        "owner": "mic92",
+        "repo": "sops-nix",
+        "rev": "553c7cb22fed19fd60eb310423fdc93045c51ba8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mic92",
+        "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1689347949,
+        "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "rev": "31732fcf5e8fea42e59c2488ad31a0e651500f68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "systems_2": {
+      "locked": {
+        "lastModified": 1689347949,
+        "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "rev": "31732fcf5e8fea42e59c2488ad31a0e651500f68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nur",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733222881,
+        "narHash": "sha256-JIPcz1PrpXUCbaccEnrcUS8jjEb/1vJbZz5KkobyFdM=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "49717b5af6f80172275d47a418c9719a31a78b53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "xdph": {
+      "inputs": {
+        "hyprland-protocols": [
+          "hyprland",
+          "hyprland-protocols"
+        ],
+        "hyprlang": [
+          "hyprland",
+          "hyprlang"
+        ],
+        "hyprutils": [
+          "hyprland",
+          "hyprutils"
+        ],
+        "hyprwayland-scanner": [
+          "hyprland",
+          "hyprwayland-scanner"
+        ],
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734907020,
+        "narHash": "sha256-p6HxwpRKVl1KIiY5xrJdjcEeK3pbmc///UOyV6QER+w=",
+        "owner": "hyprwm",
+        "repo": "xdg-desktop-portal-hyprland",
+        "rev": "d7f18dda5e511749fa1511185db3536208fb1a63",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "xdph_2": {
+      "inputs": {
+        "hyprland-protocols": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprland-protocols"
+        ],
+        "hyprlang": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprlang"
+        ],
+        "hyprutils": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprutils"
+        ],
+        "hyprwayland-scanner": [
+          "hyprland-plugins",
+          "hyprland",
+          "hyprwayland-scanner"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734422917,
+        "narHash": "sha256-0y7DRaXslhfqVKV8a/talYTYAe2NHOQhMZG7KMNRCtc=",
+        "owner": "hyprwm",
+        "repo": "xdg-desktop-portal-hyprland",
+        "rev": "3e884d941ca819c1f2e50df8bdae0debded1ed87",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
+
+
+
+### File: ./flake.nix ###
+
+{
+
+  description = "NixOS system configuration";
+
+  inputs = {
+
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.nixpkgs.follows = "hyprland";
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence.url = "github:nix-community/impermanence";
+
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+  };
+
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nixos-hardware,
+    home-manager,
+    nur,
+    sops-nix,
+    ...
+  }:
+  let
+
+    vars = {
+      user = "daniil";
+      fullName = "Daniil Orekhov";
+      stateVersion = "23.11";
+    };
+
+    overlays = [
+      nur.overlays.default
+    ];
+
+    forAllSystems = nixpkgs.lib.genAttrs [
+      "x86_64-linux"
+    ];
+
+  in rec {
+
+    nixosConfigurations = {
+      a15 = import ./hosts/a15 {
+       	inherit inputs nixpkgs nixos-hardware overlays vars;
+      };
+    };
+
+    homeConfigurations = {
+      a15 = nixosConfigurations.a15.config.home-manager.users.${vars.user}.home;
+    };
+
+    templates = {
+      python = {
+        path = ./templates/python;
+        description = "Custom Python development environment";
+      };
+    };
+
+    devShells = forAllSystems
+      (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./shell.nix { inherit pkgs; }
+      );
+  };
+}
+
+
+
+### File: ./hosts/a15/configuration.nix ###
+
+{ config, lib, pkgs, inputs, overlays, ... }:
+
+{
+  imports = (
+    import ../../modules/desktops ++
+    import ../../modules/virtualization
+  );
+
+  boot = {
+    tmp = {
+      cleanOnBoot =  true;
+      tmpfsSize = "5GB";
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+    consoleLogLevel = 3;
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 2;
+      };
+      efi = {
+	      canTouchEfiVariables = true;
+      };
+      timeout = 5;
+    };
+
+    # impermanence setup - wiping root on boot
+    initrd.postDeviceCommands = lib.mkAfter ''
+      mkdir /btrfs_tmp
+      mount /dev/root_vg/root /btrfs_tmp
+      if [[ -e /btrfs_tmp/root ]]; then
+          mkdir -p /btrfs_tmp/old_roots
+          timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
+          mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
+      fi
+      
+      delete_subvolume_recursively() {
+          IFS=$'\n'
+          for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+              delete_subvolume_recursively "/btrfs_tmp/$i"
+          done
+          btrfs subvolume delete "$1"
+      }
+      
+      for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+          delete_subvolume_recursively "$i"
+      done
+      
+      btrfs subvolume create /btrfs_tmp/root
+      umount /btrfs_tmp
+    '';
+
+  };
+
+  networking.hostName = "a15";
+  networking.networkmanager.enable = true;
+
+  users.users.${config.user} = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
+    shell = pkgs.zsh;
+    hashedPasswordFile = config.sops.secrets.password.path;
+  };
+
+  time.timeZone = "Europe/Moscow";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "ru_RU.UTF-8";
+      LC_MONETARY = "ru_RU.UTF-8";
+    };
+  };
+
+  console = {
+    font = "Lat2-Terminus16";
+    useXkbConfig = true;
+  };
+
+  security = {
+    rtkit.enable = true;
+    sudo.wheelNeedsPassword = false;
+  };
+
+  fonts.packages = with pkgs; [                # Fonts
+    carlito                                 # NixOS
+    vegur                                   # NixOS
+    source-code-pro
+    jetbrains-mono
+    font-awesome                            # Icons
+    corefonts                               # MS
+    # Individual nerd-fonts packages
+    nerd-fonts.symbols-only                 # NerdFontsSymbolsOnly
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
+  ];
+
+
+  environment = {
+    systemPackages = with pkgs; [
+      # Terminal
+      wezterm           # Terminal Emulator
+      btop              # Resource Manager
+      coreutils         # GNU Utilities
+      git               # Version Control
+      killall           # Process Killer
+      lshw              # Hardware Config
+      nano              # Text Editor
+      vim               # Text Editor
+      nix-tree          # Browse Nix Store
+      pciutils          # Manage PCI
+      ranger            # File Manager
+      smartmontools     # Disk Health
+      tldr              # Helper
+      usbutils          # Manage USB
+      wget              # Retriever
+      xdg-utils         # Environment integration
+
+      # Video/Audio
+      alsa-utils        # Audio Control
+      feh               # Image Viewer
+      # image-roll        # Image Viewer
+      linux-firmware    # Proprietary Hardware Blob
+      mpv               # Media Player
+      pavucontrol       # Audio Control
+      pipewire          # Audio Server/Control
+      pulseaudio        # Audio Server/Control
+      qpwgraph          # Pipewire Graph Manager
+      vlc               # Media Player
+
+      # Apps
+      appimage-run      # Runs AppImages on NixOS
+      brave             # Browser
+      # firefox           # Browser
+      google-chrome     # Browser
+      # remmina           # XRDP & VNC Client
+
+      # File Management
+      file-roller       # Archive Manager
+      pcmanfm           # File Browser
+      p7zip             # Zip Encryption
+      rsync             # Syncer - $ rsync -r dir1/ dir2/
+      unzip             # Zip Files
+      unrar             # Rar Files
+      libreoffice       # Office
+      zip               # Zip
+
+      # discord
+      telegram-desktop
+      brave
+      zoom-us
+      xdg-desktop-portal
+      xdg-desktop-portal-kde
+
+      # hiddify-app
+
+      # Screenshot tools for Wayland
+      grim
+      slurp
+      swappy
+      wl-clipboard
+      wf-recorder
+
+      # Other Packages Found @
+      # - ./<host>/default.nix
+      # - ../modules
+      gparted
+      bitwarden-desktop
+      bitwarden-cli
+
+      deluge
+
+      wireshark
+      postman
+      ngrok
+
+      obsidian
+
+      input-remapper
+      xclicker
+    ];
+  };
+
+  services = {
+    displayManager.sddm = {
+	    enable = true;
+    };
+    xserver.enable = true;
+    printing = {
+      enable = true;
+    };
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+      jack.enable = true;
+    };
+    pulseaudio.enable = false;
+    openssh = {
+      enable = true;
+      allowSFTP = true;
+      extraConfig = ''
+        HostKeyAlgorithms +ssh-rsa
+      '';
+    };
+  };
+  programs.ssh.startAgent = true;
+  programs.mosh.enable = true;
+
+  # impermanence - persistence configuration
+  fileSystems = {
+    "/persist".neededForBoot = true;
+    "/persist/home".neededForBoot = true;
+    "/data".neededForBoot = false;  # Data partition can mount after boot
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /data 0755 ${config.user} users"
+  ];
+
+  environment.persistence."/persist/system" = {
+    hideMounts = true;
+    directories = [
+      "/etc/nixos"
+      "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
+      "/etc/NetworkManager/system-connections"
+    ];
+    files = [
+      "/etc/machine-id"
+    ];
+  };
+
+  programs.fuse.userAllowOther = true;
+  home-manager = {
+    extraSpecialArgs = {inherit inputs;};
+    users.${config.user} = import ./home.nix;
+  };
+
+}
+
+
+
+### File: ./hosts/a15/default.nix ###
+
+{ inputs, vars, overlays, ... }:
+
+with inputs;
+
+nixpkgs.lib.nixosSystem {
+
+  system = "x86_64-linux";
+  specialArgs = { inherit inputs; };
+
+  modules = [
+    vars
+    home-manager.nixosModules.home-manager {
+        nixpkgs.overlays = overlays;
+        home-manager.extraSpecialArgs = { inherit inputs; };
+    }
+
+    disko.nixosModules.default
+    impermanence.nixosModules.impermanence
+    ./disko-config.nix
+
+    ./hardware-configuration.nix
+
+    sops-nix.nixosModules.sops
+
+    ../common.nix
+    ./configuration.nix
+  ];
+
+}
+
+
+
+### File: ./hosts/a15/disko-config.nix ###
+
+{ config, ... }: 
+
+{
+  disko.devices = {
+    disk = {
+      system = {
+        type = "disk";
+        device = "/dev/disk/by-id/nvme-Micron_2400_MTFDKBA512QFM_22413CD7F126";
+        content = {
+          type = "gpt";
+          partitions = {
+            boot = {
+              name = "boot";
+              size = "1M";
+              type = "EF02";
+            };
+            esp = {
+              name = "ESP";
+              size = "512M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            };
+            swap = {
+              name = "swap";
+              size = "32G";
+              content = {
+                type = "swap";
+                resumeDevice = true;
+              };
+            };
+            root = {
+              name = "root";
+              size = "100%";
+              content = {
+                type = "lvm_pv";
+                vg = "root_vg";
+              };
+            };
+          };
+        };
+      };
+      data = {
+        type = "disk";
+        device = "/dev/disk/by-id/nvme-KXG50ZNV1T02_NVMe_TOSHIBA_1024GB_18AS1097TYAT";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "lvm_pv";
+                vg = "data_vg";
+              };
+            };
+          };
+        };
+      };
+    };
+
+    lvm_vg = {
+      root_vg = {
+        type = "lvm_vg";
+        lvs = {
+          root = {
+            size = "100%FREE";
+            content = {
+              type = "btrfs";
+              extraArgs = ["-f"];
+              subvolumes = {
+                "/root" = {
+                  mountpoint = "/";
+                };
+                "/persist" = {
+                  mountOptions = ["subvol=persist" "noatime"];
+                  mountpoint = "/persist";
+                };
+                "/nix" = {
+                  mountOptions = ["subvol=nix" "noatime"];
+                  mountpoint = "/nix";
+                };
+              };
+            };
+          };
+        };
+      };
+      data_vg = {
+        type = "lvm_vg";
+        lvs = {
+          home = {
+            size = "100G";
+            content = {
+              type = "btrfs";
+              extraArgs = ["-f"];
+              subvolumes = {
+                "/home" = {
+                  mountpoint = "/home";
+                  mountOptions = [
+                    "subvol=home"
+                    "uid=${toString config.users.users.${config.user}.uid}"
+                    "gid=${toString config.users.groups.users.gid}"
+                  ];
+                };
+                "/persist_home" = {
+                  mountpoint = "/persist/home";
+                  mountOptions = [
+                    "subvol=persist_home" 
+                    "noatime"
+                    "uid=${toString config.users.users.${config.user}.uid}"
+                    "gid=${toString config.users.groups.users.gid}"
+                  ];
+                };
+              };
+            };
+          };
+          userdata = {
+            size = "100%FREE";
+            content = {
+              type = "btrfs";
+              extraArgs = ["-f"];
+              subvolumes = {
+                "/data" = {
+                  mountpoint = "/data";
+                  mountOptions = [
+                    "subvol=data"
+                    "uid=${toString config.users.users.${config.user}.uid}"
+                    "gid=${toString config.users.groups.users.gid}"
+                  ];
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
+
+
+
+### File: ./hosts/a15/hardware-configuration.nix ###
+
+# Do not modify this file!  It was generated by ‘nixos-generate-config’
+# and may be overwritten by future invocations.  Please make changes
+# to /etc/nixos/configuration.nix instead.
+{ config, lib, pkgs, modulesPath, ... }:
+
+{
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = [ "ntfs" ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    prime = {
+      amdgpuBusId = "PCI:54:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+    };
+  };
+  services.power-profiles-daemon.enable = true;
+  boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+  hardware.nvidia-container-toolkit.enable = true;
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
+}
+
+
+
+### File: ./hosts/a15/home.nix ###
+
+
+{ pkgs, inputs, config, ... }:
+
+{ 
+  home.stateVersion = "23.11";
+  imports = [
+    inputs.impermanence.nixosModules.home-manager.impermanence
+  ];
+  home.persistence."/persist/home" = {
+    directories = [
+      "Projects"
+    ];
+    files = [
+    ];
+    allowOther = true;
+  };
+
+  home.file = {
+    "Games".source = config.lib.file.mkOutOfStoreSymlink "/data/Games";
+    "Work".source = config.lib.file.mkOutOfStoreSymlink "/data/Work";
+    "Downloads".source = config.lib.file.mkOutOfStoreSymlink "/data/Downloads";
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+
+    defaultApplications = {
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
+    };
+  };
+
+  sops = {
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    secrets.anthropic-api-key = {
+      path = "%r/anthropic-api-key";
+    };
+  };
+}
+
+
+
+### File: ./hosts/common.nix ###
+
+{ inputs, config, lib, pkgs, ... }:
+
+{
+  imports = [
+    ../modules/git.nix
+    ../modules/steam.nix
+    ../modules/terminal/wezterm.nix
+    ../modules/shell
+    ../modules/llm
+    ../modules/neovim
+    ../modules/vpn
+    ../modules/firefox.nix
+    ../modules/sops
+  ];
+  
+  ## Global options
+  ##
+  ## These can be used throughout the configuration. If a value
+  ## with the same name has been declared in `globals', its
+  ## value will be set as default for the respective option.
+  options = let
+    mkConst = const: (lib.mkOption { default = const; });
+  in {
+
+    user = lib.mkOption { # is defined in flake.nix
+      type = lib.types.str;
+      description = "Primary user of the system";
+    };
+
+    fullName = lib.mkOption { # is defined in flake.nix
+      type = lib.types.str;
+      description = "Full name of the user";
+    };
+    
+    stateVersion = lib.mkOption { # is defined in flake.nix
+      type = lib.types.str;
+      description = "State version of nixos and home-manager";
+    };
+  };
+
+  ## Global configuration
+  ##
+  ## Should only contain global settings that are not related to
+  ## any particular part of the system and could therefore be
+  ## extracted into their own module.
+  config = {
+    nix = {
+
+      ## Enabling flakes
+      extraOptions = ''
+        experimental-features = nix-command flakes
+        warn-dirty = false
+      '';
+
+      ## Store optimization
+      optimise.automatic = true;
+
+      ## Automatic garbage collection
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
+
+      settings = {
+        trusted-users = ["daniil"];
+
+        substituters = [
+          "https://cache.nixos.org"
+        ];
+      };
+    };
+
+    ## Allow unfree packages
+    nixpkgs.config.allowUnfree = true;
+
+    ## Global packages
+    ##
+    ## Packages should be managed with home-manager whereever
+    ## possible. Only use a set of barebones applications here.
+    environment.systemPackages = with pkgs; [ git vim wget curl age sops ];
+    environment.variables = {
+      EDITOR = "nvim";
+    };
+
+    ## Home manager settings
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+
+    home-manager.backupFileExtension = "hm-backup-" + pkgs.lib.readFile "${pkgs.runCommand "timestamp" {} "echo -n `date '+%Y%m%d%H%M%S'` > $out"}";
+    ## Setting the `stateVersion' for both home-manager and system.
+    # home-manager.users.${config.user} = {
+    #   home = lib.mkMerge [
+    #     {
+    #       ## Setting state version for home-manager
+    #       stateVersion = "${config.stateVersion}";
+    #     }
+    #   ];
+    # };
+    
+    home-manager.sharedModules = [
+      inputs.sops-nix.homeManagerModules.sops
+    ];
+  
+    ## Setting state version for system
+    system.stateVersion = "${config.stateVersion}";
+  };
+}
+
+
+
+
+### File: ./justfile ###
+
+hostname := "a15"
+flake := "."
+disk_config := "./hosts/a15/disko-config.nix"
+
+rebuild:
+    @echo "Rebuilding NixOS configuration..."
+    nixos-rebuild switch --flake {{flake}} --use-remote-sudo --option eval-cache false --show-trace
+
+update:
+    @echo "Updating flake inputs..."
+    nix flake update
+
+list:
+    @echo "Listing all generations..."
+    nix-env --list-generations
+    nixos-rebuild list-generations
+
+clean *ARGS:
+    @echo "Cleaning up old generations..."
+    sudo nix-collect-garbage {{ARGS}}
+
+clean-all: && clean
+    @echo "Removing all old generations..."
+    sudo nix-collect-garbage -d
+
+format-disks:
+    #!/usr/bin/env bash
+    echo "WARNING: This will DESTROY ALL DATA on the disks configured in disko-config.nix"
+    echo "Are you sure you want to continue? (y/N)"
+    read answer
+    if [ "$answer" = "y" ]; then
+        sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko {{disk_config}}
+    else
+        echo "Aborted."
+    fi
+
+list-persist:
+    @echo "Listing persisted directories..."
+    ls -la /persist/system
+    @echo "\nListing persisted home directories..."
+    ls -la /persist/home
+
+check-persist:
+    @echo "Checking persistence status..."
+    findmnt -t btrfs | grep persist
+    @echo "\nChecking BTRFS subvolumes..."
+    sudo btrfs subvolume list /
+
+clean-roots:
+    @echo "Cleaning old root snapshots..."
+    sudo find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30 -exec rm -rf {} \;
+
+check:
+    @echo "Checking NixOS configuration..."
+    nixos-rebuild dry-build --flake {{flake}}
+
+diff:
+    @echo "Showing changes between current and new configuration..."
+    nixos-rebuild build --flake {{flake}} --show-trace
+    nvd diff /run/current-system result
+
+install:
+    #!/usr/bin/env bash
+    echo "WARNING: This will install NixOS with the current configuration"
+    echo "Make sure you have formatted the disks first with 'just format-disks'"
+    echo "Continue? (y/N)"
+    read answer
+    if [ "$answer" = "y" ]; then
+        sudo nixos-install --root /mnt --flake {{flake}}#{{hostname}}
+    else
+        echo "Aborted."
+    fi
+
+edit-secrets:
+  sops secrets/secrets.yaml
+
+setup-sops-keys:
+    #!/usr/bin/env bash
+    echo "Setting up sops age keys..."
+    
+    # Create directories
+    sudo mkdir -p /persist/system/sops/age
+    mkdir -p ~/.config/sops/age
+    
+    # Generate a new age key if it doesn't exist
+    if [ ! -f /persist/system/sops/age/keys.txt ]; then
+        echo "Generating new age key..."
+        age-keygen -o /tmp/keys.txt
+        sudo mv /tmp/keys.txt /persist/system/sops/age/keys.txt
+    fi
+    
+    # Set permissions on system key
+    sudo chmod 600 /persist/system/sops/age/keys.txt
+    sudo chown $USER:users /persist/system/sops/age/keys.txt
+    
+    # Copy and set permissions for user key
+    sudo cp /persist/system/sops/age/keys.txt ~/.config/sops/age/keys.txt
+    sudo chown $USER:users ~/.config/sops/age/keys.txt
+    sudo chown -R $USER:users ~/.config/sops
+    chmod 600 ~/.config/sops/age/keys.txt
+    
+    # Show the public key
+    echo -e "\nYour age public key is:"
+    age-keygen -y ~/.config/sops/age/keys.txt
+    echo -e "\nMake sure to add this public key to your .sops.yaml file!"
+
+    # Output next steps
+    echo -e "\nNext steps:"
+    echo "1. Add this public key to .sops.yaml"
+    echo "2. Update your secrets with: just edit-secrets"
+
+help:
+    @just --list
+
+default: help
+
+
+
+### File: ./modules/desktops/default.nix ###
+
+[
+  ./kde.nix
+  # ./hyprland.nix
+]
+
+
+
+### File: ./modules/desktops/hyprland.nix ###
+
+{ config, lib, pkgs, inputs, ... }:
+let
+
+  inherit (lib) mkEnableOption mkOption mkIf mkMerge types mapAttrsToList;
+in{
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  home-manager.users.${config.user}.home = {
+    packages = with pkgs; [ 
+        waybar
+        swww
+    ];
+
+    wayland.windowManager.hyprland = {
+      enable = true;
+      xwayland.enable = true;
+      settings = let
+        playerctl = "${pkgs.playerctl}/bin/playerctl";
+        pactl = "${pkgs.pulseaudio}/bin/pactl";
+        pamixer = "${pkgs.pamixer}/bin/pamixer";
+      in {
+        bezier = [
+          "mycurve,.32,.97,.53,.98"
+          "expoOut,0.19,1.0,0.22,1.0"
+          "overshot,.32,.97,.37,1.16"
+          "easeInOut,.5,0,.5,1"
+        ];
+        env = mapAttrsToList (name: value: "${name},${toString value}") {
+          WLR_NO_HARDWARE_CURSORS = 1; # For Sunshine... Let's see if I notice anything...
+          SDL_VIDEODRIVER = "wayland";
+          _JAVA_AWT_WM_NONREPARENTING = 1;
+          WLR_DRM_NO_ATOMIC = 1;
+          XCURSOR_SIZE = 24;
+          CLUTTER_BACKEND = "wayland";
+          XDG_SESSION_TYPE = "wayland";
+          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+          MOZ_ENABLE_WAYLAND = "1";
+          WLR_BACKEND = "vulkan";
+          QT_QPA_PLATFORM = "wayland";
+          GDK_BACKEND = "wayland";
+          TERM = "wezterm";
+          NIXOS_OZONE_WL = "1";
+        };
+        layerrule = [
+          "noanim, ^(selection)$"
+          "blur,^(anyrun)$"
+        ];
+      misc = {
+          vfr = true;
+          enable_swallow = true;
+          swallow_regex = "^(foot)$";
+          animate_manual_resizes = true;
+          force_default_wallpaper = 0;
+        };
+        input = {
+          follow_mouse = 1;
+          force_no_accel = 1;
+          repeat_delay = 200;
+          repeat_rate = 40;
+
+          touchpad = {
+            natural_scroll = false;
+          };
+          kb_layout = config.services.xserver.xkb.layout;
+        };
+        general = {
+          sensitivity = 0.2;
+
+          gaps_in = 1;
+          gaps_out = 2;
+          border_size = 1;
+          allow_tearing = true;
+
+          layout = "dwindle";
+        };
+        binds = {
+          workspace_back_and_forth = 0;
+          allow_workspace_cycles = 1;
+        };
+        decoration = {
+          rounding = 0;
+          dim_inactive = true;
+          dim_strength = 0.2;
+          drop_shadow = 1;
+          shadow_range = 20;
+          shadow_render_power = 2;
+          "col.shadow" = "rgba(00000044)";
+          shadow_offset = "0 0";
+          blur = {
+            enabled = 1;
+            size = 4;
+            passes = 4;
+            ignore_opacity = 1;
+            xray = 1;
+            new_optimizations = 1;
+            noise = 0.03;
+            contrast = 1.0;
+          };
+        };
+        animations = {
+          enabled = 1;
+          animation = [
+            "windowsMove,0,4,expoOut"
+            "windowsIn,0,4,expoOut"
+            "windowsOut,0,4,mycurve"
+            "fadeIn,0,3,mycurve"
+            "fadeOut,1,3,mycurve"
+            "fadeDim,1,1,expoOut"
+            "border,1,4,expoOut"
+            "workspaces,0,2,expoOut,fade"
+          ];
+        };
+        dwindle = {
+          pseudotile = 0;
+          force_split = 2;
+          preserve_split = 1;
+          default_split_ratio = 1.3;
+        };
+        master = {
+          new_is_master = false;
+          new_on_top = false;
+          no_gaps_when_only = false;
+          orientation = "top";
+          mfact = 0.6;
+          always_center_master = false;
+        };
+        exec-once = [
+          "${pkgs.mako}/bin/mako"
+          "${pkgs.foot}/bin/foot --server"
+          # "${elib.flPkgs inputs.flutter_background_bar}/bin/flutter_background_bar"
+          "hyprctl setcursor Bibata-Modern-Ice 24"
+
+          "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store #Stores only text data"
+          "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.xclip}/bin/xclip -selection clipboard"
+          "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store #Stores only image data"
+          "${pkgs.snapcast}/bin/snapclient --host 10.0.0.2 -s 3 --port 1704"
+          # "[workspace special] firefox"
+        ];
+        bind = [
+          '',Print,exec,${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png''
+          "ALT,S,fullscreen"
+          "ALT,F,exec,${pkgs.foot}/bin/foot"
+          "ALT,V,exec,${pkgs.foot}/bin/footclient --app-id sideterm"
+          "ALT,BACKSPACE,exec,${pkgs.foot}/bin/footclient --app-id middleterm"
+          "ALT,D,killactive,"
+          "ALT,G,togglefloating,"
+          ",Menu,exec,hyprctl switchxkblayout kmonad-kb-laptop next && hyprctl switchxkblayout kmonad-kb-hyperx next"
+
+          "ALT,SEMICOLON,exec,anyrun"
+
+          "SHIFTALT,SEMICOLON,exit,"
+          "ALT,A,togglesplit,"
+
+          ",XF86AudioPlay,exec,${playerctl} play-pause"
+          ",XF86AudioPrev,exec,${playerctl} previous"
+          ",XF86AudioNext,exec,${playerctl} next"
+
+          "ALT,H,movefocus,l"
+          "ALT,J,movefocus,d"
+          "ALT,K,movefocus,u"
+          "ALT,L,movefocus,r"
+
+          "ALTCTRL,L,swapwindow,r"
+          "ALTCTRL,H,swapwindow,l"
+          "ALTCTRL,K,swapwindow,u"
+          "ALTCTRL,J,swapwindow,d"
+
+          "SUPER,U,workspace,previous"
+          "ALT,Q,workspace,1"
+          "ALT,W,workspace,2"
+          "ALT,E,workspace,3"
+          "ALT,R,workspace,4"
+          "ALT,T,workspace,5"
+          "ALT,Y,workspace,6"
+          "ALT,U,workspace,7"
+          "ALT,I,workspace,8"
+          "ALT,O,workspace,9"
+          "ALT,P,workspace,10"
+
+          "ALTSHIFT,Q,movetoworkspace,1"
+          "ALTSHIFT,W,movetoworkspace,2"
+          "ALTSHIFT,E,movetoworkspace,3"
+          "ALTSHIFT,R,movetoworkspace,4"
+          "ALTSHIFT,T,movetoworkspace,5"
+          "ALTSHIFT,Y,movetoworkspace,6"
+          "ALTSHIFT,U,movetoworkspace,7"
+          "ALTSHIFT,I,movetoworkspace,8"
+          "ALTSHIFT,O,movetoworkspace,9"
+          "ALTSHIFT,P,movetoworkspace,10"
+        ];
+        binde = [
+          "ALTSHIFT,H,resizeactive,-150 0"
+          "ALTSHIFT,J,resizeactive,0 150"
+          "ALTSHIFT,K,resizeactive,0 -150"
+          "ALTSHIFT,L,resizeactive,150 0"
+
+          ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5% && ${pactl} get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK"
+          ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5% && ${pactl} get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK"
+          '',XF86AudioMute,exec,${pamixer} --toggle-mute && ( [ "$(${pamixer} --get-mute)" = "true" ] && echo 0 > $WOBSOCK ) || ${pamixer} --get-volume > $WOBSOCK''
+
+          ",XF86MonBrightnessUp,exec,${pkgs.lib.getExe pkgs.brightnessctl} set +5%"
+          ",XF86MonBrightnessDown,exec,${pkgs.lib.getExe pkgs.brightnessctl} set 5%-"
+        ];
+        bindm = [
+          "ALT,mouse:272,movewindow"
+          "ALT,mouse:273,resizewindow"
+        ];
+        windowrulev2 = let
+          rulesForWindow = window: map (rule: "${rule},${window}");
+        in
+          []
+          # Specific window rules
+          ++ (rulesForWindow "title:^()$,class:^(steam)$" ["stayfocused" "minsize 1 1"])
+          ++ (rulesForWindow "class:^(sideterm)$" ["float" "move 60% 10" "size 750 350" "animation slide"])
+          ++ (rulesForWindow "class:^(looking-glass-client)$" ["immediate"])
+          ++ (rulesForWindow "class:^(middleterm)$" ["float" "size 750 550" "animation slide"])
+          ++ (rulesForWindow "class:^(guifetch)$" ["float" "animation slide" "move 10 10"])
+          ++ (rulesForWindow "class:^(listen_blue)$" ["size 813 695" "float" "center"])
+          ++ (rulesForWindow "class:^(neovide)$" ["tile"])
+          ++ (rulesForWindow "class:^(firefox)$" ["opacity 0.999 0.999"])
+          # General window rules
+          ++ (rulesForWindow "floating:0" ["rounding 0"])
+          ++ (rulesForWindow "floating:1" ["rounding 5"])
+          ++ (rulesForWindow "floating:0" ["noshadow"]);
+      };
+    };
+  };
+}
+
+
+
+### File: ./modules/desktops/kde.nix ###
+
+#
+#  KDE Plasma 5 Configuration
+#  Enable with "kde.enable = true;"
+#  Get the plasma configs in a file with $ nix run github:pjones/plasma-manager > <file>
+#
+
+{ config, lib, pkgs, inputs, ... }:
+
+with lib;
+{
+  options = {
+    kde = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+      };
+    };
+  };
+
+  config = mkIf (config.kde.enable) {
+    programs = {
+      zsh.enable = true;
+      kdeconnect = {                                # For GSConnect
+        enable = true;
+        package = pkgs.gnomeExtensions.gsconnect;
+      };
+    };
+
+    services = {
+      libinput.enable = true;
+      displayManager = {
+        sddm.enable = true;                       # Display Manager
+      };
+
+      xserver = {
+        enable = true;
+
+        xkb = {
+          layout = "us,us,ru";
+          variant = "dvp,,";
+          options = "grp:win_space_toggle";
+        };
+
+        modules = [ pkgs.xf86_input_wacom ];
+        wacom.enable = true;
+
+        desktopManager.plasma5 = {
+          enable = true;                            # Desktop Environment
+        };
+      };
+      pipewire = {
+        enable = true;
+        alsa.enable = true;
+        pulse.enable = true;
+      };
+    };
+
+    environment = {
+      systemPackages = with pkgs.libsForQt5; [      # System-Wide Packages
+        bismuth         # Dynamic Tiling
+        packagekit-qt   # Package Updater
+      ];
+      plasma5.excludePackages = with pkgs.libsForQt5; [
+        elisa
+        khelpcenter
+        # konsole
+        oxygen
+      ];
+    };
+
+  };
+}
+
+
+
+### File: ./modules/firefox.nix ###
+
+{ pkgs, config, ... }: {
+
+  home-manager.users.${config.user} = {
+
+    programs.firefox = {
+      enable = true;
+      
+
+      # Configure Firefox settings
+      profiles.default = {
+        id = 0;
+        name = "Default";
+        isDefault = true;
+        
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          ublock-origin
+          bitwarden
+          darkreader
+          privacy-badger
+        ];
+
+        settings = {
+          # Enable hardware video acceleration
+          "media.ffmpeg.vaapi.enabled" = true;
+          "media.navigator.mediadatadecoder_vpx_enabled" = true;
+
+          # Disable telemetry
+          "browser.newtabpage.activity-stream.feeds.telemetry" = false;
+          "browser.ping-centre.telemetry" = false;
+          "browser.tabs.crashReporting.sendReport" = false;
+          "devtools.onboarding.telemetry.logged" = false;
+          "toolkit.telemetry.enabled" = false;
+          "toolkit.telemetry.unified" = false;
+
+          # Performance settings
+          "browser.cache.disk.enable" = false;
+          "browser.cache.memory.enable" = true;
+          "browser.cache.memory.capacity" = 524288;
+          "browser.sessionstore.interval" = 15000;
+
+          # UI customization
+          "sidebar.verticalTabs" = true;
+
+          # Disable password saving prompts
+          "signon.rememberSignons" = false;
+          "signon.autofillForms" = false;
+
+          # Disable translation prompts
+          "browser.translation.ui.show" = false;
+          "browser.translation.detectLanguage" = false;
+
+          # Enable dark theme
+          "browser.theme.content-theme" = 0;
+          "browser.theme.toolbar-theme" = 0;
+          "browser.in-content.dark-mode" = true;
+
+          # Performance improvements
+          # Increase process count for better parallel processing
+          "dom.ipc.processCount" = 8;  # Default is 8, increase if you have more CPU cores
+
+          # Enable HTTP/3 for faster connections
+          "network.http.http3.enabled" = true;
+
+          # Reduce animation effects
+          "ui.prefersReducedMotion" = 1;
+
+          # Enable hardware acceleration
+          "gfx.webrender.all" = true;
+          "layers.acceleration.force-enabled" = true;
+
+          # Memory management
+          "browser.tabs.unloadOnLowMemory" = true;
+
+          # Increase script timeout for complex web apps
+          "dom.max_script_run_time" = 20;  # Default is 10 seconds
+
+          # Enable back-forward cache for faster navigation
+          "browser.cache.memory.max_entry_size" = 51200;
+
+          # Reduce resource usage of background tabs
+          "browser.tabs.loadInBackground" = false;
+          "browser.sessionstore.interval.idle" = 3600000; # Save session every hour when idle
+
+          # Enable process per site isolation for better stability
+          "fission.autostart" = true;
+
+          # Optimize JavaScript performance
+          "javascript.options.mem.gc_incremental_slice_ms" = 5;
+          "javascript.options.mem.high_water_mark" = 128;
+
+          # Additional SSE-specific optimizations
+          "network.http.connection-timeout" = 300;  # Longer connection timeout
+          "network.http.response.timeout" = 300;    # Longer response timeout
+          "network.http.max-persistent-connections-per-server" = 10;  # More concurrent connections
+        };
+
+        # Search engines
+        search = {
+          force = true;
+          default = "DuckDuckGo";
+          engines = {
+            "Nix Packages" = {
+              urls = [{
+                template = "https://search.nixos.org/packages";
+                params = [
+                  { name = "type"; value = "packages"; }
+                  { name = "query"; value = "{searchTerms}"; }
+                ];
+              }];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@np" ];
+            };
+            "NixOS Wiki" = {
+              urls = [{
+                template = "https://nixos.wiki/index.php?search={searchTerms}";
+              }];
+              iconUpdateURL = "https://nixos.wiki/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              definedAliases = [ "@nw" ];
+            };
+            "Bing".metaData.hidden = true;
+            "Google".metaData.alias = "@g"; # create a @g alias
+          };
+        };
+
+        # Bookmarks
+        bookmarks = [
+          {
+            name = "NixOS";
+            tags = [ "nix" "os" ];
+            keyword = "nixos";
+            url = "https://nixos.org/";
+          }
+          {
+            name = "Home-Manager";
+            url = "https://nix-community.github.io/home-manager/";
+            tags = [ "nix" "home-manager" ];
+          }
+          {
+            name = "Development";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "GitHub";
+                url = "https://github.com/";
+              }
+              {
+                name = "NixOS Search";
+                url = "https://search.nixos.org/";
+              }
+            ];
+          }
+        ];
+
+        userChrome = ''
+          #Bitwarden_toolbar-button {
+            -moz-box-ordinal-group: 1 !important;
+          }
+        '';
+
+      };
+    };
+  };
+}
+
+
+
+### File: ./modules/git.nix ###
+
+{ config, ... }:
+
+{
+    home-manager.users.${config.user} = {
+        programs.git = {
+            enable = true;
+
+            userName = "Daniil Orekhov";
+            userEmail = "daniil.orekhov15@gmail.com";
+        };
+    };
+}
+
+
+
+### File: ./modules/llm/default.nix ###
+
+{ ... }:
+{
+  imports = [
+    # ./ollama.nix
+  ];
+}
+
+
+
+### File: ./modules/llm/ollama.nix ###
+
+{ config, pkgs, ... }:
+{
+  home-manager.users.${config.user}.home = {
+    packages = [(pkgs.ollama.override { acceleration = "cuda"; })];
+  };
+}
+
+
+
+### File: ./modules/neovim/default.nix ###
+
+{ config, ... }:
+
+{
+
+  home-manager.users.${config.user} = {
+
+    imports = [ 
+      ./packages.nix
+      ./lazyvim
+    ];
+
+  };
+}
+
+
+
+### File: ./modules/neovim/lazyvim/default.nix ###
+
+{ inputs, config, lib, pkgs, ... }:
+
+{
+  programs.neovim = {
+    enable = true;
+    extraPackages = with pkgs; [
+      # LazyVim
+      lua-language-server
+      stylua
+
+      # Telescope
+      ripgrep
+
+      # nix
+      nil
+      # rnix-lsp # TODO
+
+      # nixd
+      statix # Lints and suggestions for the nix programming language
+      deadnix # Find and remove unused code in .nix source files
+      alejandra # Nix Code Formatter
+
+    ];
+
+    extraConfig = ''
+      let $AVANTE_ANTHROPIC_API_KEY_FILE = '${config.sops.secrets.anthropic-api-key.path}'
+    '';
+
+    plugins = with pkgs.vimPlugins; [
+      lazy-nvim
+    ];
+
+    extraLuaConfig =
+      let
+        plugins = with pkgs.vimPlugins; [
+            # LazyVim
+            LazyVim
+            bufferline-nvim
+            cmp-buffer
+            cmp-nvim-lsp
+            cmp-path
+            cmp_luasnip
+            conform-nvim
+            dashboard-nvim
+            dressing-nvim
+            flash-nvim
+            friendly-snippets
+            gitsigns-nvim
+            indent-blankline-nvim
+            lualine-nvim
+            neo-tree-nvim
+            neoconf-nvim
+            neodev-nvim
+            noice-nvim
+            nui-nvim
+            nvim-cmp
+            nvim-lint
+            nvim-lspconfig
+            nvim-notify
+            nvim-spectre
+            nvim-treesitter
+            nvim-treesitter-context
+            nvim-treesitter-textobjects
+            nvim-ts-autotag
+            nvim-ts-context-commentstring
+            nvim-web-devicons
+            persistence-nvim
+            plenary-nvim
+            telescope-fzf-native-nvim
+            telescope-nvim
+            todo-comments-nvim
+            tokyonight-nvim
+            trouble-nvim
+            vim-illuminate
+            vim-startuptime
+            which-key-nvim
+            { name = "LuaSnip"; path = luasnip; }
+            { name = "catppuccin"; path = catppuccin-nvim; }
+            { name = "mini.ai"; path = mini-nvim; }
+            { name = "mini.bufremove"; path = mini-nvim; }
+            { name = "mini.comment"; path = mini-nvim; }
+            { name = "mini.indentscope"; path = mini-nvim; }
+            { name = "mini.pairs"; path = mini-nvim; }
+            { name = "mini.surround"; path = mini-nvim; }
+
+            nvim-dap
+            nvim-dap-ui
+            nvim-nio
+            nvim-dap-python
+            nvim-dap-virtual-text
+            yanky-nvim
+            sqlite-lua # dependency for yanky-nvim
+            edgy-nvim
+            tmux-nvim
+            vim-just
+            harpoon
+            codeium-nvim
+
+            obsidian-nvim
+        ];
+        mkEntryFromDrv = drv:
+          if lib.isDerivation drv then
+            { name = "${lib.getName drv}"; path = drv; }
+          else
+            drv;
+        lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
+      in
+      ''
+        require("lazy").setup({
+          defaults = {
+            lazy = true,
+          },
+          rocks = {
+            enabled = false,
+          },
+          dev = {
+            -- reuse files from pkgs.vimPlugins.*
+            path = "${lazyPath}",
+            patterns = { "." },
+            -- fallback to download
+            fallback = true,
+          },
+          spec = {
+            { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+            -- The following configs are needed for fixing lazyvim on nix
+            -- force enable telescope-fzf-native.nvim
+            { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
+
+            -- { import = "lazyvim.plugins.extras.ui.alpha" },
+            -- { import = "lazyvim.plugins.extras.ui.edgy" },
+
+            -- disable mason.nvim, use programs.neovim.extraPackages
+            { "williamboman/mason-lspconfig.nvim", enabled = false },
+            { "williamboman/mason.nvim", enabled = false },
+
+            -- import/override with your plugins
+            { import = "plugins" },
+            -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
+            { "nvim-treesitter/nvim-treesitter", opts = function(_, opts) opts.ensure_installed = {} end },
+          },
+        })
+      '';
+
+  };
+
+  # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
+  xdg.configFile."nvim/parser".source =
+    let
+      parsers = pkgs.symlinkJoin {
+        name = "treesitter-parsers";
+        paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
+          bash
+          c
+          csv
+          jsonc
+          lua
+          markdown
+          markdown_inline
+          nix
+          regex
+          python
+          vimdoc
+        ])).dependencies;
+      };
+    in
+    "${parsers}/parser";
+
+  # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
+  xdg.configFile."nvim/lua".source = ./lua;
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/config/autocmds.lua ###
+
+-- Autocmds are automatically loaded on the VeryLazy event
+-- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
+-- Add any additional autocmds here
+
+local function augroup(name)
+  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+end
+
+local function zellij_nav(short_direction, direction)
+  local cur_winnr = vim.fn.winnr()
+  vim.cmd("wincmd " .. short_direction)
+  if cur_winnr == vim.fn.winnr() then
+    os.execute("zellij action move-focus " .. direction)
+  end
+end
+
+local function ZellijNavigateUp()
+  zellij_nav("k", "up")
+end
+
+local function ZellijNavigateDown()
+  zellij_nav("j", "down")
+end
+
+local function ZellijNavigateRight()
+  zellij_nav("l", "right")
+end
+
+local function ZellijNavigateLeft()
+  zellij_nav("h", "left")
+end
+
+local function ZellijLock()
+  os.execute("zellij action switch-mode locked")
+end
+
+local function ZellijUnlock()
+  os.execute("zellij action switch-mode normal")
+end
+
+local function ZellijNewPane(direction)
+  ZellijUnlock()
+  local dir = (direction and #direction > 0) and (" --direction " .. direction) or " --floating"
+  os.execute(
+    "zellij action new-pane" .. dir .. ' --close-on-exit --cwd "' .. vim.fn.getcwd() .. '" -- ' .. os.getenv("SHELL")
+  )
+end
+
+local zellij_navigator_loaded = vim.g.zellij_navigator_loaded
+local zellij_navigator_enabled = vim.g.zellij_navigator_enabled
+
+if zellij_navigator_loaded or (zellij_navigator_enabled and zellij_navigator_enabled ~= 1) then
+  return
+end
+
+vim.g.zellij_navigator_loaded = 1
+
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter" }, {
+  group = augroup("zellij_lock"),
+  callback = function()
+    ZellijLock()
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimLeave", {
+  group = augroup("zellij_unlock"),
+  callback = function()
+    ZellijUnlock()
+  end,
+})
+
+vim.api.nvim_create_user_command("ZellijNavigateUp", function()
+  ZellijNavigateUp()
+end, {})
+
+vim.api.nvim_create_user_command("ZellijNavigateDown", function()
+  ZellijNavigateDown()
+end, {})
+
+vim.api.nvim_create_user_command("ZellijNavigateLeft", function()
+  ZellijNavigateLeft()
+end, {})
+
+vim.api.nvim_create_user_command("ZellijNavigateRight", function()
+  ZellijNavigateRight()
+end, {})
+
+vim.api.nvim_create_user_command("ZellijNewPane", function()
+  ZellijNewPane()
+end, {})
+
+vim.api.nvim_create_user_command("ZellijNewPaneSplit", function()
+  ZellijNewPane("down")
+end, {})
+
+vim.api.nvim_create_user_command("ZellijNewPaneVSplit", function()
+  ZellijNewPane("right")
+end, {})
+
+local zellij_navigator_no_default_mappings = vim.g.zellij_navigator_no_default_mappings
+if zellij_navigator_no_default_mappings and zellij_navigator_no_default_mappings == 1 then
+  return
+end
+
+vim.api.nvim_set_keymap("n", "<C-h>", ":ZellijNavigateLeft<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-j>", ":ZellijNavigateDown<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-k>", ":ZellijNavigateUp<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-l>", ":ZellijNavigateRight<CR>", { noremap = true, silent = true })
+
+
+
+### File: ./modules/neovim/lazyvim/lua/config/keymaps.lua ###
+
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+
+vim.keymap.set("n", "[B", vim.cmd.bfirst, { silent = true, desc = "Go to first buffer" })
+vim.keymap.set("n", "]B", vim.cmd.blast, { silent = true, desc = "Go to last buffer" })
+
+-- Remove {} motions from the jumplist
+vim.keymap.set("n", "}", function()
+  local count = vim.v.count1
+  vim.cmd("keepjumps norm! " .. count .. "}")
+end, { noremap = true })
+vim.keymap.set("n", "{", function()
+  local count = vim.v.count1
+  vim.cmd("keepjumps norm! " .. count .. "{")
+end, { noremap = true })
+
+-- Move selection around
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
+
+-- Copy
+vim.keymap.set({ "v", "n" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set("n", "<leader>Y", 'gg"+yG', { desc = "Copy the entire file to system clipboard" })
+
+
+
+### File: ./modules/neovim/lazyvim/lua/config/options.lua ###
+
+-- Options are automatically loaded before lazy.nvim startup
+-- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+-- Add any additional options here
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = "single"
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/avante.lua ###
+
+return {
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    version = false, -- latest changes
+    build = "make",
+    opts = {
+      -- Custom configuration
+      provider = "claude",
+      provider_options = {
+        claude = {
+          provider_module = "plugins.avante-provider",
+        },
+      },
+      auto_suggestions_provider = "claude",
+      claude = {
+        endpoint = "https://api.anthropic.com",
+        model = "claude-3-5-sonnet-20241022",
+        temperature = 0,
+        max_tokens = 4096,
+      },
+      behaviour = {
+        auto_suggestions = false,
+        auto_set_highlight_group = true,
+        auto_set_keymaps = true,
+        auto_apply_diff_after_generation = false,
+        support_paste_from_clipboard = false,
+        minimize_diff = true,
+      },
+      windows = {
+        position = "right",
+        wrap = true,
+        width = 30,
+      },
+    },
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-tree/nvim-web-devicons",
+      {
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/avante-provider.lua ###
+
+local claude = require("avante.providers.claude")
+claude.api_key_name = "AVANTE_ANTHROPIC_API_KEY"
+return claude
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/colorscheme.lua ###
+
+return {
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    opts = {
+      flavour = "mocha",
+      transparent_background = true,
+      term_colors = true,
+      integrations = {
+        aerial = true,
+        alpha = true,
+        cmp = true,
+        dashboard = true,
+        flash = true,
+        gitsigns = true,
+        headlines = true,
+        illuminate = true,
+        indent_blankline = { enabled = true },
+        leap = true,
+        lsp_trouble = true,
+        mason = true,
+        markdown = true,
+        mini = true,
+        native_lsp = {
+          enabled = true,
+          underlines = {
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
+          },
+        },
+        navic = { enabled = true, custom_bg = "lualine" },
+        neotest = true,
+        neotree = true,
+        noice = true,
+        notify = true,
+        semantic_tokens = true,
+        telescope = true,
+        treesitter = true,
+        treesitter_context = true,
+        which_key = true,
+      },
+    },
+  },
+
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/copilot.lua ###
+
+return {
+  {
+    "Exafunction/codeium.nvim",
+    cmd = "Codeium",
+    build = ":Codeium Auth",
+    opts = {},
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    optional = true,
+    event = "VeryLazy",
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_x, 2, LazyVim.lualine.cmp_source("codeium"))
+    end,
+  },
+  {
+    "nvim-cmp",
+    dependencies = {
+      -- codeium
+      {
+        "Exafunction/codeium.nvim",
+        cmd = "Codeium",
+        build = ":Codeium Auth",
+        opts = {},
+      },
+    },
+    opts = function(_, opts)
+      table.insert(opts.sources, 1, {
+        name = "codeium",
+        group_index = 1,
+        priority = 100,
+      })
+    end,
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/debug.lua ###
+
+return {
+  "mfussenegger/nvim-dap",
+
+  dependencies = {
+
+    -- async io
+    {
+      "nvim-neotest/nvim-nio",
+    },
+
+    -- fancy UI for the debugger
+    {
+      "rcarriga/nvim-dap-ui",
+      -- stylua: ignore
+      keys = {
+        { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
+        { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
+      },
+      opts = {},
+      config = function(_, opts)
+        -- setup dap config by VsCode launch.json file
+        -- require("dap.ext.vscode").load_launchjs()
+        local dap = require("dap")
+        local dapui = require("dapui")
+        dapui.setup(opts)
+        dap.listeners.after.event_initialized["dapui_config"] = function()
+          dapui.open({})
+        end
+        dap.listeners.before.event_terminated["dapui_config"] = function()
+          dapui.close({})
+        end
+        dap.listeners.before.event_exited["dapui_config"] = function()
+          dapui.close({})
+        end
+      end,
+    },
+
+    -- virtual text for the debugger
+    {
+      "theHamsta/nvim-dap-virtual-text",
+      opts = {},
+    },
+  },
+
+  -- stylua: ignore
+  keys = {
+    { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
+    { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+    { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
+    { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
+    { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
+    { "<leader>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
+    { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
+    { "<leader>dj", function() require("dap").down() end, desc = "Down" },
+    { "<leader>dk", function() require("dap").up() end, desc = "Up" },
+    { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
+    { "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
+    { "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
+    { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
+    { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+    { "<leader>ds", function() require("dap").session() end, desc = "Session" },
+    { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
+    { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+  },
+
+  config = function()
+    local Config = require("lazyvim.config")
+    vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+
+    for name, sign in pairs(Config.icons.dap) do
+      sign = type(sign) == "table" and sign or { sign }
+      vim.fn.sign_define(
+        "Dap" .. name,
+        { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
+      )
+    end
+  end,
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/flash.lua ###
+
+return {
+  "folke/flash.nvim",
+  event = "VeryLazy",
+  opts = {},
+  -- stylua: ignore
+  keys = {
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/formatting.lua ###
+
+return {
+  "stevearc/conform.nvim",
+  optional = true,
+  opts = {
+    formatters_by_ft = {
+      ["fish"] = {}, -- replace default
+      ["python"] = { "ruff_fix", "ruff_format" },
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/harpoon.lua ###
+
+return {
+  "ThePrimeagen/harpoon",
+  branch = "harpoon2",
+  opts = {
+    menu = {
+      width = vim.api.nvim_win_get_width(0) - 4,
+    },
+  },
+  keys = {
+    {
+      "<leader>H",
+      function()
+        require("harpoon"):list():append()
+      end,
+      desc = "Harpoon file",
+    },
+    {
+      "<leader>h",
+      function()
+        local harpoon = require("harpoon")
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end,
+      desc = "Harpoon quick menu",
+    },
+    {
+      "<leader>1",
+      function()
+        require("harpoon"):list():select(1)
+      end,
+      desc = "Harpoon to file 1",
+    },
+    {
+      "<leader>2",
+      function()
+        require("harpoon"):list():select(2)
+      end,
+      desc = "Harpoon to file 2",
+    },
+    {
+      "<leader>3",
+      function()
+        require("harpoon"):list():select(3)
+      end,
+      desc = "Harpoon to file 3",
+    },
+    {
+      "<leader>4",
+      function()
+        require("harpoon"):list():select(4)
+      end,
+      desc = "Harpoon to file 4",
+    },
+    {
+      "<leader>5",
+      function()
+        require("harpoon"):list():select(5)
+      end,
+      desc = "Harpoon to file 5",
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/just.lua ###
+
+return {
+  "NoahTheDuke/vim-just",
+  ft = { "just" },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/linting.lua ###
+
+return {
+  "mfussenegger/nvim-lint",
+  optional = true,
+  opts = {
+    linters_by_ft = {
+      ["python"] = { "ruff" },
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/neo-tree.lua ###
+
+return {
+  "nvim-neo-tree/neo-tree.nvim",
+  opts = {
+    filesystem = {
+      hijack_netrw_behavior = "open_default",
+      filtered_items = {
+        visible = true,
+        never_show = {
+          ".git",
+          ".direnv",
+          ".mypy_cache",
+          ".pyre",
+          ".ruff_cache",
+          ".devenv",
+          ".venv",
+          "result",
+          ".devenv.flake.nix",
+          ".pre-commit-config.yaml",
+        },
+        never_show_by_pattern = {
+          "**/__pycache__",
+        },
+      },
+    },
+    event_handlers = {
+      {
+        event = "neo_tree_buffer_enter",
+        handler = function()
+          vim.cmd([[setlocal relativenumber]])
+        end,
+      },
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/nix.lua ###
+
+return {
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        nil_ls = {
+          settings = {
+            ["nil"] = {
+              formatting = {
+                command = { "nixpkgs-fmt" },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/obsidian.lua ###
+
+return {
+  "epwalsh/obsidian.nvim",
+  version = "*", -- recommended, use latest release instead of latest commit
+  lazy = true,
+  ft = "markdown",
+  -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+  -- event = {
+  --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+  --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+  --   -- refer to `:h file-pattern` for more examples
+  --   "BufReadPre path/to/my-vault/*.md",
+  --   "BufNewFile path/to/my-vault/*.md",
+  -- },
+  dependencies = {
+    -- Required.
+    "nvim-lua/plenary.nvim",
+
+    -- see below for full list of optional dependencies 👇
+  },
+  opts = {
+    workspaces = {
+      {
+        name = "personal",
+        path = "~/vaults/personal",
+      },
+      {
+        name = "work",
+        path = "~/vaults/work",
+      },
+    },
+
+    -- see below for full list of options 👇
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/python.lua ###
+
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "ninja", "python", "rst", "toml" })
+      end
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        pyright = {},
+        ruff_lsp = {
+          keys = {
+            {
+              "<leader>co",
+              function()
+                vim.lsp.buf.code_action({
+                  apply = true,
+                  context = {
+                    only = { "source.organizeImports" },
+                    diagnostics = {},
+                  },
+                })
+              end,
+              desc = "Organize Imports",
+            },
+          },
+        },
+      },
+      setup = {
+        ruff_lsp = function()
+          require("lazyvim.util").lsp.on_attach(function(client, _)
+            if client.name == "ruff_lsp" then
+              -- Disable hover in favor of Pyright
+              client.server_capabilities.hoverProvider = false
+            end
+          end)
+        end,
+      },
+    },
+  },
+  {
+    "nvim-neotest/neotest",
+    optional = true,
+    dependencies = {
+      "nvim-neotest/neotest-python",
+    },
+    opts = {
+      adapters = {
+        ["neotest-python"] = {
+          -- Here you can specify the settings for the adapter, i.e.
+          -- runner = "pytest",
+          -- python = ".venv/bin/python",
+        },
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-dap",
+    optional = true,
+    dependencies = {
+      "mfussenegger/nvim-dap-python",
+      -- stylua: ignore
+      keys = {
+        { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
+        { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
+      },
+      config = function()
+        require("dap-python").setup("python")
+        table.insert(require("dap").configurations.python, {
+          type = "python",
+          request = "launch",
+          name = "My custom launch configuration",
+          program = "${file}",
+          justMyCode = false,
+          -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+        })
+      end,
+    },
+  },
+  -- {
+  --   "linux-cultist/venv-selector.nvim",
+  --   cmd = "VenvSelect",
+  --   opts = function(_, opts)
+  --     if require("lazyvim.util").has("nvim-dap-python") then
+  --       opts.dap_enabled = true
+  --     end
+  --     return vim.tbl_deep_extend("force", opts, {
+  --       name = {
+  --         "venv",
+  --         ".venv",
+  --         "env",
+  --         ".env",
+  --       },
+  --     })
+  --   end,
+  --   keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv" } },
+  -- },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/tmux.lua ###
+
+return {
+  {
+    "aserowy/tmux.nvim",
+    lazy = false,
+    opts = {
+      copy_sync = {
+        enable = false,
+        sync_clipboard = false,
+        sync_registers = true,
+      },
+      resize = {
+        enable_default_keybindings = false,
+      },
+    },
+    keys = {
+      {
+        "<C-h>",
+        function()
+          require("tmux").move_left()
+        end,
+      },
+      {
+        "<C-j>",
+        function()
+          require("tmux").move_bottom()
+        end,
+      },
+      {
+        "<C-k>",
+        function()
+          require("tmux").move_top()
+        end,
+      },
+      {
+        "<C-l>",
+        function()
+          require("tmux").move_right()
+        end,
+      },
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/which-key.lua ###
+
+return {
+  "folke/which-key.nvim",
+  opts = {
+    win = {
+      border = "single",
+    },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/plugins/yanky.lua ###
+
+return {
+  "gbprod/yanky.nvim",
+  recommended = true,
+  desc = "Better Yank/Paste",
+  event = "LazyFile",
+  opts = {
+    highlight = { timer = 150 },
+  },
+  keys = {
+    {
+      "<leader>p",
+      function()
+        if LazyVim.pick.picker.name == "telescope" then
+          require("telescope").extensions.yank_history.yank_history({})
+        else
+          vim.cmd([[YankyRingHistory]])
+        end
+      end,
+      mode = { "n", "x" },
+      desc = "Open Yank History",
+    },
+    -- stylua: ignore
+    { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
+    { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
+    { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
+    { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put Text After Selection" },
+    { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Selection" },
+    { "[y", "<Plug>(YankyCycleForward)", desc = "Cycle Forward Through Yank History" },
+    { "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle Backward Through Yank History" },
+    { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
+    { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
+    { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
+    { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
+    { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and Indent Right" },
+    { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and Indent Left" },
+    { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put Before and Indent Right" },
+    { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put Before and Indent Left" },
+    { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put After Applying a Filter" },
+    { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put Before Applying a Filter" },
+  },
+}
+
+
+
+### File: ./modules/neovim/lazyvim/lua/stylua.toml ###
+
+indent_type = "Spaces"
+indent_width = 2
+column_width = 120
+
+
+### File: ./modules/neovim/packages.nix ###
+
+{pkgs, ...}: {
+  nixpkgs.config = {
+    programs.npm.npmrc = ''
+      prefix = ''${HOME}/.npm-global
+    '';
+  };
+
+  home.packages = with pkgs;
+    [
+      fzf
+      fd
+      lazygit
+      ripgrep
+      
+      #-- c/c++
+      cmake
+      cmake-language-server
+      gnumake
+      checkmake
+      # c/c++ compiler, required by nvim-treesitter!
+      gcc
+      # c/c++ tools with clang-tools, the unwrapped version won't
+      # add alias like `cc` and `c++`, so that it won't conflict with gcc
+      llvmPackages.clang-unwrapped
+      lldb
+
+      #-- python
+       ruff
+       pyright # python language server
+       (python311.withPackages (
+         ps:
+           with ps; [
+             ruff-lsp
+             debugpy
+           ]
+       ))
+
+      #-- nix
+      nil
+      # rnix-lsp # TODO
+      # nixd
+      statix # Lints and suggestions for the nix programming language
+      deadnix # Find and remove unused code in .nix source files
+      alejandra # Nix Code Formatter
+
+      #-- lua
+      stylua
+      lua-language-server
+
+      #-- bash
+      nodePackages.bash-language-server
+      shellcheck
+      shfmt
+
+      #-- javascript/typescript --#
+      nodePackages.nodejs
+      nodePackages.typescript
+      nodePackages.typescript-language-server
+      # HTML/CSS/JSON/ESLint language servers extracted from vscode
+      nodePackages.vscode-langservers-extracted
+      nodePackages."@tailwindcss/language-server"
+      emmet-ls
+
+      #-- CloudNative
+      nodePackages.dockerfile-language-server-nodejs
+      # terraform  # install via brew on macOS
+      terraform-ls
+      jsonnet
+      jsonnet-language-server
+      hadolint # Dockerfile linter
+
+      #-- AI Coding Assistance
+      curl # Required by avante.nvim
+      gnutar # Required by avante.nvim
+      cargo # Required by avante.nvim if building from source
+
+      #-- Others
+      taplo # TOML language server / formatter / validator
+      nodePackages.yaml-language-server
+      sqlfluff # SQL linter
+      actionlint # GitHub Actions linter
+      buf # protoc plugin for linting and formatting
+      proselint # English prose linter
+
+      #-- Misc
+      tree-sitter # common language parser/highlighter
+      nodePackages.prettier # common code formatter
+      marksman # language server for markdown
+      glow # markdown previewer
+      pandoc # document converter
+      hugo # static site generator
+
+      #-- Optional Requirements:
+      gdu # disk usage analyzer, required by AstroNvim
+      (ripgrep.override {withPCRE2 = true;}) # recursively searches directories for a regex pattern
+    ];
+}
+
+
+
+### File: ./modules/shell/default.nix ###
+
+{ ... }:
+{
+  imports = [
+    ./zsh.nix
+    ./starship.nix
+    # ./tmux.nix
+    ./zellij.nix
+    ./misc.nix
+  ];
+}
+
+
+
+### File: ./modules/shell/misc.nix ###
+
+{ config, pkgs, ... }:
+
+{
+  home-manager.users.${config.user} = {
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    programs.fzf.enable = true;
+    programs.zoxide.enable = true;
+    programs.btop.enable = true;
+    programs.btop.settings = {
+        color_theme = "horizon";
+        theme_background = false;
+        vim_keys = true;
+    };
+  
+    home.packages = with pkgs; [
+      manix
+      ripgrep
+      fd
+      eza
+      bat
+      neofetch
+      just
+
+      xsel
+      devenv
+      openssl
+      dig
+      mkcert
+
+      hollywood
+    ];
+
+    programs.zsh.shellAliases = {
+      cd = "z";
+      ls = "eza --icons -l -T -L=1";
+      cat = "bat";
+      htop = "btop";
+      v = "nvim";
+
+      startvpn = "(exec hiddify-next &> /dev/null &)";
+      yc = "/home/daniil/yandex-cloud/bin/yc"; # TODO this is pretty bad
+
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      "....." = "cd ../../../..";
+    };
+  };
+}
+
+
+
+### File: ./modules/shell/starship.nix ###
+
+
+{ config, pkgs, ... }:
+
+{
+
+  home-manager.users.${config.user} = {
+  
+    programs = {
+      starship = 
+          let
+            flavour = "mocha";
+          in
+          {
+              enable = true;
+              enableZshIntegration = true;
+              settings = {
+                add_newline = true;
+                # Other config here
+                format = "$all";
+                palette = "catppuccin_${flavour}";
+              } // builtins.fromTOML (builtins.readFile
+                (pkgs.fetchFromGitHub
+                  {
+                    owner = "catppuccin";
+                    repo = "starship";
+                    rev = "5629d2356f62a9f2f8efad3ff37476c19969bd4f"; 
+                    hash = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
+                  } + /palettes/${flavour}.toml));
+      };
+    };
+  };
+}
+
+
+
+### File: ./modules/shell/tmux.nix ###
+
+
+{ config, pkgs, inputs, ... }:
+{
+  home-manager.users.${config.user} = {
+    programs = {
+      tmux = {
+        enable = true;
+        shortcut = "Space";
+        keyMode = "vi";
+        mouse = true;
+        newSession = true;
+        terminal = "screen-256color";
+        clock24 = true;
+        sensibleOnTop = true;
+        escapeTime = 10;
+        historyLimit = 1000000;
+        plugins = with pkgs.tmuxPlugins; [
+          vim-tmux-navigator
+          yank
+          tmux-thumbs
+          tmux-fzf
+          {
+              plugin = fzf-tmux-url;
+              extraConfig = ''
+                set -g @fzf-url-fzf-options '-p 60%,30% --prompt="   " --border-label=" Open URL "'
+                set -g @fzf-url-history-limit '2000'
+              '';
+          }
+          extrakto
+          better-mouse-mode
+          {
+            plugin = inputs.tmux-sessionx.packages."${pkgs.system}".default;
+            extraConfig = ''
+              set -g @sessionx-x-path '~/.dotfiles'
+              set -g @sessionx-bind 'o'
+              set -g @sessionx-zoxide-mode 'on'
+              set -g @sessionx-preview-enabled 'true'
+            '';
+          }
+          {
+            plugin = resurrect;
+            extraConfig = ''
+              set -g @resurrect-strategy-nvim 'session'
+              set -g @resurrect-dir '~/.tmux/resurrect'
+            '';
+          }
+          {
+            plugin = continuum;
+            extraConfig = ''
+              set -g @continuum-save-interval '15'
+              set -g @continuum-restore 'on'
+            '';
+          }
+          {
+            plugin = catppuccin;
+            extraConfig = ''
+              set -g @catppuccin_flavour 'mocha'
+              set -g @catppuccin_window_left_separator "█"
+              set -g @catppuccin_window_right_separator "█ "
+              set -g @catppuccin_window_number_position "right"
+              set -g @catppuccin_window_middle_separator "  █"
+              set -g @catppuccin_status_left_separator  "█"
+              set -g @catppuccin_status_right_separator "█ "
+            '';
+              # set -g @catppuccin_status_right_separator_inverse "no"
+              # set -g @catppuccin_status_fill "icon"
+              # set -g @catppuccin_status_modules_left "session"
+              # set -g @catppuccin_directory_text "#{b:pane_current_path}"
+              # set -g @catppuccin_date_time_text "%H:%M"
+          }
+        ];
+        extraConfig = ''
+
+          bind l list-sessions
+
+          bind s split-window -v -c "#{pane_current_path}"
+          bind v split-window -h -c "#{pane_current_path}"
+
+          bind -n M-H previous-window
+          bind -n M-L next-window
+
+          bind -r H resize-pane -L 5
+          bind -r J resize-pane -D 5
+          bind -r K resize-pane -U 5
+          bind -r L resize-pane -R 5
+
+          bind-key -n C-S-Left swap-window -d -t -1
+          bind-key -n C-S-Right swap-window -d -t +1
+          bind-key -n MouseDrag1Status swap-window -d -t=
+
+          bind Escape copy-mode
+          bind-key -T copy-mode-vi v send-keys -X begin-selection
+          bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+          bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+          bind-key -T copy-mode-vi Escape send-keys -X cancel
+          unbind -Tcopy-mode-vi Enter
+
+          set -g renumber-windows on
+
+          set-option -sa terminal-features ',*256col*:RGB'
+        '';
+      };
+    };
+  };
+
+}
+
+
+
+### File: ./modules/shell/zellij.nix ###
+
+{ config, ... }:
+{
+  home-manager.users.${config.user} = {
+    programs.zellij = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+          theme = "catppuccin-mocha";
+      };
+    };
+  };
+}
+
+
+
+### File: ./modules/shell/zsh.nix ###
+
+{ config, pkgs, ... }:
+
+{
+
+  home-manager.users.${config.user} = {
+  
+    programs = {
+      zsh = {
+        enable = true;
+        autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
+        enableCompletion = true;
+  
+        dotDir = ".config/zsh";
+        plugins = [
+          {
+            name = "zsh-nix-shell";
+            file = "nix-shell.plugin.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "chisui";
+              repo = "zsh-nix-shell";
+              rev = "v0.8.0";
+              sha256 = "1lzrn0n4fxfcgg65v0qhnj7wnybybqzs4adz7xsrkgmcsr0ii8b7";
+            };
+          }
+        ]; 
+
+        initExtra = ''
+          proxy_http="http://127.0.0.1:2334"
+          proxy_socks="socks5://127.0.0.1:2334"
+          no_proxy_addr="*.local.choice.shopping,127.0.0.1,localhost,.local.choice.shopping"
+
+          set_proxy() {
+            export http_proxy="$proxy_http"
+            export https_proxy="$proxy_http"
+            export ALL_PROXY="$proxy_socks"
+            export no_proxy="$no_proxy_addr"
+          }
+
+          unset_proxy() {
+            unset http_proxy
+            unset https_proxy
+            unset ALL_PROXY
+            unset no_proxy
+          }
+
+          toggle_proxy() {
+            if [[ -n "$http_proxy" ]]; then
+              unset_proxy
+              echo "Proxy settings have been disabled."
+            else
+              set_proxy
+              echo "Proxy settings have been enabled."
+            fi
+          }
+
+          check_proxy() {
+            if [[ -n "$http_proxy" ]]; then
+              echo "Proxy is currently set to:"
+              echo "HTTP_PROXY: $http_proxy"
+              echo "HTTPS_PROXY: $https_proxy"
+              echo "ALL_PROXY: $ALL_PROXY"
+              echo "NO_PROXY: $no_proxy"
+            else
+              echo "Proxy is currently disabled."
+            fi
+          }
+
+          set_proxy
+        '';
+      };
+    };
+  };
+}
+
+
+
+### File: ./modules/sops/default.nix ###
+
+{ config, ... }: {
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    age = {
+      keyFile = "/persist/system/sops/age/keys.txt";
+      generateKey = false;
+    };
+    secrets = {
+      password = {
+        neededForUsers = true;
+      };
+    };
+  };
+}
+
+
+
+### File: ./modules/steam.nix ###
+
+{ config, ... }:
+
+{
+    programs.steam = {
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    };
+}
+
+
+
+### File: ./modules/terminal/default.nix ###
+
+{ ... }:
+
+{
+    imports = [
+      ./wezterm.nix
+    ];
+}
+
+
+
+### File: ./modules/terminal/wezterm.nix ###
+
+{ config, ... }:
+
+{
+    home-manager.users.${config.user} = {
+        programs.wezterm.enable = true;
+        programs.wezterm.extraConfig = ''
+          local wezterm = require 'wezterm'
+
+          return {
+              hide_tab_bar_if_only_one_tab = true,
+              color_scheme = "Catppuccin Mocha",
+              window_background_opacity = 0.8,
+              font = wezterm.font_with_fallback {
+                "JetBrainsMono Nerd Font",
+                "FiraCode Nerd Font",
+              }
+          }
+        '';
+    };
+}
+
+
+
+### File: ./modules/virtualization/default.nix ###
+
+[
+  ./docker.nix
+  ./wine.nix
+]
+
+
+
+### File: ./modules/virtualization/docker.nix ###
+
+{ config, pkgs, ... }:
+
+{
+  virtualisation.docker = {
+    enable = true;
+  };
+
+  users.groups.docker.members = [ "${config.user}" ];
+
+  environment.systemPackages = with pkgs; [
+    docker
+    docker-compose
+    kubectl
+    kubernetes-helm
+  ];
+}
+
+
+
+### File: ./modules/virtualization/wine.nix ###
+
+{ config, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
+    wine
+  ];
+}
+
+
+
+### File: ./modules/vpn/default.nix ###
+
+{ config, lib, pkgs, ... }:
+
+let
+  hiddify_next = with pkgs; appimageTools.wrapType2 rec {
+    name = "hiddify-next";
+    pname = "hiddify-next";
+    version = "v2.5.7";
+
+    src = fetchurl {
+      url = "https://github.com/hiddify/hiddify-next/releases/download/${version}/Hiddify-Linux-x64.AppImage";
+      hash = "sha256-5RqZ6eyurRtoOVTBLZqoC+ANi4vMODjlBWf3V4GXtMg=";
+    };
+    extraPkgs = pkgs: with pkgs; [ libepoxy ];
+  };
+
+  hiddify_cli = with pkgs; stdenv.mkDerivation rec {
+    pname = "hiddify-cli";
+    version = "3.1.8";
+
+    src = fetchurl {
+      url = "https://github.com/hiddify/hiddify-core/releases/download/v${version}/hiddify-cli-linux-amd64.tar.gz";
+      hash = "sha256-en5iADDZGwxEe5XF8C9ykukAcXwDZN28fsxYURdtVDY=";
+    };
+
+    nativeBuildInputs = [
+      makeWrapper
+      autoPatchelfHook
+    ];
+
+    buildInputs = [
+      stdenv.cc.cc.lib
+      glib
+      gtk3
+    ];
+
+    unpackPhase = ''
+      tar xf $src
+    '';
+
+    installPhase = ''
+      mkdir -p $out/{bin,lib,share}
+      
+      # Copy files
+      if [ -f HiddifyCli ]; then
+        cp HiddifyCli $out/bin/hiddify-cli
+      elif [ -f webui/HiddifyCli ]; then
+        cp webui/HiddifyCli $out/bin/hiddify-cli
+      fi
+      
+      if [ -f libcore.so ]; then
+        cp libcore.so $out/lib/
+      elif [ -f webui/libcore.so ]; then
+        cp webui/libcore.so $out/lib/
+      fi
+      
+      # Copy webui files if they exist
+      if [ -d webui ]; then
+        cp -r webui $out/share/
+      fi
+      
+      # Make the binary executable
+      chmod +x $out/bin/hiddify-cli
+    '';
+
+    # Ensure the binary can find its library
+    postFixup = ''
+      patchelf --set-rpath "$out/lib:${lib.makeLibraryPath buildInputs}" $out/bin/hiddify-cli
+      wrapProgram $out/bin/hiddify-cli \
+        --set LD_LIBRARY_PATH "$out/lib:${lib.makeLibraryPath buildInputs}"
+    '';
+
+    meta = with lib; {
+      description = "Hiddify CLI client";
+      homepage = "https://github.com/hiddify/hiddify-core";
+      license = licenses.gpl3;
+      platforms = platforms.linux;
+    };
+  };
+
+  hiddifyDesktopItem = pkgs.makeDesktopItem {
+    name = "hiddify-next";
+    desktopName = "Hiddify-Next";
+    exec = "${hiddify_next}/bin/hiddify-next";
+    icon = "hiddify-next";
+    categories = [ "Network" ];
+  };
+
+in {
+  environment.systemPackages = [
+    hiddify_next
+    hiddify_cli
+    hiddifyDesktopItem
+  ];
+
+  # Desktop autostart entry
+  environment.etc."xdg/autostart/hiddify-next.desktop".source = 
+    "${hiddifyDesktopItem}/share/applications/hiddify-next.desktop";
+
+  # Systemd service for hiddify-cli
+  # systemd.services.hiddify-cli = {
+  #   description = "Hiddify CLI Service";
+  #   after = [ "network.target" ];
+  #   wantedBy = [ "multi-user.target" ];
+  #
+  #   # You'll need to replace these with your actual config values
+  #   environment = {
+  #     HIDDIFY_CONFIG = "/path/to/your/config.json";
+  #     HIDDIFY_APP_CONFIG = "/path/to/your/app-config.json";
+  #   };
+  #
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     ExecStart = "${hiddify_cli}/bin/hiddify-cli run -c $HIDDIFY_CONFIG -d $HIDDIFY_APP_CONFIG";
+  #     Restart = "always";
+  #     RestartSec = "10";
+  #     User = "root"; # You might want to create a dedicated user instead
+  #   };
+  # };
+}
+
+
+
+
+### File: ./README.md ###
+
+# NixOS Configuration
+
+Personal NixOS configuration with impermanence setup and automated disk management.
+
+## Structure
+
+```
+.
+├── flake.nix              # Main flake configuration
+├── hosts/                 # Host-specific configurations
+│   ├── a15/              # Laptop configuration
+│   │   ├── configuration.nix
+│   │   ├── disko-config.nix
+│   │   └── home.nix
+│   └── common.nix        # Shared configuration
+├── modules/              # Modular configurations
+│   ├── desktops/        # Desktop environments
+│   ├── neovim/          # Neovim configuration
+│   ├── shell/           # Shell configurations
+│   └── ...
+└── justfile             # Command automation
+```
+
+## Initial Setup
+
+### 1. Boot from NixOS Installation Media
+
+### 2. Format Disks
+WARNING: This will DESTROY ALL DATA on the configured disks!
+
+```bash
+# Clone this repository
+git clone <repository-url> /mnt/etc/nixos
+
+# Format disks according to disko configuration
+just format-disks
+```
+
+### 3. Install NixOS
+```bash
+# Install NixOS with the current configuration
+just install
+```
+
+### 4. Post-Installation
+After rebooting into the new system:
+```bash
+# Rebuild the system to apply all configurations
+just rebuild
+```
+
+## System Management
+
+### Daily Operations
+```bash
+just rebuild            # Rebuild system configuration
+just update            # Update flake inputs
+just list              # List all system generations
+just clean             # Clean up old generations
+```
+
+### Development
+```bash
+just check             # Dry-build configuration
+just diff              # Show configuration changes
+```
+
+### Disk and Persistence Management
+```bash
+just list-persist      # List persisted files/directories
+just check-persist     # Check persistence status
+just clean-roots       # Clean old root snapshots
+```
+
+### Maintenance
+```bash
+just clean-all         # Remove all old generations
+```
+
+## Impermanence Setup
+
+This configuration uses an impermanent root with persistent directories:
+
+### System Persistence (/persist/system)
+- /etc/nixos
+- /var/log
+- /var/lib/bluetooth
+- /var/lib/nixos
+- Other system-critical directories
+
+### User Persistence (/persist/home)
+- Downloads
+- Documents
+- .ssh
+- Other user-specific directories
+
+## Disk Layout
+
+The system uses a dual-disk setup with:
+
+### System Disk (500GB NVMe)
+- Boot partition (512MB)
+- Swap partition (32GB)
+- Root partition with BTRFS subvolumes:
+  - /root (ephemeral)
+  - /persist (persistent system data)
+  - /nix (nix store)
+
+### Data Disk (1TB NVMe)
+- Home partition with BTRFS subvolumes:
+  - /home (ephemeral)
+  - /persist_home (persistent user data)
+
+## Troubleshooting
+
+### System Won't Boot
+1. Boot from installation media
+2. Mount your system:
+   ```bash
+   mount /dev/root_vg/root /mnt
+   mount /dev/root_vg/home /mnt/home
+   ```
+3. Chroot and rebuild:
+   ```bash
+   nixos-enter
+   nixos-rebuild switch
+   ```
+
+### Persistence Issues
+Check mount points and BTRFS subvolumes:
+```bash
+just check-persist
+```
+
+
+
+### File: ./secrets/secrets.yaml ###
+
+password: ENC[AES256_GCM,data:bk5AQ7/Hsh68d7ybsGp+lRlsjJtltE7KxrJXhNK5OYkgaSjxujnV+yF6XFOYDfEPNFh55mKzemD/QKiTHZdq3FSKNbg5xi+8bjG6Wey6j2YNbTKgmhMLcm1oJBnViONLhfEaLx/nplHo5Q==,iv:qIWd3Vjv4EdqgLewixQW615suuCzVmXEq1LpdEWm+4U=,tag:8sLHp29g47uRaAbiqXJe/w==,type:str]
+anthropic-api-key: ENC[AES256_GCM,data:22D4bF4z8zTrzLcmTnrrlp6fn0AMWJZMwB6xHZBO2ZWklJrHNydh+aOT5by1WJdWZ2fXjCKjKyDKpm9la+nVRNrFGod5LiaWnNy/NBo4Da0/t147zhZmHbfpIzij6IufXDSi7hYL2DBP/HqW,iv:rtyR/O0QX3Xn2+pqYJYFk0XpfNLiCkmZnzWTIZYhbMA=,tag:G6qspF4Cz6X8qYLNj1K8YQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wvg4dwfp2drzefz9fydqmpyxhymt99sn59mh3l387xu9gnkws5ssz5vrpq
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA4VG9URTFTZzljYUlJK1RL
+            MWsrWm5GVDFGK2d6aEpNVlBUSy9HZ2I1bFhJCnJtMXZsSkNtL0R1dHRzallmUm1O
+            WXUrT0I5NlRZUzZmTit2TTJyY2xrcmsKLS0tIDVCeFplQVJLaHd2S1BWb3hWQjBh
+            a2k2U3N2anBmaHFUd0ovcENBS1BBSWcKpWSgp/D4JlzcPO+UjDUKvjQvQmDl+Vfp
+            xAP62AI06U5AXdf/Da59SorXcWpFuPwKYPUWXjyzDGE8Ac+FjmwNvg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-01-17T17:56:41Z"
+    mac: ENC[AES256_GCM,data:fw6KOAhJ8WqfoXZr5+27TCHesbWI1NOmMNkHplGjXIg2mfgpJpaa01QASR63lOKYhen/ChMXtiHHRmNHLrXRhkmyQ2n3jF6bzfg3y8MeAQs0J39x8S4vjE5BfSc8KMevSPekC/+8vBSLTyqJZe4Xk3DGevLSe2FA1f23H5kY5xY=,iv:MCnDVIBR/yukNzEe0hZYwEbBXhdyfqlWWVd2h0+hFm4=,tag:sIu2RO0l4J6ZE0NEbyXwOw==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.2
+
+
+
+### File: ./shell.nix ###
+
+#################### DevShell ####################
+#
+# Custom shell for bootstrapping on new hosts, modifying nix-config, and secrets management
+
+{ pkgs ? # If pkgs is not defined, instantiate nixpkgs from locked commit
+  let
+    lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
+    nixpkgs = fetchTarball {
+      url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+      sha256 = lock.narHash;
+    };
+  in
+  import nixpkgs { overlays = [ ]; }
+, ...
+}: {
+  default = pkgs.mkShell {
+    NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+    nativeBuildInputs = builtins.attrValues {
+      inherit (pkgs)
+        # Required for pre-commit hook 'nixpkgs-fmt' only on Darwin
+        # REF: <https://discourse.nixos.org/t/nix-shell-rust-hello-world-ld-linkage-issue/17381/4>
+        libiconv
+
+        nix
+        home-manager
+        git
+        just
+        pre-commit
+
+        age
+        ssh-to-age
+        sops;
+    };
+  };
+}
+
+
+
+### File: ./templates/python/flake.nix ###
+
+# taken from https://github.com/shahinism/devenv-templates/blob/main/python/flake.nix
+
+{
+  # TODO update me
+  description = "Description for the project";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    devenv.url = "github:cachix/devenv";
+    nixpkgs-python.url = "github:cachix/nixpkgs-python";
+    nix2container.url = "github:nlewo/nix2container";
+    nix2container.inputs.nixpkgs.follows = "nixpkgs";
+    mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+  };
+
+  nixConfig = {
+    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+    extra-substituters = "https://devenv.cachix.org";
+  };
+
+  outputs = inputs@{ flake-parts, nixpkgs, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.devenv.flakeModule
+      ];
+      systems = [ "x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+
+      perSystem = { config, self', inputs', pkgs, system, ... }:
+        let
+          python-packages = p:
+            with p; [
+              pip
+              debugpy
+            ];
+        in {
+        # Per-system attributes can be defined here. The self' and inputs'
+        # module parameters provide easy access to attributes of the same
+        # system.
+        devenv.shells.default = {
+          # TODO update me
+          name = "Name of the project";
+
+          imports = [
+            # This is just like the imports in devenv.nix.
+            # See https://devenv.sh/guides/using-with-flake-parts/#import-a-devenv-module
+            # ./devenv-foo.nix
+          ];
+
+          # https://devenv.sh/reference/options/
+          packages = with pkgs;
+            [
+              nodePackages.pyright
+              ruff
+              ruff-lsp
+
+              just # makefile alternative
+              stdenv.cc.cc.lib # required by Jupyter
+              (python3.withPackages python-packages)
+            ];
+
+          # https://devenv.sh/basics/
+          env = {
+            GREET = "🛠️ Let's hack 🧑🏻‍💻";
+          };
+
+          # https://devenv.sh/scripts/
+          scripts.hello.exec = "echo $GREET";
+
+          enterShell = ''
+            hello
+          '';
+
+          # https://devenv.sh/languages/
+          languages.python = {
+            enable = true;
+            version = "3.12";
+            poetry = {
+              enable = true;
+              activate.enable = true;
+              install.enable = true;
+              install.allExtras = true;
+            };
+          };
+
+          # Make diffs fantastic
+          difftastic.enable = true;
+
+          # https://devenv.sh/pre-commit-hooks/
+          pre-commit.hooks = {
+            nixfmt.enable = true;
+            yamllint.enable = true;
+            pyright.enable = true;
+            editorconfig-checker.enable = true;
+            ruff.enable = true;
+          };
+
+          # Plugin configuration
+          pre-commit.settings = {
+            yamllint.relaxed = true;
+          };
+
+          # https://devenv.sh/integrations/dotenv/
+          dotenv.enable = true;
+
+        };
+
+      };
+      flake = {
+        # The usual flake attributes can be defined here, including system-
+        # agnostic ones like nixosModule and system-enumerating ones, although
+        # those are more easily expressed in perSystem.
+
+      };
+    };
+}
+
+
+
+### File: ./templates/python/justfile ###
+
+
+
+
+### File: ./templates/python/pyproject.toml ###
+
+[tool.poetry]
+name = ""
+version = "0.1.0"
+description = ""
+authors = ["John Smith <john.smith@mail.ru>"]
+license = "Proprietary"
+packages = [
+  { include = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+debugpy = "^1.8.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+
+
+
+### File: ./templates/python/src/__main__.py ###
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
+
+
+

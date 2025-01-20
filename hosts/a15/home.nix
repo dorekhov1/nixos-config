@@ -8,11 +8,15 @@
   ];
   home.persistence."/persist/home" = {
     directories = [
-      "Projects"
     ];
     files = [
     ];
     allowOther = true;
+  };
+
+  home.file = {
+    "Games".source = config.lib.file.mkOutOfStoreSymlink "/data/Games";
+    "Work".source = config.lib.file.mkOutOfStoreSymlink "/data/Work";
   };
 
   xdg.mimeApps = {
@@ -27,4 +31,11 @@
     };
   };
 
+  sops = {
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    secrets.anthropic-api-key = {
+      path = "%r/anthropic-api-key";
+    };
+  };
 }

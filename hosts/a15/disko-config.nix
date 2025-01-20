@@ -1,8 +1,7 @@
-{ ... }: 
+{ config, ... }: 
 
 {
   disko.devices = {
-
     disk = {
       system = {
         type = "disk";
@@ -92,17 +91,40 @@
         type = "lvm_vg";
         lvs = {
           home = {
-            size = "100%FREE";
+            size = "100G";
             content = {
               type = "btrfs";
               extraArgs = ["-f"];
               subvolumes = {
                 "/home" = {
                   mountpoint = "/home";
+                  mountOptions = [
+                    "subvol=home"
+                    "noatime"
+                  ];
                 };
                 "/persist_home" = {
-                  mountOptions = ["subvol=persist_home" "noatime"];
                   mountpoint = "/persist/home";
+                  mountOptions = [
+                    "subvol=persist_home" 
+                    "noatime"
+                  ];
+                };
+              };
+            };
+          };
+          userdata = {
+            size = "100%FREE";
+            content = {
+              type = "btrfs";
+              extraArgs = ["-f"];
+              subvolumes = {
+                "/data" = {
+                  mountpoint = "/data";
+                  mountOptions = [
+                    "subvol=data"
+                    "noatime"
+                  ];
                 };
               };
             };
@@ -110,6 +132,5 @@
         };
       };
     };
-
   };
 }

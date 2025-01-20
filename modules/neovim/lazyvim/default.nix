@@ -22,6 +22,10 @@
 
     ];
 
+    extraConfig = ''
+      let $AVANTE_ANTHROPIC_API_KEY_FILE = '${config.sops.secrets.anthropic-api-key.path}'
+    '';
+
     plugins = with pkgs.vimPlugins; [
       lazy-nvim
     ];

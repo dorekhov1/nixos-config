@@ -74,6 +74,41 @@ install:
 edit-secrets:
   sops secrets/secrets.yaml
 
+setup-sops-keys:
+    #!/usr/bin/env bash
+    echo "Setting up sops age keys..."
+    
+    # Create directories
+    sudo mkdir -p /persist/system/sops/age
+    mkdir -p ~/.config/sops/age
+    
+    # Generate a new age key if it doesn't exist
+    if [ ! -f /persist/system/sops/age/keys.txt ]; then
+        echo "Generating new age key..."
+        age-keygen -o /tmp/keys.txt
+        sudo mv /tmp/keys.txt /persist/system/sops/age/keys.txt
+    fi
+    
+    # Set permissions on system key
+    sudo chmod 600 /persist/system/sops/age/keys.txt
+    sudo chown $USER:users /persist/system/sops/age/keys.txt
+    
+    # Copy and set permissions for user key
+    sudo cp /persist/system/sops/age/keys.txt ~/.config/sops/age/keys.txt
+    sudo chown $USER:users ~/.config/sops/age/keys.txt
+    sudo chown -R $USER:users ~/.config/sops
+    chmod 600 ~/.config/sops/age/keys.txt
+    
+    # Show the public key
+    echo -e "\nYour age public key is:"
+    age-keygen -y ~/.config/sops/age/keys.txt
+    echo -e "\nMake sure to add this public key to your .sops.yaml file!"
+
+    # Output next steps
+    echo -e "\nNext steps:"
+    echo "1. Add this public key to .sops.yaml"
+    echo "2. Update your secrets with: just edit-secrets"
+
 help:
     @just --list
 

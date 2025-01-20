@@ -7,7 +7,12 @@ return {
     build = "make",
     opts = {
       -- Custom configuration
-      provider = "claude", -- Recommended provider
+      provider = "claude",
+      provider_options = {
+        claude = {
+          provider_module = "plugins.avante-provider",
+        },
+      },
       auto_suggestions_provider = "claude",
       claude = {
         endpoint = "https://api.anthropic.com",
@@ -29,14 +34,12 @@ return {
         width = 30,
       },
     },
-    -- Dependencies required by avante
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       "hrsh7th/nvim-cmp",
       "nvim-tree/nvim-web-devicons",
-      -- Support for image pasting
       {
         "HakonHarnes/img-clip.nvim",
         event = "VeryLazy",

@@ -211,7 +211,53 @@
   programs.mosh.enable = true;
 
   # impermanence - persistence configuration
-  fileSystems."/persist".neededForBoot = true;
+  fileSystems = {
+    "/persist"= {
+      neededForBoot = true;
+      options = [ "noatime" ];
+    };
+    "/persist/home"= {
+      neededForBoot = true;
+      options = [ "noatime" ];
+    };
+    "/home"= {
+      neededForBoot = true;
+      options = [ "noatime" ];
+    };
+    "/data"= {
+      neededForBoot = false;
+      options = [ "noatime" ];
+    };
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /data 0755 ${config.user} users"
+    "d /home/${config.user} 0755 ${config.user} users"
+    "d /persist/home/${config.user} 0755 ${config.user} users"
+    "Z /home/${config.user} 0755 ${config.user} users"
+    "Z /persist/home/${config.user} 0755 ${config.user} users"
+    "Z /data 0755 ${config.user} users"
+  ];
+
+  systemd.services.check-mounts = {
+    description = "Check if required filesystems are mounted";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "local-fs.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "check-mounts" ''
+        for dir in /persist /persist/home /home /data; do
+          if ! ${pkgs.util-linux}/bin/mountpoint -q $dir; then
+            echo "Error: $dir is not mounted"
+            exit 1
+          fi
+        done
+        echo "All required filesystems are mounted"
+      '';
+    };
+  };
+
   environment.persistence."/persist/system" = {
     hideMounts = true;
     directories = [

@@ -97,7 +97,11 @@
     #     }
     #   ];
     # };
-
+    
+    home-manager.sharedModules = [
+      inputs.sops-nix.homeManagerModules.sops
+    ];
+  
     ## Setting state version for system
     system.stateVersion = "${config.stateVersion}";
   };
