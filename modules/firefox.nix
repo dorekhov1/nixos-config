@@ -53,6 +53,8 @@
           "browser.theme.content-theme" = 0;
           "browser.theme.toolbar-theme" = 0;
           "browser.in-content.dark-mode" = true;
+          "ui.systemUsesDarkTheme" = 1;
+          "layout.css.prefers-color-scheme.content-override" = 0;
 
           # Performance improvements
           # Increase process count for better parallel processing

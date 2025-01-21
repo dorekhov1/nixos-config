@@ -275,7 +275,7 @@
 
   programs.fuse.userAllowOther = true;
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {inherit inputs; inherit (config) user;};
     users.${config.user} = import ./home.nix;
   };
 

@@ -1,12 +1,12 @@
 
-{ pkgs, inputs, config, ... }:
+{ pkgs, inputs, config, user, ... }:
 
 { 
   home.stateVersion = "23.11";
   imports = [
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
-  home.persistence."/persist/home" = {
+  home.persistence."/persist/home/${user}" = {
     directories = [
     ];
     files = [
