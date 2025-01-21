@@ -246,14 +246,14 @@
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "d /data 0755 ${config.user} users"
-    "d /home/${config.user} 0755 ${config.user} users"
-    "d /persist/home/${config.user} 0755 ${config.user} users"
-    "Z /home/${config.user} 0755 ${config.user} users"
-    "Z /persist/home/${config.user} 0755 ${config.user} users"
-    "Z /data 0755 ${config.user} users"
-  ];
+  # systemd.tmpfiles.rules = [
+  #   "d /data 0755 ${config.user} users"
+  #   "d /home/${config.user} 0755 ${config.user} users"
+  #   "d /persist/home/${config.user} 0755 ${config.user} users"
+  #   "Z /home/${config.user} 0755 ${config.user} users"
+  #   "Z /persist/home/${config.user} 0755 ${config.user} users"
+  #   "Z /data 0755 ${config.user} users"
+  # ];
 
   systemd.services.check-mounts = {
     description = "Check if required filesystems are mounted";
