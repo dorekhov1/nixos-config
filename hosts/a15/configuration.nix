@@ -48,6 +48,22 @@
       
       btrfs subvolume create /btrfs_tmp/root
       umount /btrfs_tmp
+
+
+      mkdir /home_tmp
+      mount /dev/data_vg/home /home_tmp
+      if [[ -e /home_tmp/home ]]; then
+      mkdir -p /home_tmp/old_homes
+      timestamp=$(date --date="@$(stat -c %Y /home_tmp/home)" "+%Y-%m-%-d_%H:%M:%S")
+      mv /home_tmp/home "/home_tmp/old_homes/$timestamp"
+      fi
+
+      for i in $(find /home_tmp/old_homes/ -maxdepth 1 -mtime +30); do
+      delete_subvolume_recursively "$i"
+      done
+
+      btrfs subvolume create /home_tmp/home
+      umount /home_tmp
     '';
 
   };
