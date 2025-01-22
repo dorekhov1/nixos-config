@@ -15,8 +15,7 @@
   };
 
   home.file = {
-    "Games".source = config.lib.file.mkOutOfStoreSymlink "/data/Games";
-    "Work".source = config.lib.file.mkOutOfStoreSymlink "/data/Work";
+    "data".source = config.lib.file.mkOutOfStoreSymlink "/data";
   };
 
   xdg.mimeApps = {
