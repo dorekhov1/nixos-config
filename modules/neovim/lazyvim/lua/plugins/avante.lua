@@ -8,11 +8,6 @@ return {
     opts = {
       -- Custom configuration
       provider = "claude",
-      provider_options = {
-        claude = {
-          provider_module = "plugins.avante-provider",
-        },
-      },
       auto_suggestions_provider = "claude",
       claude = {
         endpoint = "https://api.anthropic.com",
