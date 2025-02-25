@@ -18,6 +18,7 @@ nixpkgs.lib.nixosSystem {
     impermanence.nixosModules.impermanence
     ./disko-config.nix
 
+    # nixos-hardware.nixosModules.asus-fa507nv
     ./hardware-configuration.nix
 
     sops-nix.nixosModules.sops
