@@ -5,6 +5,7 @@
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
@@ -40,6 +41,7 @@
   outputs = inputs @ {
     self,
     nixpkgs,
+    nixpkgs-master,
     nixos-hardware,
     home-manager,
     nur,
@@ -66,7 +68,7 @@
 
     nixosConfigurations = {
       a15 = import ./hosts/a15 {
-       	inherit inputs nixpkgs nixos-hardware overlays vars;
+       	inherit inputs nixpkgs nixpkgs-master nixos-hardware overlays vars;
       };
     };
 

@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
-    ./ollama.nix
+    # ./ollama.nix
+    ./claude.nix
   ];
 }

@@ -37,7 +37,7 @@ with lib;
 
         xkb = {
           layout = "us,us,ru";
-          variant = "dvp,,";
+          variant = ",dvp,";
           options = "grp:win_space_toggle";
         };
 
@@ -353,10 +353,10 @@ with lib;
         update_info=kxkb.upd:remove-empty-lists,kxkb.upd:add-back-resetoptions,kxkb_variants.upd:split-variants
 
         [Layout]
-        DisplayNames=dvp,,
+        DisplayNames=,dvp,
         LayoutList=us,us,ru
         Use=true
-        VariantList=dvp,,
+        VariantList=,dvp,
       '';
     };
 

@@ -150,7 +150,7 @@
       brave
       zoom-us
       xdg-desktop-portal
-      xdg-desktop-portal-kde
+      kdePackages.xdg-desktop-portal-kde
 
       # hiddify-app
 
