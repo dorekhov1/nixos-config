@@ -20,16 +20,16 @@ with lib;
   config = mkIf (config.kde.enable) {
     programs = {
       zsh.enable = true;
-      kdeconnect = {                                # For GSConnect
-        enable = true;
-        package = pkgs.gnomeExtensions.gsconnect;
-      };
     };
 
     services = {
       libinput.enable = true;
       displayManager = {
         sddm.enable = true;                       # Display Manager
+      };
+
+      desktopManager = {
+        plasma6.enable = true;                       # Desktop Manager
       };
 
       xserver = {
@@ -44,9 +44,6 @@ with lib;
         modules = [ pkgs.xf86_input_wacom ];
         wacom.enable = true;
 
-        desktopManager.plasma5 = {
-          enable = true;                            # Desktop Environment
-        };
       };
       pipewire = {
         enable = true;
@@ -55,12 +52,13 @@ with lib;
       };
     };
 
+
     environment = {
       systemPackages = with pkgs.libsForQt5; [      # System-Wide Packages
         bismuth         # Dynamic Tiling
         packagekit-qt   # Package Updater
       ];
-      plasma5.excludePackages = with pkgs.libsForQt5; [
+      plasma6.excludePackages = with pkgs.libsForQt5; [
         elisa
         khelpcenter
         # konsole
