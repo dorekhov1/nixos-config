@@ -156,6 +156,7 @@
           regex
           python
           vimdoc
+          query
         ])).dependencies;
       };
     in

@@ -14,21 +14,16 @@ return {
   dependencies = {
     -- Required.
     "nvim-lua/plenary.nvim",
-
-    -- see below for full list of optional dependencies 👇
   },
   opts = {
     workspaces = {
       {
-        name = "personal",
-        path = "~/vaults/personal",
-      },
-      {
-        name = "work",
-        path = "~/vaults/work",
+        name = "second-brain",
+        path = "~/data/Obsidian/second-brain",
       },
     },
-
-    -- see below for full list of options 👇
+    ui = {
+      enable = false, -- Disable UI to avoid conflict with render-markdown
+    },
   },
 }
