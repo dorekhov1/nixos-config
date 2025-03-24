@@ -1,10 +1,27 @@
 {pkgs, ...}: {
-  home.packages = with pkgs;
+  home.packages = with pkgs; 
     [
+      # Core utilities
       fzf
       fd
       lazygit
       ripgrep
+      
+      # Terminal image/media previewers
+      viu           # Terminal image viewer
+      chafa         # Terminal graphics
+      ueberzugpp    # Terminal image previewer
+      
+      # Image, PDF and document processing tools
+      imagemagick   # For 'magick' and 'convert' commands
+      ghostscript   # For 'gs' PDF rendering
+      mermaid-cli   # For 'mmdc' Mermaid diagrams
+      sqlite        # For picker history and frecency tracking
+      
+      # LaTeX support
+      tectonic      # Modern LaTeX engine
+      # Or alternatively:
+      # texlive.combined.scheme-medium  # Traditional LaTeX with pdflatex
       
       #-- c/c++
       cmake
@@ -28,16 +45,21 @@
             debugpy
             black   # Python formatter
             isort   # Import sorter
+            # Data science and ML packages
+            numpy
+            pandas
+            matplotlib
+            scikit-learn
+            jupyter
+            ipython
           ]
       ))
 
       #-- nix
       nil
-      # rnix-lsp # TODO
-      # nixd
-      statix # Lints and suggestions for the nix programming language
-      deadnix # Find and remove unused code in .nix source files
-      alejandra # Nix Code Formatter
+      statix      # Lints and suggestions for the nix programming language
+      deadnix     # Find and remove unused code in .nix source files
+      alejandra   # Nix Code Formatter
 
       #-- lua
       stylua
@@ -48,7 +70,7 @@
       shellcheck
       shfmt
 
-      #-- javascript/typescript --#
+      #-- javascript/typescript
       nodePackages.nodejs
       nodePackages.typescript
       nodePackages.typescript-language-server
@@ -59,7 +81,6 @@
 
       #-- CloudNative
       nodePackages.dockerfile-language-server-nodejs
-      # terraform  # install via brew on macOS
       terraform-ls
       jsonnet
       jsonnet-language-server

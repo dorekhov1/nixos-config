@@ -157,6 +157,28 @@
           python
           vimdoc
           query
+          vim
+          
+          html
+          css
+          javascript
+          typescript
+          tsx
+          latex
+          scss
+          svelte
+          vue
+          
+          yaml
+          toml
+          json
+          sql
+          dockerfile
+          diff
+          git_rebase
+          gitattributes
+          gitcommit
+          gitignore
         ])).dependencies;
       };
     in
