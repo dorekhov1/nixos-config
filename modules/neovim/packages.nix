@@ -21,6 +21,7 @@
       #-- python
       ruff       # Use new ruff instead of ruff-lsp
       pyright    # python language server
+      basedpyright
       (python311.withPackages (
         ps:
           with ps; [
