@@ -179,6 +179,8 @@
           gitattributes
           gitcommit
           gitignore
+          norg
+          typst
         ])).dependencies;
       };
     in

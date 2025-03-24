@@ -17,6 +17,8 @@
       ghostscript   # For 'gs' PDF rendering
       mermaid-cli   # For 'mmdc' Mermaid diagrams
       sqlite        # For picker history and frecency tracking
+      sqlitebrowser  # For SQLite DB management
+      sqlite-interactive  # Command-line interface
       
       # LaTeX support
       tectonic      # Modern LaTeX engine

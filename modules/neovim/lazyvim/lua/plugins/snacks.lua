@@ -1,75 +1,45 @@
 return {
-  -- Use folke's fork of snacks.nvim
-  {
-    "folke/snacks.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    opts = {
+  "folke/snacks.nvim",
+  event = "VeryLazy",
+  dependencies = {
+    "MunifTanjim/nui.nvim",
+    "nvim-tree/nvim-web-devicons",
+  },
+  config = function()
+    -- Configure Snacks properly with image disabled
+    require("snacks").setup({
       -- Core components
       notifier = {
         enabled = true,
       },
 
-      -- Keep enabled components that are working
-      bigfile = {
-        enabled = true,
-      },
-      dashboard = {
-        enabled = true,
-      },
-      input = {
-        enabled = true,
+      -- Explicitly disable image
+      image = {
+        enabled = false,
       },
 
-      -- Fix picker configuration
+      -- Configure picker properly
       picker = {
         enabled = true,
-        -- Maintain existing vim.ui.select provider if it's working
         ui = {
-          select = false, -- Don't override existing select UI
+          select = true, -- Enable vim.ui.select integration
         },
       },
 
-      -- Fix image settings
-      image = {
-        enabled = true,
-        terminal = {
-          wezterm = {
-            enabled = true,
-          },
-          kitty = {
-            enabled = false,
-          },
-        },
-      },
+      -- Keep the rest of your preferred options
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      input = { enabled = true },
+      explorer = { enabled = false },
+      statuscolumn = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      toggle = { enabled = true },
+      words = { enabled = true },
+    })
 
-      -- Adjust explorer to avoid duplicates with neo-tree
-      explorer = {
-        enabled = false, -- Disable since neo-tree is already active
-      },
-
-      statuscolumn = {
-        enabled = true,
-      },
-
-      quickfile = {
-        enabled = true,
-      },
-      scope = {
-        enabled = true,
-      },
-      scroll = {
-        enabled = true,
-      },
-      toggle = {
-        enabled = true,
-      },
-      words = {
-        enabled = true,
-      },
-    },
-  },
+    -- Set vim.ui.select explicitly
+    vim.ui.select = require("snacks.picker").select
+  end,
 }
