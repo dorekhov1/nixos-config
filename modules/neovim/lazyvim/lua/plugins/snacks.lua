@@ -1,9 +1,14 @@
 return {
-  "LunarVim/snacks.nvim",
-  opts = {
-    picker = {
-      enabled = true, -- Enable the picker
-      use_ui_select = false, -- Don't try to take over vim.ui.select
+  -- Use folke's fork of snacks.nvim instead of LunarVim's
+  {
+    "folke/snacks.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- You can customize the options here
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
     },
   },
+
 }

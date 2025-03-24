@@ -4,7 +4,7 @@ return {
   opts = {
     formatters_by_ft = {
       ["fish"] = {}, -- replace default
-      ["python"] = { "ruff_fix", "ruff_format" },
+      ["python"] = { "ruff_format", "black" },
     },
   },
 }

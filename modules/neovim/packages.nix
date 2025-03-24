@@ -19,15 +19,16 @@
       lldb
 
       #-- python
-       ruff
-       pyright # python language server
-       (python311.withPackages (
-         ps:
-           with ps; [
-             ruff-lsp
-             debugpy
-           ]
-       ))
+      ruff       # Use new ruff instead of ruff-lsp
+      pyright    # python language server
+      (python311.withPackages (
+        ps:
+          with ps; [
+            debugpy
+            black   # Python formatter
+            isort   # Import sorter
+          ]
+      ))
 
       #-- nix
       nil

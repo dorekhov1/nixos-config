@@ -9,10 +9,57 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        pyright = {},
-        ruff_lsp = {
+    opts = function(_, opts)
+      -- Determine which Python LSP to use based on config (defaults to pyright)
+      local lsp = vim.g.lazyvim_python_lsp or "pyright"
+      -- Determine which Ruff implementation to use (defaults to new "ruff")
+      local ruff = vim.g.lazyvim_python_ruff or "ruff"
+
+      -- Configure servers
+      if lsp == "pyright" then
+        opts.servers.pyright = {
+          settings = {
+            pyright = {
+              -- Let Ruff handle imports
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true,
+                typeCheckingMode = "basic",
+              },
+            },
+          },
+        }
+      elseif lsp == "basedpyright" then
+        opts.servers.basedpyright = {
+          settings = {
+            basedpyright = {
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true,
+                typeCheckingMode = "basic",
+              },
+            },
+          },
+        }
+      end
+
+      -- Configure Ruff
+      if ruff == "ruff" then
+        opts.servers.ruff = {
+          cmd_env = { RUFF_TRACE = "messages" },
+          init_options = {
+            settings = {
+              logLevel = "error",
+            },
+          },
           keys = {
             {
               "<leader>co",
@@ -28,19 +75,50 @@ return {
               desc = "Organize Imports",
             },
           },
-        },
-      },
-      setup = {
-        ruff_lsp = function()
-          require("lazyvim.util").lsp.on_attach(function(client, _)
-            if client.name == "ruff_lsp" then
-              -- Disable hover in favor of Pyright
-              client.server_capabilities.hoverProvider = false
-            end
-          end)
-        end,
-      },
-    },
+        }
+      elseif ruff == "ruff_lsp" then
+        opts.servers.ruff_lsp = {
+          keys = {
+            {
+              "<leader>co",
+              function()
+                vim.lsp.buf.code_action({
+                  apply = true,
+                  context = {
+                    only = { "source.organizeImports" },
+                    diagnostics = {},
+                  },
+                })
+              end,
+              desc = "Organize Imports",
+            },
+          },
+        }
+      end
+
+      -- Enable/disable servers
+      local servers = { "pyright", "basedpyright", "ruff", "ruff_lsp" }
+      for _, server in ipairs(servers) do
+        opts.servers[server] = opts.servers[server] or {}
+        opts.servers[server].enabled = (server == lsp) or (server == ruff)
+      end
+
+      -- Set up handlers
+      opts.setup = opts.setup or {}
+
+      -- Configure Ruff LSP to defer to Pyright for certain capabilities
+      opts.setup[ruff] = function()
+        require("lazyvim.util").lsp.on_attach(function(client, _)
+          -- Disable hover in favor of Pyright
+          client.server_capabilities.hoverProvider = false
+          -- Optionally disable other capabilities if needed
+          -- client.server_capabilities.completionProvider = false
+        end)
+        return false -- Return false to allow the default setup to proceed
+      end
+
+      return opts
+    end,
   },
   {
     "nvim-neotest/neotest",
@@ -76,27 +154,26 @@ return {
           name = "My custom launch configuration",
           program = "${file}",
           justMyCode = false,
-          -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
         })
       end,
     },
   },
-  -- {
-  --   "linux-cultist/venv-selector.nvim",
-  --   cmd = "VenvSelect",
-  --   opts = function(_, opts)
-  --     if require("lazyvim.util").has("nvim-dap-python") then
-  --       opts.dap_enabled = true
-  --     end
-  --     return vim.tbl_deep_extend("force", opts, {
-  --       name = {
-  --         "venv",
-  --         ".venv",
-  --         "env",
-  --         ".env",
-  --       },
-  --     })
-  --   end,
-  --   keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv" } },
-  -- },
+  {
+    "williamboman/mason-nvim-dap.nvim",
+    optional = true,
+    opts = {
+      -- Don't mess up DAP adapters provided by nvim-dap-python
+      handlers = {
+        python = function() end,
+      },
+    },
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    optional = true,
+    opts = function(_, opts)
+      opts.auto_brackets = opts.auto_brackets or {}
+      table.insert(opts.auto_brackets, "python")
+    end,
+  },
 }

@@ -22,3 +22,17 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
 -- Copy
 vim.keymap.set({ "v", "n" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 vim.keymap.set("n", "<leader>Y", 'gg"+yG', { desc = "Copy the entire file to system clipboard" })
+
+-- LSP Navigation
+vim.keymap.set("n", "gd", function()
+  require("telescope.builtin").lsp_definitions({ reuse_win = true })
+end, { desc = "Go to Definition" })
+vim.keymap.set("n", "gr", function()
+  require("telescope.builtin").lsp_references()
+end, { desc = "Go to References" })
+vim.keymap.set("n", "gI", function()
+  require("telescope.builtin").lsp_implementations({ reuse_win = true })
+end, { desc = "Go to Implementation" })
+vim.keymap.set("n", "gy", function()
+  require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+end, { desc = "Go to Type Definition" })
