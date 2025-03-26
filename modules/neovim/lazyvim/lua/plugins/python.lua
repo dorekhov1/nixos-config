@@ -11,7 +11,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       -- Determine which Python LSP to use based on config (defaults to pyright)
-      local lsp = vim.g.lazyvim_python_lsp or "pyright"
+      local lsp = vim.g.lazyvim_python_lsp or "basedpyright"
       -- Determine which Ruff implementation to use (defaults to new "ruff")
       local ruff = vim.g.lazyvim_python_ruff or "ruff"
 

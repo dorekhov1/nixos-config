@@ -38,8 +38,7 @@
       lldb
 
       #-- python
-      ruff       # Use new ruff instead of ruff-lsp
-      pyright    # python language server
+      ruff
       basedpyright
       (python311.withPackages (
         ps:
@@ -47,6 +46,7 @@
             debugpy
             black   # Python formatter
             isort   # Import sorter
+            vulture
             # Data science and ML packages
             numpy
             pandas
