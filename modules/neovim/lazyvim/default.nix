@@ -3,6 +3,7 @@
 {
   programs.neovim = {
     enable = true;
+    withPython3 = true;
     extraPackages = with pkgs; [
       # LazyVim
       lua-language-server
@@ -24,6 +25,10 @@
 
     plugins = with pkgs.vimPlugins; [
       lazy-nvim
+    ];
+
+    extraPython3Packages = ps: with ps; [
+      pynvim  # This is the package that provides the 'neovim' Python module
     ];
 
     extraLuaConfig =

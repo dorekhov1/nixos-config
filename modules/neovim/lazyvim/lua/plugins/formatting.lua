@@ -34,7 +34,7 @@ return {
   -- Add custom keybinding specifically for unused imports
   keys = {
     {
-      "<leader>cR",
+      "<leader>cu",
       function()
         require("conform").format({
           formatters = { "ruff_imports" },

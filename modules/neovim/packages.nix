@@ -47,6 +47,7 @@
             black   # Python formatter
             isort   # Import sorter
             vulture
+            pynvim
             # Data science and ML packages
             numpy
             pandas

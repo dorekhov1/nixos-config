@@ -51,7 +51,7 @@ return {
         nil,
         {
           ["source"] = "vulture",
-          ["severity"] = vim.diagnostic.severity.WARN,
+          ["severity"] = vim.diagnostic.severity.INFO,
         }
       ),
     }

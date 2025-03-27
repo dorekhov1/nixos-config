@@ -36,3 +36,42 @@ end, { desc = "Go to Implementation" })
 vim.keymap.set("n", "gy", function()
   require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
 end, { desc = "Go to Type Definition" })
+
+-- Smart paste that respects current indentation
+vim.keymap.set("n", "p", function()
+  -- Get the current indentation level
+  local indent_level = vim.fn.indent(vim.fn.line("."))
+  local lines = vim.fn.getreg('"'):gsub("\n$", ""):split("\n")
+
+  -- Check if we're pasting a Python block
+  local is_python_block = vim.bo.filetype == "python" and #lines > 1
+
+  if is_python_block then
+    -- Determine the minimum indentation in the yanked code
+    local min_indent = math.huge
+    for _, line in ipairs(lines) do
+      if #line:match("^%s*") < min_indent and line:match("%S") then
+        min_indent = #line:match("^%s*")
+      end
+    end
+
+    -- Re-indent each line to match the current position
+    local indented_lines = {}
+    for _, line in ipairs(lines) do
+      if line:match("%S") then
+        local spaces = line:match("^%s*")
+        local content = line:sub(#spaces + 1)
+        local new_indent = string.rep(" ", indent_level + (#spaces - min_indent))
+        table.insert(indented_lines, new_indent .. content)
+      else
+        table.insert(indented_lines, "")
+      end
+    end
+
+    -- Put the indented text
+    vim.api.nvim_put(indented_lines, "l", true, true)
+  else
+    -- For non-python or single-line pastes, use normal p
+    return "p"
+  end
+end, { expr = true, silent = true, desc = "Smart paste respecting indentation" })
