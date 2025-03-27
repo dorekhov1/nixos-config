@@ -78,7 +78,7 @@
     ##
     ## Packages should be managed with home-manager whereever
     ## possible. Only use a set of barebones applications here.
-    environment.systemPackages = with pkgs; [ git vim wget curl age sops ];
+    environment.systemPackages = with pkgs; [ git vim wget curl age sops stdenv.cc.cc.lib gcc13Stdenv.cc.cc.lib zlib ];
     environment.variables = {
       EDITOR = "nvim";
     };
@@ -104,6 +104,39 @@
   
     ## Setting state version for system
     system.stateVersion = "${config.stateVersion}";
+
+
+
+    # Set global environment variables for all programs
+    # environment.variables = {
+    #   LD_LIBRARY_PATH = lib.makeLibraryPath [
+    #     pkgs.stdenv.cc.cc.lib
+    #     pkgs.gcc13Stdenv.cc.cc.lib
+    #     pkgs.zlib
+    #   ];
+    # };
+
+    # Create a Neovim wrapper script
+    environment.shellAliases = {
+      nvim-with-libs = ''
+        env LD_LIBRARY_PATH="${lib.makeLibraryPath [
+          pkgs.stdenv.cc.cc.lib
+          pkgs.gcc13Stdenv.cc.cc.lib
+          pkgs.zlib
+        ]}:$LD_LIBRARY_PATH" nvim
+      '';
+    };
+
+    # For user-specific environment in home-manager
+    home-manager.users.${config.user} = {
+      home.sessionVariables = {
+        LD_LIBRARY_PATH = lib.makeLibraryPath [
+          pkgs.stdenv.cc.cc.lib
+          pkgs.gcc13Stdenv.cc.cc.lib
+          pkgs.zlib
+        ] + ":$LD_LIBRARY_PATH";
+      };
+    };
   };
 }
 

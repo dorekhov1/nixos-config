@@ -3,8 +3,13 @@
 {
   programs.neovim = {
     enable = true;
-    withPython3 = true;
+    # withPython3 = true;
     extraPackages = with pkgs; [
+      # Required C libraries
+      stdenv.cc.cc.lib
+      gcc13Stdenv.cc.cc.lib
+      zlib
+
       # LazyVim
       lua-language-server
       stylua

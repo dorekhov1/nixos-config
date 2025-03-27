@@ -121,20 +121,88 @@ return {
     end,
   },
   {
-    "nvim-neotest/neotest",
-    optional = true,
+    "nvim-neotest/neotest-python",
     dependencies = {
-      "nvim-neotest/neotest-python",
+      "nvim-neotest/neotest",
     },
-    opts = {
-      adapters = {
-        ["neotest-python"] = {
-          -- Here you can specify the settings for the adapter, i.e.
-          -- runner = "pytest",
-          -- python = ".venv/bin/python",
+    ft = { "python" },
+    config = function()
+      -- Configure Python testing adapter
+      local neotest = require("neotest")
+
+      -- Create Python adapter with proper settings
+      local neotest_python = require("neotest-python")({
+        -- Use pytest as the test runner
+        runner = "pytest",
+
+        -- Arguments passed to pytest
+        args = {
+          "--verbose",
+          "--color=yes",
         },
-      },
-    },
+
+        -- Configure debugger settings
+        dap = {
+          justMyCode = false,
+          console = "integratedTerminal",
+        },
+
+        -- Discover parametrized tests
+        pytest_discover_instances = true,
+      })
+
+      -- Register Python adapter with neotest
+      neotest.setup({
+        adapters = {
+          neotest_python,
+        },
+      })
+
+      -- Add Python-specific test commands
+      vim.api.nvim_create_user_command("PytestDir", function(opts)
+        local dir = opts.args ~= "" and opts.args or "tests"
+        local path = vim.fn.getcwd() .. "/" .. dir
+        neotest.run.run(path)
+      end, { nargs = "?", complete = "dir" })
+
+      vim.api.nvim_create_user_command("PytestFile", function(opts)
+        local file = opts.args ~= "" and opts.args or vim.fn.expand("%")
+        neotest.run.run(file)
+      end, { nargs = "?", complete = "file" })
+
+      -- Add key mapping for running test class/method under cursor
+      vim.keymap.set("n", "<leader>tc", function()
+        -- Get the current line
+        local line = vim.fn.getline(".")
+
+        -- Try to find a class or method definition
+        local class_match = line:match("^class%s+([%w_]+)")
+        local method_match = line:match("^%s*def%s+([%w_]+)")
+        local test_name = class_match or method_match
+
+        if test_name then
+          -- Get current file path
+          local file_path = vim.fn.expand("%:p")
+
+          -- Construct the test identifier
+          local test_id = file_path
+          if class_match then
+            test_id = test_id .. "::" .. class_match
+            if method_match then
+              test_id = test_id .. "::" .. method_match
+            end
+          elseif method_match then
+            test_id = test_id .. "::" .. method_match
+          end
+
+          -- Run the specific test
+          neotest.run.run(test_id)
+        else
+          -- Fall back to running the nearest test
+          neotest.run.run()
+        end
+      end, { desc = "Run Test Class/Method Under Cursor" })
+    end,
   },
   {
     "mfussenegger/nvim-dap",
@@ -157,6 +225,35 @@ return {
         })
       end,
     },
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    },
+    ft = { "python" },
+    config = function()
+      -- Get DAP Python adapter
+      local dap_python = require("dap-python")
+
+      -- Configure DAP Python to work with your virtual environment
+      local python_path = vim.fn.exepath("python")
+      dap_python.setup(python_path)
+
+      -- Add Python testing configurations
+      dap_python.test_runner = "pytest"
+
+      -- Add a command to debug the current Python test file
+      vim.api.nvim_create_user_command("PytestDebug", function(opts)
+        local file = opts.args ~= "" and opts.args or vim.fn.expand("%")
+
+        -- Run test with DAP
+        require("neotest").run.run({
+          file,
+          strategy = "dap",
+        })
+      end, { nargs = "?", complete = "file" })
+    end,
   },
   {
     "williamboman/mason-nvim-dap.nvim",
