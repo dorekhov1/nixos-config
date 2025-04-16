@@ -99,7 +99,7 @@
         # Search engines
         search = {
           force = true;
-          default = "DuckDuckGo";
+          default = "ddg";  # Changed from "DuckDuckGo"
           engines = {
             "Nix Packages" = {
               urls = [{
@@ -116,43 +116,46 @@
               urls = [{
                 template = "https://nixos.wiki/index.php?search={searchTerms}";
               }];
-              iconUpdateURL = "https://nixos.wiki/favicon.png";
+              icon = "https://nixos.wiki/favicon.png";  # Changed from iconUpdateURL
               updateInterval = 24 * 60 * 60 * 1000; # every day
               definedAliases = [ "@nw" ];
             };
-            "Bing".metaData.hidden = true;
-            "Google".metaData.alias = "@g"; # create a @g alias
+            "bing".metaData.hidden = true;  # Changed from "Bing"
+            "google".metaData.alias = "@g"; # Changed from "Google"
           };
         };
 
         # Bookmarks
-        bookmarks = [
-          {
-            name = "NixOS";
-            tags = [ "nix" "os" ];
-            keyword = "nixos";
-            url = "https://nixos.org/";
-          }
-          {
-            name = "Home-Manager";
-            url = "https://nix-community.github.io/home-manager/";
-            tags = [ "nix" "home-manager" ];
-          }
-          {
-            name = "Development";
-            toolbar = true;
-            bookmarks = [
-              {
-                name = "GitHub";
-                url = "https://github.com/";
-              }
-              {
-                name = "NixOS Search";
-                url = "https://search.nixos.org/";
-              }
-            ];
-          }
-        ];
+        bookmarks = {
+          force = true;  # Added as required by new format
+          settings = [
+            {
+              name = "NixOS";
+              tags = [ "nix" "os" ];
+              keyword = "nixos";
+              url = "https://nixos.org/";
+            }
+            {
+              name = "Home-Manager";
+              url = "https://nix-community.github.io/home-manager/";
+              tags = [ "nix" "home-manager" ];
+            }
+            {
+              name = "Development";
+              toolbar = true;
+              bookmarks = [
+                {
+                  name = "GitHub";
+                  url = "https://github.com/";
+                }
+                {
+                  name = "NixOS Search";
+                  url = "https://search.nixos.org/";
+                }
+              ];
+            }
+          ];
+        };
 
         userChrome = ''
           #Bitwarden_toolbar-button {

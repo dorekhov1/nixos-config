@@ -178,6 +178,8 @@
 
       input-remapper
       xclicker
+
+      scrcpy
     ];
   };
 

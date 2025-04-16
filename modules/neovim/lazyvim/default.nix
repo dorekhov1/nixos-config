@@ -100,7 +100,7 @@
             tmux-nvim
             vim-just
             harpoon
-            codeium-nvim
+            windsurf-nvim
 
             obsidian-nvim
         ];
