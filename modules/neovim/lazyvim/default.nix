@@ -101,6 +101,7 @@
             vim-just
             harpoon
             windsurf-nvim
+            remote-nvim-nvim
 
             obsidian-nvim
         ];

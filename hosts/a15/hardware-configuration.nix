@@ -54,7 +54,7 @@
 
   # Power management
   services.power-profiles-daemon.enable = true;
-  boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+  boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "snd-intel-dspcfg.dsp_driver=1" ];
 
   # ASUS-specific features
   services.asusd = {
