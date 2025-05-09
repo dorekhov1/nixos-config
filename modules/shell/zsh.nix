@@ -25,10 +25,9 @@
           }
         ]; 
 
-        initExtra = ''
+        initContent = ''
           proxy_http="http://127.0.0.1:2334"
           proxy_socks="socks5://127.0.0.1:2334"
-          no_proxy_addr="*.local.choice.shopping,127.0.0.1,localhost,.local.choice.shopping"
 
           set_proxy() {
             export http_proxy="$proxy_http"

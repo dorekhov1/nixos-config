@@ -147,6 +147,7 @@
 
       # discord
       telegram-desktop
+      slack
       brave
       zoom-us
       xdg-desktop-portal
@@ -180,6 +181,7 @@
       xclicker
 
       scrcpy
+      gh
     ];
   };
 

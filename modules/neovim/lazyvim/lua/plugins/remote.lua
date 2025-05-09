@@ -1,10 +1,13 @@
 return {
   "amitds1997/remote-nvim.nvim",
-  version = "*", -- Pin to GitHub releases
   dependencies = {
-    "nvim-lua/plenary.nvim", -- For standard functions
-    "MunifTanjim/nui.nvim", -- To build the plugin UI
-    "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
+    "nvim-lua/plenary.nvim",
+    "MunifTanjim/nui.nvim",
+    "nvim-telescope/telescope.nvim",
   },
-  config = true,
+  priority = 1000, -- Give this a high priority to ensure it loads early
+  lazy = false, -- Don't lazy load
+  config = function()
+    require("remote-nvim").setup()
+  end,
 }
