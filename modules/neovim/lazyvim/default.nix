@@ -190,7 +190,7 @@
           gitattributes
           gitcommit
           gitignore
-          norg
+          # norg
           typst
         ])).dependencies;
       };

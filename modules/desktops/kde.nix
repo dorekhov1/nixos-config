@@ -271,7 +271,7 @@ with lib;
         immutability=1
         plugin=org.kde.plasma.icontasks
         [Containments][2][Applets][5][Configuration][General]
-        launchers=applications:org.kde.dolphin.desktop,applications:firefox.desktop,applications:org.wezfurlong.wezterm.desktop,applications:org.telegram.desktop.desktop
+        launchers=applications:org.kde.dolphin.desktop,applications:firefox.desktop,applications:org.wezfurlong.wezterm.desktop,applications:org.telegram.desktop.desktop,applicatins:cursor.desktop
         [Containments][2][Applets][6]
         immutability=1
         plugin=org.kde.plasma.marginsseparator
