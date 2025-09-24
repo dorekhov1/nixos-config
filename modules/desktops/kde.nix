@@ -53,18 +53,18 @@ with lib;
     };
 
 
-    environment = {
-      systemPackages = with pkgs.libsForQt5; [      # System-Wide Packages
-        bismuth         # Dynamic Tiling
-        packagekit-qt   # Package Updater
-      ];
-      plasma6.excludePackages = with pkgs.libsForQt5; [
-        elisa
-        khelpcenter
-        # konsole
-        oxygen
-      ];
-    };
+    # environment = {
+    #   systemPackages = with pkgs.libsForQt5; [      # System-Wide Packages
+    #     # bismuth         # Dynamic Tiling
+    #     # packagekit-qt   # Package Updater
+    #   ];
+    #   plasma6.excludePackages = with pkgs.libsForQt5; [
+    #     # elisa
+    #     # khelpcenter
+    #     # konsole
+    #     # oxygen
+    #   ];
+    # };
 
     home-manager.users.${config.user} = {
       # KDE Theme settings

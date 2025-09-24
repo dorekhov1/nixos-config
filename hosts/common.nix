@@ -117,26 +117,10 @@
     # };
 
     # Create a Neovim wrapper script
-    environment.shellAliases = {
-      nvim-with-libs = ''
-        env LD_LIBRARY_PATH="${lib.makeLibraryPath [
-          pkgs.stdenv.cc.cc.lib
-          pkgs.gcc13Stdenv.cc.cc.lib
-          pkgs.zlib
-        ]}:$LD_LIBRARY_PATH" nvim
-      '';
-    };
+    environment.shellAliases = {};
 
     # For user-specific environment in home-manager
-    home-manager.users.${config.user} = {
-      home.sessionVariables = {
-        LD_LIBRARY_PATH = lib.makeLibraryPath [
-          pkgs.stdenv.cc.cc.lib
-          pkgs.gcc13Stdenv.cc.cc.lib
-          pkgs.zlib
-        ] + ":$LD_LIBRARY_PATH";
-      };
-    };
+    home-manager.users.${config.user} = {};
   };
 }
 

@@ -99,8 +99,18 @@
         # Search engines
         search = {
           force = true;
-          default = "ddg";  # Changed from "DuckDuckGo"
+          default = "Perplexity";  
           engines = {
+              "Perplexity" = {
+                urls = [{
+                  template = "https://www.perplexity.ai/search";
+                  params = [
+                    { name = "q"; value = "{searchTerms}"; }
+                  ];
+                }];
+                icon = "https://www.perplexity.ai/favicon.ico";
+                definedAliases = [ "@pp" ];
+              };
             "Nix Packages" = {
               urls = [{
                 template = "https://search.nixos.org/packages";

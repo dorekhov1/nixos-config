@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-  version = "0.2.55";
-  srcSha256 = "i29m6HX3GbGvROI5Kj4xq7mpFREZcOevBAmIHgaHFrE=";
+  version = "1.0.85";
+  srcSha256 = "faOh/l88ZFAsw4n22yz4GMov5nusUg7JeVL7n1eD1aM=";
 
   # Using the original implementation with mkDerivation instead of buildNpmPackage
   claude-code = pkgs.stdenv.mkDerivation rec {

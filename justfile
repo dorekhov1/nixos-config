@@ -4,7 +4,7 @@ disk_config := "./hosts/a15/disko-config.nix"
 
 rebuild:
     @echo "Rebuilding NixOS configuration..."
-    nixos-rebuild switch --flake {{flake}} --use-remote-sudo --option eval-cache false --show-trace
+    nixos-rebuild switch --flake {{flake}} --sudo --option eval-cache false --show-trace
 
 update:
     @echo "Updating flake inputs..."

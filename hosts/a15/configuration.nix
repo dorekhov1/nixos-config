@@ -137,7 +137,7 @@
 
       # File Management
       file-roller       # Archive Manager
-      pcmanfm           # File Browser
+      # pcmanfm           # File Browser
       p7zip             # Zip Encryption
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
@@ -177,42 +177,11 @@
 
       obsidian
 
-      input-remapper
-      xclicker
-
       scrcpy
       gh
     ];
   };
 
-  services = {
-    displayManager.sddm = {
-	    enable = true;
-    };
-    xserver.enable = true;
-    printing = {
-      enable = true;
-    };
-    pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      pulse.enable = true;
-      jack.enable = true;
-    };
-    pulseaudio.enable = false;
-    openssh = {
-      enable = true;
-      allowSFTP = true;
-      extraConfig = ''
-        HostKeyAlgorithms +ssh-rsa
-      '';
-    };
-  };
-  programs.ssh.startAgent = true;
-  programs.mosh.enable = true;
 
   # impermanence - persistence configuration
   fileSystems = {

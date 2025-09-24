@@ -18,16 +18,15 @@
       mermaid-cli   # For 'mmdc' Mermaid diagrams
       sqlite        # For picker history and frecency tracking
       sqlitebrowser  # For SQLite DB management
-      sqlite-interactive  # Command-line interface
       
       # LaTeX support
-      tectonic      # Modern LaTeX engine
+      # tectonic      # Modern LaTeX engine
       # Or alternatively:
       # texlive.combined.scheme-medium  # Traditional LaTeX with pdflatex
       
       #-- c/c++
       cmake
-      cmake-language-server
+      # cmake-language-server
       gnumake
       checkmake
       # c/c++ compiler, required by nvim-treesitter!
@@ -40,7 +39,7 @@
       #-- python
       ruff
       basedpyright
-      (python311.withPackages (
+      (python312.withPackages (
         ps:
           with ps; [
             debugpy
@@ -83,7 +82,7 @@
       emmet-ls
 
       #-- CloudNative
-      nodePackages.dockerfile-language-server-nodejs
+      # nodePackages.dockerfile-language-server-nodejs
       terraform-ls
       jsonnet
       jsonnet-language-server

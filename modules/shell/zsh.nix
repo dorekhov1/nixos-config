@@ -11,7 +11,7 @@
         syntaxHighlighting.enable = true;
         enableCompletion = true;
   
-        dotDir = ".config/zsh";
+        dotDir = "/home/${config.user}/.config/zsh";
         plugins = [
           {
             name = "zsh-nix-shell";

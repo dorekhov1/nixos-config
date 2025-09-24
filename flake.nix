@@ -58,6 +58,18 @@
 
     overlays = [
       nur.overlays.default
+      (final: prev: { # temporary - remove when a newer version is available
+        python311 = prev.python311.override {
+          packageOverrides = pyFinal: pyPrev: {
+            scipy = pyPrev.scipy.overridePythonAttrs (old: {
+              doCheck = false;
+            });
+            jupyter-server = pyPrev.jupyter-server.overridePythonAttrs (old: {
+              doCheck = false;
+            });
+          };
+        };
+      })
     ];
 
     forAllSystems = nixpkgs.lib.genAttrs [

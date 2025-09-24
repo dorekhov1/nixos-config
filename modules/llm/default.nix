@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    # ./ollama.nix
+    ./ollama.nix
     ./claude.nix
     ./code_cursor.nix
   ];
