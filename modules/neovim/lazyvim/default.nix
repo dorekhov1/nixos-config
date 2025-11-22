@@ -58,15 +58,13 @@
             neoconf-nvim
             neodev-nvim
             noice-nvim
+            snacks-nvim
             nui-nvim
             nvim-cmp
             nvim-lint
             nvim-lspconfig
             nvim-notify
             nvim-spectre
-            nvim-treesitter
-            nvim-treesitter-context
-            nvim-treesitter-textobjects
             nvim-ts-autotag
             nvim-ts-context-commentstring
             nvim-web-devicons
@@ -82,12 +80,6 @@
             which-key-nvim
             { name = "LuaSnip"; path = luasnip; }
             { name = "catppuccin"; path = catppuccin-nvim; }
-            { name = "mini.ai"; path = mini-nvim; }
-            { name = "mini.bufremove"; path = mini-nvim; }
-            { name = "mini.comment"; path = mini-nvim; }
-            { name = "mini.indentscope"; path = mini-nvim; }
-            { name = "mini.pairs"; path = mini-nvim; }
-            { name = "mini.surround"; path = mini-nvim; }
 
             nvim-dap
             nvim-dap-ui
@@ -132,13 +124,17 @@
             -- The following configs are needed for fixing lazyvim on nix
             -- force enable telescope-fzf-native.nvim
             { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
+            -- explicitly use the new mini.icons repo to avoid rename warnings
+            { "nvim-mini/mini.icons" },
+            -- disable old repo name to silence rename notice
+            { "echasnovski/mini.icons", enabled = false },
 
             -- { import = "lazyvim.plugins.extras.ui.alpha" },
             -- { import = "lazyvim.plugins.extras.ui.edgy" },
 
             -- disable mason.nvim, use programs.neovim.extraPackages
-            { "williamboman/mason-lspconfig.nvim", enabled = false },
-            { "williamboman/mason.nvim", enabled = false },
+            { "mason-org/mason-lspconfig.nvim", enabled = false },
+            { "mason-org/mason.nvim", enabled = false },
 
             -- import/override with your plugins
             { import = "plugins" },

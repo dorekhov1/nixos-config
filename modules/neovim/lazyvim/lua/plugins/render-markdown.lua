@@ -2,7 +2,7 @@ return {
   "MeanderingProgrammer/render-markdown.nvim",
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
-    "echasnovski/mini.icons", -- Ensure we have the icons dependency
+    "nvim-mini/mini.icons", -- Ensure we have the icons dependency
   },
   opts = {
     -- Use only direct options supported by the plugin - no nesting

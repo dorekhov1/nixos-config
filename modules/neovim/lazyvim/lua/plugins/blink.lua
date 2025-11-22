@@ -66,13 +66,14 @@ return {
       default = { "lsp", "path", "snippets", "buffer" },
     },
 
-    -- REMOVE THIS FIELD - it's causing the error
-    -- cmdline = {
-    --   enabled = false,
-    -- },
+    -- Ensure cmdline has a valid keymap table to avoid validation errors
+    cmdline = {
+      keymap = { preset = "inherit" },
+    },
 
     keymap = {
-      preset = "enter",
+      -- use a widely supported preset
+      preset = "super-tab",
       ["<C-y>"] = { "select_and_accept" },
     },
   },

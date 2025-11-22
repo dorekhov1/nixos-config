@@ -107,7 +107,7 @@ return {
       opts.setup = opts.setup or {}
       opts.setup.basedpyright = function()
         -- Explicitly enable hover support
-        require("lazyvim.util").lsp.on_attach(function(client, buffer)
+        Snacks.util.lsp.on(function(client, buffer)
           -- Force enable hover support for BasedPyright
           if client.name == "basedpyright" then
             client.server_capabilities.hoverProvider = true
@@ -118,7 +118,7 @@ return {
 
       -- Configure Ruff LSP to defer to Pyright for certain capabilities
       opts.setup[ruff] = function()
-        require("lazyvim.util").lsp.on_attach(function(client, _)
+        Snacks.util.lsp.on(function(client, _)
           -- Disable hover in favor of Pyright
           client.server_capabilities.hoverProvider = false
           -- Optionally disable other capabilities if needed

@@ -39,7 +39,13 @@ return {
       words = { enabled = true },
     })
 
-    -- Set vim.ui.select explicitly
+    -- Set vim.ui.select explicitly and re-assert after LazyDone so nothing overrides it
     vim.ui.select = require("snacks.picker").select
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "LazyDone",
+      callback = function()
+        vim.ui.select = require("snacks.picker").select
+      end,
+    })
   end,
 }

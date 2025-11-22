@@ -84,8 +84,8 @@
       #-- CloudNative
       # nodePackages.dockerfile-language-server-nodejs
       terraform-ls
-      jsonnet
-      jsonnet-language-server
+      # jsonnet
+      # jsonnet-language-server
       hadolint # Dockerfile linter
 
       #-- AI Coding Assistance
