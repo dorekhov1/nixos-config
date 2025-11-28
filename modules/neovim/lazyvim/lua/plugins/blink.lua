@@ -72,8 +72,7 @@ return {
     },
 
     keymap = {
-      -- use a widely supported preset
-      preset = "super-tab",
+      preset = "enter",
       ["<C-y>"] = { "select_and_accept" },
     },
   },
@@ -92,21 +91,11 @@ return {
       end
     end
 
-    -- add ai_accept to <Tab> key
-    if not opts.keymap["<Tab>"] then
-      if opts.keymap.preset == "super-tab" then -- super-tab
-        opts.keymap["<Tab>"] = {
-          require("blink.cmp.keymap.presets")["super-tab"]["<Tab>"][1],
-          LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
-          "fallback",
-        }
-      else -- other presets
-        opts.keymap["<Tab>"] = {
-          LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
-          "fallback",
-        }
-      end
-    end
+    -- add ai_accept to <Tab> key without relying on preset internals
+    opts.keymap["<Tab>"] = opts.keymap["<Tab>"] or {
+      LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
+      "fallback",
+    }
 
     -- Unset custom prop to pass blink.cmp validation
     opts.sources.compat = nil

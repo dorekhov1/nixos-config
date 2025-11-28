@@ -107,7 +107,7 @@ return {
       opts.setup = opts.setup or {}
       opts.setup.basedpyright = function()
         -- Explicitly enable hover support
-        Snacks.util.lsp.on(function(client, buffer)
+        Snacks.util.lsp.on(function(bufnr, client)
           -- Force enable hover support for BasedPyright
           if client.name == "basedpyright" then
             client.server_capabilities.hoverProvider = true
@@ -118,7 +118,7 @@ return {
 
       -- Configure Ruff LSP to defer to Pyright for certain capabilities
       opts.setup[ruff] = function()
-        Snacks.util.lsp.on(function(client, _)
+        Snacks.util.lsp.on(function(_, client)
           -- Disable hover in favor of Pyright
           client.server_capabilities.hoverProvider = false
           -- Optionally disable other capabilities if needed

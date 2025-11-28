@@ -53,7 +53,6 @@
             friendly-snippets
             gitsigns-nvim
             indent-blankline-nvim
-            lualine-nvim
             neo-tree-nvim
             neoconf-nvim
             neodev-nvim
@@ -126,8 +125,6 @@
             { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
             -- explicitly use the new mini.icons repo to avoid rename warnings
             { "nvim-mini/mini.icons" },
-            -- disable old repo name to silence rename notice
-            { "echasnovski/mini.icons", enabled = false },
 
             -- { import = "lazyvim.plugins.extras.ui.alpha" },
             -- { import = "lazyvim.plugins.extras.ui.edgy" },
