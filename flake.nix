@@ -82,10 +82,14 @@
       a15 = import ./hosts/a15 {
        	inherit inputs nixpkgs nixpkgs-master nixos-hardware overlays vars;
       };
+      vps = import ./hosts/vps {
+        inherit inputs nixpkgs nixpkgs-master nixos-hardware overlays vars;
+      };
     };
 
     homeConfigurations = {
       a15 = nixosConfigurations.a15.config.home-manager.users.${vars.user}.home;
+      vps = nixosConfigurations.vps.config.home-manager.users.${vars.user}.home;
     };
 
     templates = {
