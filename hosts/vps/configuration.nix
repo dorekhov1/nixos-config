@@ -74,7 +74,6 @@
         environment = {
           TZ = config.time.timeZone;
         };
-        logDriver = "journald";
       };
     };
   };
