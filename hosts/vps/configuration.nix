@@ -4,7 +4,6 @@
   imports = [
     ../../modules/shell
     ../../modules/git.nix
-    ../../modules/neovim
   ];
 
   # Bootloader: assume single disk /dev/vda (adjust if provider differs)
@@ -51,7 +50,6 @@
     netcat-openbsd
     iperf3
     dnsutils
-    docker-compose
   ];
 
   services.fail2ban.enable = true;
