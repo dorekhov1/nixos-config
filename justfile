@@ -74,6 +74,15 @@ install:
 edit-secrets:
   sops secrets/secrets.yaml
 
+decrypt-secrets:
+  sops -d secrets/secrets.yaml > secrets/secrets.decrypted.yaml
+
+reencrypt-secrets:
+  sops --input-type yaml --output-type yaml -e secrets/secrets.decrypted.yaml > secrets/secrets.yaml
+
+deploy-vps host:
+  nixos-rebuild switch --flake .#vps --target-host {{host}} --option max-jobs 1 --option cores 2 --sudo
+
 setup-sops-keys:
     #!/usr/bin/env bash
     echo "Setting up sops age keys..."

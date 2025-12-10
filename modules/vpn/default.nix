@@ -1,3 +1,10 @@
+{ ... }:
+{
+  imports = [
+    ./server.nix
+    ./client.nix
+  ];
+}
 { config, lib, pkgs, ... }:
 
 let

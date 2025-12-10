@@ -9,6 +9,9 @@
       password = {
         neededForUsers = true;
       };
+      traefik-basicauth = {
+        owner = "root";
+      };
     };
   };
 }
