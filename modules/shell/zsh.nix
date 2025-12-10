@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 
@@ -67,7 +67,6 @@
 
           set_proxy
 
-          export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
         '';
       };
     };

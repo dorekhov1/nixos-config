@@ -9,9 +9,6 @@
       password = {
         neededForUsers = true;
       };
-      anthropic-api-key = {
-        owner = "daniil";
-      };
     };
   };
 }
