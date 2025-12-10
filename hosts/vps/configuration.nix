@@ -51,7 +51,6 @@
     netcat-openbsd
     iperf3
     dnsutils
-    xray-core
     docker-compose
   ];
 
