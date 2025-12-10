@@ -7,6 +7,12 @@
     ../../modules/neovim
   ];
 
+  # Bootloader: assume single disk /dev/vda (adjust if provider differs)
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/vda";
+  };
+
   networking.hostName = "vps";
 
   time.timeZone = "Europe/Moscow";
@@ -89,5 +95,8 @@
     };
     users.${config.user}.home.stateVersion = config.stateVersion;
   };
+
+  # Ensure system zsh bits are available since the user shell is zsh
+  programs.zsh.enable = true;
 }
 
