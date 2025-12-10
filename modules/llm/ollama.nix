@@ -3,7 +3,7 @@
     enable = true;
     host = "127.0.0.1";
     port = 11434;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     # environmentVariables = {
     #   "CUDA_VISIBLE_DEVICES" = "0";
     #   "NVIDIA_VISIBLE_DEVICES" = "all";
@@ -13,5 +13,5 @@
     # };
   };
 
-  environment.systemPackages = with pkgs; [ ollama ollama-cuda ];
+  environment.systemPackages = with pkgs; [ ollama-cuda ];
 }
